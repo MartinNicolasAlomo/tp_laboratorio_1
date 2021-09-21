@@ -42,13 +42,18 @@ int main(void) {
 			flagA = 1;
 			break;
 		case 2:
-			numeroB = PedirNumero("Ingrese otro numero: \n");
-			printf("El segundo numero ingresado fue %f\n\n", numeroB);
-			flagB = 1;
+			if(flagA == 1){
+				numeroB = PedirNumero("Ingrese otro numero: \n");
+				printf("El segundo numero ingresado fue %f\n\n", numeroB);
+				flagB = 1;
+			}
+			else{
+				puts("¡Falta ingresar el primer operando!\n");
+			}
 			break;
 		case 3:
 			if(flagA == 1 && flagB == 1){
-				puts("Se realizaron las operaciones\n");
+				puts("¡Se realizaron las operaciones!\n");
 				resultadoSuma = Sumar(numeroA, numeroB);
 				resultadoResta = Restar(numeroA, numeroB);
 				resultadoMultiplicacion = Multriplicar(numeroA, numeroB);
@@ -58,7 +63,7 @@ int main(void) {
 				flagOperaciones = 1;
 			}
 			else{
-				puts("No se ingresaron los operandos suficientes para realizar alguna operación \n");
+				puts("¡No se ingresaron los operandos suficientes para realizar alguna operación!\n");
 			}
 			break;
 		case 4:
@@ -67,19 +72,19 @@ int main(void) {
 			printf("El resultado de la resta entre %f y %f es: %f\n", numeroA, numeroB, resultadoResta);
 			printf("El resultado de la multiplicación entre %f y %f es: %f\n", numeroA, numeroB, resultadoMultiplicacion);
 			if (errorDivision == 0) {
-				printf("No se puede dividir por cero. \n");
+				printf("¡No se puede dividir por cero!\n");
 			}
 			else {
 				printf("El resultado de la división entre %f y %f es: %f\n", numeroA, numeroB, resultadoDivision);
 			}
 			if(factorialA == -1){
-				printf("No se puede sacar el factorial del primer numero ya que es un numero negativo \n");
+				printf("¡No se puede sacar el factorial del primer numero ya que es un numero negativo!\n");
 			}
 			else{
 				printf("El factorial de %f es: %ld\n", numeroA, factorialA);
 			}
 			if(factorialB == -1){
-				printf("No se puede sacar el factorial del segundo numero ya que es un numero negativo \n\n");
+				printf("¡No se puede sacar el factorial del segundo numero ya que es un numero negativo!\n\n");
 			}
 			else{
 				printf("El factorial de %f es: %ld\n\n", numeroB, factorialB);
@@ -87,7 +92,7 @@ int main(void) {
 			break;
 		}
 			else{
-				puts("Aun no se realizo ninguna operacion \n");
+				puts("¡Aun no se realizo ninguna operacion! \n");
 			}
 		}
 		}
