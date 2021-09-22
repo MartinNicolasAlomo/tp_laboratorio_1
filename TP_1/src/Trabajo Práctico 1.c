@@ -89,11 +89,14 @@ int main(void) {
 			else{
 				printf("El factorial de %f es: %ld\n\n", numeroB, factorialB);
 			}
-			break;
 		}
 			else{
 				puts("Aun no se realizo ninguna operacion\n");
 			}
+			break;
+		case 5:
+			puts("Usted salió de la calculadora\n");
+			break;
 		}
 		}
 	}while(opcion != 5);
