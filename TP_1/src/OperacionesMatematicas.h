@@ -28,7 +28,7 @@ int Dividir(float operandoUno, float operandoDos, float *dirResultadoDivision);
 
 /// @brief realiza el calculo para sacar el factorial (n!) del numero ingresado.
 /// @param numeroIngresado es el numero ingresado, el cual yo quiero saber su factorial.
-/// @return devuelve 1 si el numero ingresado fue 0, devuelve -1 si se ingreso un numero negativo y si se ingreso un numero positivo devuelve el factorial de dicho numero.
+/// @return devuelve 1 si el numero ingresado fue 0, devuelve -1 si se ingreso un numero negativo, -2 si es un numero flotante y si se ingreso un numero positivo devuelve el factorial de dicho numero.
 long int SacarFactorial(float numeroIngresado);
 
 #endif /* OPERACIONESMATEMATICAS_H_ */
