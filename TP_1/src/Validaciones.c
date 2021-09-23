@@ -11,3 +11,11 @@ int VerificarSigno(int numeroIngresado){
 	}
 	return signoVerificado;
 }
+
+int VerificarEntero(float numeroIngresado){
+	int numeroEntero = 0;
+	if(numeroIngresado==(int)numeroIngresado){
+		numeroEntero = 1;
+	}
+	return numeroEntero;
+}

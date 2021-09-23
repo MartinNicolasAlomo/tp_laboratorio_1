@@ -80,11 +80,17 @@ int main(void) {
 			if(factorialA == -1){
 				printf("No se puede sacar el factorial del primer numero ya que es un numero negativo\n");
 			}
+			else if(factorialA == -2){
+				printf("No se puede sacar el factorial del primer numero ya que es un numero flotante\n");
+			}
 			else{
 				printf("El factorial de %f es: %ld\n", numeroA, factorialA);
 			}
 			if(factorialB == -1){
 				printf("No se puede sacar el factorial del segundo numero ya que es un numero negativo\n\n");
+			}
+			else if(factorialB == -2){
+				printf("No se puede sacar el factorial del segundo numero ya que es un numero flotante\n");
 			}
 			else{
 				printf("El factorial de %f es: %ld\n\n", numeroB, factorialB);

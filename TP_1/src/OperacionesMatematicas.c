@@ -32,18 +32,25 @@ int Dividir(float operandoUno, float operandoDos, float *dirResultadoDivision) {
 }
 
 long int SacarFactorial(float numeroIngresado){
+	int esEntero = 0;
 	int signoPositividad;
 	long int resultado;
 	signoPositividad = VerificarSigno(numeroIngresado);
+	esEntero = VerificarEntero(numeroIngresado);
 
-	if (signoPositividad == 0) {
-		resultado = 1;
+	if(esEntero == 1){
+		if (signoPositividad == 0) {
+			resultado = 1;
+		}
+		else if (signoPositividad == 1) {
+			resultado = (int)numeroIngresado * SacarFactorial(numeroIngresado - 1);
+		}
+		else if(signoPositividad == -1){
+			resultado = -1;
+		}
 	}
-	else if (signoPositividad == 1) {
-		resultado = (int)numeroIngresado * SacarFactorial(numeroIngresado - 1);
-	}
-	else if(signoPositividad == -1){
-		resultado = -1;
+	else if(esEntero == 0){
+		resultado = -2;
 	}
 	return resultado;
 }
