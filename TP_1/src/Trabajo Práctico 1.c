@@ -95,9 +95,25 @@ int main(void) {
 			else{
 				printf("El factorial de %f es: %ld\n\n", numeroB, factorialB);
 			}
-		}
-			else{
-				puts("Aun no se realizo ninguna operacion\n");
+			puts("Luego de mostrar los resultados se reiniciaran los valores ingresados\n");
+			numeroA = 0;
+			numeroB = 0;
+			resultadoSuma = 0;
+			resultadoResta = 0;
+			resultadoMultiplicacion = 0;
+			resultadoDivision = 0;
+			factorialA = 0;
+			factorialB = 0;
+			flagOperaciones = -1;
+			}
+			else if(flagA == 0 || flagB == 0) {
+				puts("No se ingresaron los operandos suficientes para realizar alguna operación\n");
+			}
+			else if(flagOperaciones == 0) {
+				puts("Aun no se realizó ninguna operacion\n");
+			}
+			else if(flagOperaciones == -1) {
+				puts("Se reiniciaron los valores! Por favor realice toda la operatoria nuevamente\n");
 			}
 			break;
 		case 5:
