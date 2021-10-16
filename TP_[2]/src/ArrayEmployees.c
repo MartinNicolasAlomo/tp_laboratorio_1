@@ -1,21 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <Input.h>
-#include <ArrayEmployees.h>
-
+#include <ctype.h>
+#include "Input.h"
+#include "ArrayEmployees.h"
+#define TRUE 0
 int initEmployees(Employee* list, int lenght){
 	int i;
 
-	if (list != NULL && cantidadElementos > 0) {
-		for (i = 0; i < cantidadElementos; i++) {
-			list[i].legajo = valorInicial;
+	if (list != NULL && lenght > 0) {
+		for (i = 0; i < lenght; i++) {
+			list[i].isEmpty = TRUE;
 		}
 	}
 	return 0;
 }
 
-int addEmployee(Employee* list, int lenght, int id, char name[],char, lastName[],float salary,int sector){
+/*int addEmployee(Employee* list, int lenght, int id, char name[],char, lastName[],float salary,int sector){
 
 }
 
@@ -34,4 +35,4 @@ int sortEmployees(Employee* list, int len, int order){
 int printEmployees(Employee* list, int length){
 
 }
-
+*/

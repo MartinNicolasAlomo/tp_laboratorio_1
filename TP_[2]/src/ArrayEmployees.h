@@ -16,7 +16,7 @@ typedef struct{
 /// @return
 int initEmployees(Employee* list, int lenght);
 
-int addEmployee(Employee* list, int lenght, int id, char name[],char, lastName[],float salary,int sector);
+int addEmployee(Employee* list, int lenght, int id, char name[],char lastName[],float salary,int sector);
 
 int findEmployeeById(Employee* list, int len,int id);
 
@@ -27,4 +27,7 @@ int sortEmployees(Employee* list, int len, int order);
 int printEmployees(Employee* list, int length);
 
 
-#endif /* ARRAYEMPLOYEES_H_ */
+
+
+
+#endif
