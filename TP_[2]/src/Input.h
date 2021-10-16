@@ -1,6 +1,7 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
+int IngresarDatos(char nombre[], int limiteNombre, char apellido[], int limiteApellido, float* salario, int* sector);
 int IngresarEntero(int *pEntero, char *mensaje, char *mensajeError, int minimo, int maximo, int reintentos);
 int ValidarRangoEntero(int numeroIngresado, int minimo, int maximo);
 int RecibirEntero(int *pResultado);

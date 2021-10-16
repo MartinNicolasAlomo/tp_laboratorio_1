@@ -5,6 +5,34 @@
 #include "Input.h"
 #include "ArrayEmployees.h"
 
+
+int IngresarDatos(char nombre[], int limiteNombre, char apellido[], int limiteApellido, float* salario, int* sector){
+	int retorno = 0;
+	char nombreIngresado[limiteNombre];
+	char apellidoIngresado[limiteApellido];
+	float salarioIngresado;
+	int sectorIngresado;
+
+	if (IngresarNombre(nombreIngresado, limiteNombre, "Ingrese el nombre del empleado: \n", "Error\n", 5) == 1) {
+		if (IngresarNombre(apellidoIngresado, limiteApellido, "Ingrese el apellido del empleado: \n", "Error\n", 5) == 1) {
+			if (IngresarFlotante(&salarioIngresado, "Ingrese el salario del empleado: \n", "Error\n", 1, 200000, 5) == 1) {
+				if (IngresarEntero(&sectorIngresado, "Ingrese el sector donde trabaja: \n", "Error\n", 1, 10, 5) == 1) {
+
+					strncpy(nombre,nombreIngresado,limiteNombre);
+					strncpy(apellido,apellidoIngresado,limiteApellido);
+					*salario = salarioIngresado;
+					*sector = sectorIngresado;
+					retorno = 1;
+				}
+			}
+		}
+	}
+	else{
+		puts("No se pudo cargar los datos correctamente.\n\n");
+	}
+	return retorno;
+}
+
 int IngresarEntero(int *pEntero, char *mensaje, char *mensajeError, int minimo, int maximo, int reintentos) {
 	int retorno = 0;
 	int bufferInt;

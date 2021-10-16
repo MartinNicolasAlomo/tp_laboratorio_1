@@ -12,7 +12,7 @@
 #include <ctype.h>
 #include "Input.h"
 #include "ArrayEmployees.h"
-#define	CANTEMPLEADOS 5
+#define	CANTEMPLEADOS 100
 
 int main(void) {
 	setbuf(stdout, NULL);

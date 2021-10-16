@@ -18,20 +18,19 @@ int MenuEmpleados(Employee lista[], int limite);
 /// @return
 int initEmployees(Employee* list, int lenght);
 
-int BuscarPrimerOcurrenciaEmpleados(Employee lista[], int cantidadElementos,int valorInicial);
+int BuscarPrimerOcurrenciaEmpleados(Employee lista[], int cantidadElementos);
 
 int addEmployee(Employee* list, int lenght, int id, char name[],char lastName[],float salary,int sector);
 
-int findEmployeeById(Employee* list, int len,int id);
+int findEmployeeById(Employee* list, int lenght,int id);
 
-int removeEmployee(Employee* list, int len, int id);
+int removeEmployee(Employee* list, int lenght, int id);
 
-int sortEmployees(Employee* list, int len, int order);
+int sortEmployees(Employee* list, int lenght, int order);
 
 int printEmployees(Employee* list, int length);
 
-
-
+int CalcularYMostrarSalarios(Employee* lista,int limite,float totalSalarios,int cantidadSalarios);
 
 
 #endif
