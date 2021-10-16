@@ -16,11 +16,15 @@ int initEmployees(Employee* list, int lenght){
 	return 0;
 }
 
-/*int addEmployee(Employee* list, int lenght, int id, char name[],char, lastName[],float salary,int sector){
+int addEmployee(Employee* list, int lenght, int id, char name[],char lastName[],float salary,int sector){
+	if (list != NULL && lenght > 0 && name != NULL && lastName != NULL){
 
+	}
+
+	return 1;
 }
 
-int findEmployeeById(Employee* list, int len,int id){
+/*int findEmployeeById(Employee* list, int len,int id){
 
 }
 
