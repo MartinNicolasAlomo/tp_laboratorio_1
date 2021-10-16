@@ -10,11 +10,15 @@ typedef struct{
 	int isEmpty;
 }Employee;
 
+int MenuEmpleados(Employee lista[], int limite);
+
 /// @brief To indicate that all position in the array are empty, this function put the flag (isEmpty) in TRUE in all position of the array.
 /// @param list Pointer to array of employees.
 /// @param lenght length of the array.
 /// @return
 int initEmployees(Employee* list, int lenght);
+
+int BuscarPrimerOcurrenciaEmpleados(Employee lista[], int cantidadElementos,int valorInicial);
 
 int addEmployee(Employee* list, int lenght, int id, char name[],char lastName[],float salary,int sector);
 
