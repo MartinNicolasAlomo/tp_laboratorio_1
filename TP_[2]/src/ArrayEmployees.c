@@ -58,7 +58,7 @@ int MenuEmpleados(Employee lista[], int limite) {
 			case 2:
 				/*MODIFICAR: Se ingresará el Número de Id, permitiendo modificar: o Nombre o Apellido o Salario o Sector*/
 				if (flagAlta == 1) {
-					if (IngresarEntero(&clienteID, "\nIngrese el ID del cliente que desea modificar", "\nError", 1, 5, 2) == 1){
+					if (IngresarEntero(&clienteID, "\nIngrese el ID del cliente que desea modificar", "\nError", 1, contadorID, 2) == 1){
 						idEncontrado = findEmployeeById(lista, limite, clienteID);
 					}
 					if(MenuCambioDatosEmpleados(nombreIngresado, LARGONOMBRE, apellidoIngresado, LARGOAPELLIDO, &salarioIngresado, &sectorIngresado) == 1){
@@ -83,6 +83,9 @@ int MenuEmpleados(Employee lista[], int limite) {
 				if (flagAlta == 1) {
 					if (IngresarEntero(&contadorID, "\nIngrese el ID del cliente a dar de baja: ", "\nError", 1, contadorID, 2) == 1) {
 						idEncontrado = findEmployeeById(lista, limite, contadorID);
+						if(idEncontrado == contadorID){
+							puts("coinciden");
+						}
 							if(removeEmployee(lista, limite, idEncontrado) == 1){
 								puts("\nSe dio de baja al cliente");
 							}
@@ -192,7 +195,6 @@ int addEmployee(Employee *list, int lenght, int id, char name[], char lastName[]
 	}
 	return retorno;
 }
-
 
 int findEmployeeById(Employee *list, int lenght, int id) {
 	int i;
