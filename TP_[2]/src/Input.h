@@ -12,6 +12,16 @@
 int IngresarDatos(char nombre[], int limiteNombre, char apellido[], int limiteApellido, float* salario, int* sector);
 
 /// @brief
+/// @param nombre
+/// @param limiteNombre
+/// @param apellido
+/// @param limiteApellido
+/// @param salario
+/// @param sector
+/// @return
+int MenuCambioDatosEmpleados(char nombre[], int limiteNombre, char apellido[], int limiteApellido, float* salario, int* sector);
+
+/// @brief
 /// @param pEntero
 /// @param mensaje
 /// @param mensajeError muestra un mensaje de error cuando el usuario se equivoca
