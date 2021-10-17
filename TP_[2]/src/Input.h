@@ -13,6 +13,7 @@ int esFlotante(char *cadena,int limite);
 int IngresarNombre(char* pNombre, int limite, char *mensaje, char *mensajeError, int reintentos);
 int RecibirNombre(char *pResultado, int limite);
 int esSoloLetras(char *cadena, int limite);
+int AjustarMayusculasNombres(char nombre[],int limite);
 int PedirDatos(char *cadena, int longitud);
 
 

@@ -33,6 +33,49 @@ int IngresarDatos(char nombre[], int limiteNombre, char apellido[], int limiteAp
 	return retorno;
 }
 
+int MenuCambioDatosEmpleados(char nombre[], int limiteNombre, char apellido[], int limiteApellido, float* salario, int* sector){
+	int retorno = 0;
+	int opcionCambio=0;
+	char nombreIngresado[limiteNombre];
+	char apellidoIngresado[limiteApellido];
+	float salarioIngresado;
+	int sectorIngresado;
+	do {
+		if (IngresarEntero(&opcionCambio, "\nQue desea modificar?\n1-Nombre\n2-Apellido\n3-Salario\n4-Sector\n5-Finalizar modificaciones", "\nError", 1, 5, 2) == 1){
+			switch(opcionCambio){
+			case 1:
+				if (IngresarNombre(nombreIngresado, limiteNombre, "\nIngrese el nombre del empleado:", "\nError", 5) == 1) {
+					strncpy(nombre,nombreIngresado,limiteNombre);
+				}
+				break;
+			case 2:
+				if (IngresarNombre(apellidoIngresado, limiteApellido, "\nIngrese el apellido del empleado:", "\nError", 5) == 1) {
+					strncpy(apellido,apellidoIngresado,limiteApellido);
+				}
+					break;
+			case 3:
+				if (IngresarFlotante(&salarioIngresado, "\nIngrese el salario del empleado:", "\nError", 1, 200000, 5) == 1) {
+					*salario = salarioIngresado;
+				}
+					break;
+			case 4:
+				if (IngresarEntero(&sectorIngresado, "\nIngrese el sector donde trabaja:", "\nError", 1, 10, 5) == 1) {
+					*sector = sectorIngresado;
+				}
+					break;
+			}
+
+
+		}
+		retorno = 1;
+
+		}while (opcionCambio != 5);
+
+	return retorno;
+}
+
+
+
 int IngresarEntero(int *pEntero, char *mensaje, char *mensajeError, int minimo, int maximo, int reintentos) {
 	int retorno = 0;
 	int bufferInt;
@@ -93,6 +136,7 @@ int esNumerica(char *cadena, int limite) {
 
 	return retorno;
 }
+
 
 
 int IngresarFlotante(float *pFlotante, char *mensaje, char *mensajeError, float minimo, float maximo, int reintentos) {
