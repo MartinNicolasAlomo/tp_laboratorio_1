@@ -5,13 +5,12 @@
 #include "Ingresos.h"
 #include "Validaciones.h"
 #include "Operaciones.h"
-
 #define LONGMENSAJEMENU 500
 #define LONGMENSAJES 100
 #define REINTENTOS 3
 #define DESCUENTO 10
 #define INTERES 25
-#define PRECIOBITCOIN 4800000
+
 
 int menuOpcionesEmpresas(void){
 	int retorno=-1;
@@ -33,6 +32,7 @@ int menuOpcionesEmpresas(void){
 	int flagLatam=1;
 	int flagAerolineas=1;
 	int flagCalculos=1;
+	float bitcoinPrecio=4800000;
 	float precioDescuentoLatam;
 	float precioInteresLatam;
 	float precioBitcoinLatam;
@@ -123,11 +123,11 @@ int menuOpcionesEmpresas(void){
 					puts("Se calcularon todos los costos.\n\n\n");
 					respuestaDescuentoLatam = calcularDescuento(&precioDescuentoLatam, precioLatamIngresado, DESCUENTO);
 					respuestaInteresLatam = calcularInteres(&precioInteresLatam, precioLatamIngresado, INTERES);
-					respuestaBitcoinLatam = dividir(&precioBitcoinLatam, precioLatamIngresado, PRECIOBITCOIN);
+					respuestaBitcoinLatam = dividir(&precioBitcoinLatam, precioLatamIngresado, bitcoinPrecio);
 					respuestaUnitarioLatam = dividir(&precioUnitarioLatam, precioLatamIngresado, kilometrosIngresados);
 					respuestaDescuentoAerolineas = calcularDescuento(&precioDescuentoAerolineas, precioAerolineasIngresado, DESCUENTO);
 					respuestaInteresAerolineas = calcularInteres(&precioInteresAerolineas, precioAerolineasIngresado, INTERES);
-					respuestaBitcoinAerolineas = dividir(&precioBitcoinAerolineas, precioAerolineasIngresado, PRECIOBITCOIN);
+					respuestaBitcoinAerolineas = dividir(&precioBitcoinAerolineas, precioAerolineasIngresado, bitcoinPrecio);
 					respuestaUnitarioAerolineas = dividir(&precioUnitarioAerolineas, precioAerolineasIngresado, kilometrosIngresados);
 					respuestaDiferenciaPrecios = calcularDiferenciaPrecios(&diferenciaPrecios, precioLatamIngresado, precioAerolineasIngresado);
 				}
@@ -238,7 +238,7 @@ int menuOpcionesEmpresas(void){
 					else{
 						puts("No se pudo calcular el precio final con interes para LATAM.\n");
 					}
-					if(!dividir(&bitcoinLatamHardcodeado, latamHardcodeado, PRECIOBITCOIN)){
+					if(!dividir(&bitcoinLatamHardcodeado, latamHardcodeado, bitcoinPrecio)){
 						printf("c) Precio pagando con bitcoin: $%.2f\n", bitcoinLatamHardcodeado);
 					}
 					else{
@@ -263,7 +263,7 @@ int menuOpcionesEmpresas(void){
 					else{
 						puts("No se pudo calcular el precio final con interes para Aerolineas.\n");
 					}
-					if(!dividir(&bitcoinAerolineasHardcodeado, aerolineasHardcodeado, PRECIOBITCOIN)){
+					if(!dividir(&bitcoinAerolineasHardcodeado, aerolineasHardcodeado, bitcoinPrecio)){
 						printf("c) Precio pagando con bitcoin: $%.2f\n", bitcoinAerolineasHardcodeado);
 					}
 					else{

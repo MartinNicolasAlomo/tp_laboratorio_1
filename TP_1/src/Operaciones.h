@@ -1,6 +1,7 @@
 #ifndef OPERACIONES_H_
 #define OPERACIONES_H_
 
+
 /// @brief Es el menu interactivo del programa
 /// @return Retorna 0 (EXITO) si se pudo finalizar el menu interactivo, y -1 (ERROR) si hubo un fallo en el programa
 int menuOpcionesEmpresas(void);
