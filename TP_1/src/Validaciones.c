@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "Ingresos.h"
+#include "Validaciones.h"
 
 
 int esNumerica(char cadena[], int limite){
