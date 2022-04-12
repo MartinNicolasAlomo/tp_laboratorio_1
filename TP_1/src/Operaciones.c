@@ -54,15 +54,6 @@ int menuOpcionesEmpresas(void){
 	float kilometrosHardcodeado = 7090;
 	float aerolineasHardcodeado = 162965;
 	float latamHardcodeado = 159339;
-	float descuentoLatamHardcodeado;
-	float interesLatamHardcodeado;
-	float bitcoinLatamHardcodeado;
-	float unitarioLatamHardcodeado;
-	float descuentoAerolineasHardcodeado;
-	float interesAerolineasHardcodeado;
-	float bitcoinAerolineasHardcodeado;
-	float unitarioAerolineasHardcodeado;
-	float diferenciaPreciosHardcodeado;
 	int respuestaDiferenciaPreciosHardcodeado;
 
 	snprintf(mensajeMenuIngreso,sizeof(mensajeMenuIngreso),"Seleccione una opcion:\n\n1-Ingresar Kilómetros: (km = %.2f)\n2-Ingresar Precio de Vuelos: (Aerolíneas = $%.2f, Latam = $%.2f)\n3-Calcular todos los costos:\n4-Informar Resultados\n5-Carga forzada de datos\n6-Salir\n\n",kilometrosIngresados,precioAerolineasIngresado,precioLatamIngresado);
@@ -116,7 +107,7 @@ int menuOpcionesEmpresas(void){
 					puts("Falta ingresar los kilometros de vuelo para realizar las operaciones.\n\n\n");
 				}
 				else if(flagLatam){
-					puts("No se ingresaron los precios de los vuelos para realizar las operaciones.\n");
+					puts("No se ingresaron los precios de los vuelos para realizar las operaciones.\n\n\n");
 				}
 				else{
 					flagCalculos = 0;
@@ -203,7 +194,7 @@ int menuOpcionesEmpresas(void){
 					else {
 						puts("No se pudo calcular la diferencia entre los precios ingresados.\n\n\n");
 					}
-					puts("Luego de mostrar los resultados se reiniciaran los valores ingresados\n\n\n");
+					puts("Luego de mostrar los resultados se reiniciaran los todos los valores\n\n\n");
 					kilometrosIngresados = 0;
 					precioLatamIngresado = 0;
 					precioDescuentoLatam = 0;
@@ -223,61 +214,65 @@ int menuOpcionesEmpresas(void){
 				}
 				break;
 			case 5:
+				if(!flagKilometros){
+					puts("Ya hay otra operatoria en proceso, espere a que termine para poder mostrar los datos hardcodeades:\n\n\n");
+				}
+				else{
 					puts("Datos forzados:\n");
 					printf("KMs ingresados: %.2f\n\n",kilometrosHardcodeado);
 					printf("Latam: %.2f\n",latamHardcodeado);
-					if(!calcularDescuento(&descuentoLatamHardcodeado, latamHardcodeado, DESCUENTO)){
-						printf("a) Precio con tarjeta de débito: $%.2f\n", descuentoLatamHardcodeado);
+					if(!calcularDescuento(&precioDescuentoLatam, latamHardcodeado, DESCUENTO)){
+						printf("a) Precio con tarjeta de débito: $%.2f\n", precioDescuentoLatam);
 					}
 					else{
 						puts("No se pudo calcular el precio final con descuento para LATAM.\n");
 					}
-					if(!calcularInteres(&interesLatamHardcodeado, latamHardcodeado, INTERES)){
-						printf("b) Precio con tarjeta de crédito: $%.2f\n", interesLatamHardcodeado);
+					if(!calcularInteres(&precioInteresLatam, latamHardcodeado, INTERES)){
+						printf("b) Precio con tarjeta de crédito: $%.2f\n", precioInteresLatam);
 					}
 					else{
 						puts("No se pudo calcular el precio final con interes para LATAM.\n");
 					}
-					if(!dividir(&bitcoinLatamHardcodeado, latamHardcodeado, bitcoinPrecio)){
-						printf("c) Precio pagando con bitcoin: $%.2f\n", bitcoinLatamHardcodeado);
+					if(!dividir(&precioBitcoinLatam, latamHardcodeado, bitcoinPrecio)){
+						printf("c) Precio pagando con bitcoin: $%.2f\n", precioBitcoinLatam);
 					}
 					else{
 						puts("No se pudo calcular el precio de LATAM pagando con bitcoin.\n");
 					}
-					if(!dividir(&unitarioLatamHardcodeado, latamHardcodeado, kilometrosHardcodeado)){
-						printf("d) Precio unitario: $%.2f\n\n", unitarioLatamHardcodeado);
+					if(!dividir(&precioUnitarioLatam, latamHardcodeado, kilometrosHardcodeado)){
+						printf("d) Precio unitario: $%.2f\n\n", precioUnitarioLatam);
 					}
 					else{
 						puts("No se pudo calcular el precio unitario para LATAM.\n");
 					}
 					printf("Aerolineas: %.2f\n",aerolineasHardcodeado);
-					if(!calcularDescuento(&descuentoAerolineasHardcodeado, aerolineasHardcodeado, DESCUENTO)){
-						printf("a) Precio con tarjeta de débito: $%.2f\n", descuentoAerolineasHardcodeado);
+					if(!calcularDescuento(&precioDescuentoAerolineas, aerolineasHardcodeado, DESCUENTO)){
+						printf("a) Precio con tarjeta de débito: $%.2f\n", precioDescuentoAerolineas);
 					}
 					else{
 						puts("No se pudo calcular el precio final con descuento para Aerolineas.\n");
 					}
-					if(!calcularInteres(&interesAerolineasHardcodeado, aerolineasHardcodeado, INTERES)){
-						printf("b) Precio con tarjeta de crédito: $%.2f\n", interesAerolineasHardcodeado);
+					if(!calcularInteres(&precioInteresAerolineas, aerolineasHardcodeado, INTERES)){
+						printf("b) Precio con tarjeta de crédito: $%.2f\n", precioInteresAerolineas);
 					}
 					else{
 						puts("No se pudo calcular el precio final con interes para Aerolineas.\n");
 					}
-					if(!dividir(&bitcoinAerolineasHardcodeado, aerolineasHardcodeado, bitcoinPrecio)){
-						printf("c) Precio pagando con bitcoin: $%.2f\n", bitcoinAerolineasHardcodeado);
+					if(!dividir(&precioBitcoinAerolineas, aerolineasHardcodeado, bitcoinPrecio)){
+						printf("c) Precio pagando con bitcoin: $%.2f\n", precioBitcoinAerolineas);
 					}
 					else{
 						puts("No se pudo calcular el precio de Aerolineas pagando con bitcoin.\n");
 					}
-					if(!dividir(&unitarioAerolineasHardcodeado, aerolineasHardcodeado, kilometrosHardcodeado)){
-						printf("d) Precio unitario: $%.2f\n\n", unitarioAerolineasHardcodeado);
+					if(!dividir(&precioUnitarioAerolineas, aerolineasHardcodeado, kilometrosHardcodeado)){
+						printf("d) Precio unitario: $%.2f\n\n", precioUnitarioAerolineas);
 					}
 					else{
 						puts("No se pudo calcular el precio unitario para Aerolineas.\n\n");
 					}
-					respuestaDiferenciaPreciosHardcodeado = calcularDiferenciaPrecios(&diferenciaPreciosHardcodeado, latamHardcodeado, aerolineasHardcodeado);
+					respuestaDiferenciaPreciosHardcodeado = calcularDiferenciaPrecios(&diferenciaPrecios, latamHardcodeado, aerolineasHardcodeado);
 					if(respuestaDiferenciaPreciosHardcodeado == 1){
-						printf("La diferencia de precio es: $%.2f\n\n\n", diferenciaPreciosHardcodeado);
+						printf("La diferencia de precio es: $%.2f\n\n\n", diferenciaPrecios);
 					}
 					else if(respuestaDiferenciaPreciosHardcodeado == 0){
 						puts("Ambos precios son iguales.\n\n\n");
@@ -285,6 +280,16 @@ int menuOpcionesEmpresas(void){
 					else {
 						puts("No se pudo calcular la diferencia entre los precios ingresados.\n\n\n");
 					}
+					precioDescuentoLatam = 0;
+					precioInteresLatam = 0;
+					precioBitcoinLatam = 0;
+					precioUnitarioLatam = 0;
+					precioDescuentoAerolineas = 0;
+					precioInteresAerolineas = 0;
+					precioBitcoinAerolineas = 0;
+					precioUnitarioAerolineas = 0;
+					diferenciaPrecios = 0;
+				}
 				break;
 			case 6:
 				puts("Usted finalizó la operación.\n");
