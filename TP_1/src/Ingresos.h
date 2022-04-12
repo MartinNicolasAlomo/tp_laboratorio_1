@@ -1,19 +1,46 @@
 #ifndef INGRESOS_H_
 #define INGRESOS_H_
 
-/// @brief le pide al usuario que elija un numero segun sea la opcion que desea seleccionar.
-/// @param pResultado es el puntero de la variable Opcion en la funcion Main.
-/// @param mensaje es el mensaje que se imprime por pantalla indicandole al usaurio lo que tiene que hacer.
-/// @param mensajeError es el mensaje que le aparace al usuario cuando se equivoca al intentar seleccionar una opcion.
-/// @param minimo es el primer numero de las opciones.
-/// @param maximo es el numero limite de opciones a elejir.
-/// @param reintentos son la cantidad de reintentos que se le dan al usuario luego equivocarse.
-/// @return devuelve 0 si la opcion elegida estuvo dentro del rango correcto.
-int PedirOpcion(int *pResultado, char *mensaje, char *mensajeError, int minimo, int maximo, int reintentos);
 
-/// @brief le pide al usuario que ingrese el numero que desea ingresar.
-/// @param mensaje es el mensaje que se imprime pidiendole al usuario quue ingrese un numero.
-/// @return devuelve el numero que ingreso el usuario.
-float PedirNumero(char mensaje[]);
+/// @brief Lee desde stdin hasta que encuentre un '\n' o hasta que haya copiado en cadena un maximo de 'longitud-1' caracteres
+/// @param cadena Puntero al espacio de memoria donde se dejara el resultado de la funcion
+/// @param limite Define el tamaño de la cadena
+/// @return Retorna 0 (EXITO) si se obtiene una cadena, -1 (ERROR) si no se consiguio
+int obtenerDatos(char* cadena, int limite);
+
+
+/// @brief Solicita un numero entero al usuario y luego de verificarlo devuelve el resultado
+/// @param pEntero Puntero al espacio de memoria donde se dejara el resultado de la funcion
+/// @param mensaje Mensaje a ser mostrado
+/// @param mensajeError Mensasje que se muestra cuando hubo un error
+/// @param minimo Es el numero minimo a ser aceptado
+/// @param maximo Es el numero minimo a ser aceptado
+/// @param reintentos La cantidad de veces que el usuario puede volver a ingresar los datos
+/// @return Retorna 0 (EXITO) si se obtuvo un entero, y -1 si no se consiguio
+int ingresarEntero(int *pEntero, char *mensaje, char *mensajeError, int minimo, int maximo, int reintentos);
+
+
+/// @brief Obtiene un numero entero y verifica si la cadena contiene solo numeros
+/// @param pResultado Puntero al espacio de memoria donde se dejara el resultado de la funcion
+/// @return Retorna 0 (EXITO) si se obtiene un entero, y -1 si no se consiguio
+int conseguirEntero(int* pResultado);
+
+
+/// @brief Solicita un numero con decimal al usuario y luego de verificarlo devuelve el resultado
+/// @param pFlotante Puntero al espacio de memoria donde se dejara el resultado de la funcion
+/// @param mensaje Mensaje a ser mostrado
+/// @param mensajeError Mensasje que se muestra cuando hubo un error
+/// @param minimo Es el numero minimo a ser aceptado
+/// @param maximo Es el numero minimo a ser aceptado
+/// @param reintentos La cantidad de veces que el usuario puede volver a ingresar los datos
+/// @return Retorna 0 (EXITO) si se obtuvo un numero con decimal, y -1 si no se consiguio
+int ingresarFlotante(float *pFlotante, char *mensaje, char *mensajeError, float minimo, float maximo, int reintentos);
+
+
+/// @brief Obtiene un numero con decimal y verifica si la cadena contiene solo numeros y un solo punto decimal
+/// @param pResultado Puntero al espacio de memoria donde se dejara el resultado de la funcion
+/// @return Retorna 0 (EXITO) si se obtiene un numero flotante, y -1 si no se consiguio
+int conseguirFlotante(float* pResultado);
+
 
 #endif /* INGRESOS_H_ */
