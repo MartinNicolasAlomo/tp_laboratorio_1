@@ -188,7 +188,7 @@ int menuOpcionesEmpresas(void){
 					if(respuestaDiferenciaPrecios==1){
 						printf("La diferencia de precio es: $%.2f\n\n", diferenciaPrecios);
 					}
-					else if(respuestaDiferenciaPrecios){
+					else if(respuestaDiferenciaPrecios==0){
 						puts("Ambos precios son iguales.\n\n\n");
 					}
 					else {
