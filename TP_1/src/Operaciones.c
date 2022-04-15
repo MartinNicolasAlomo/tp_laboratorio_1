@@ -7,6 +7,7 @@
 #include "Operaciones.h"
 #define LONGMENSAJEMENU 500
 #define LONGMENSAJES 100
+#define INGRESOMINIMO 1
 #define REINTENTOS 3
 #define DESCUENTO 10
 #define INTERES 25
@@ -56,7 +57,6 @@ int menuOpcionesEmpresas(void){
 	float latamHardcodeado = 159339;
 	int respuestaDiferenciaPreciosHardcodeado;
 
-	snprintf(mensajeMenuIngreso,sizeof(mensajeMenuIngreso),"Seleccione una opcion:\n\n1-Ingresar Kilómetros: (km = %.2f)\n2-Ingresar Precio de Vuelos: (Aerolíneas = $%.2f, Latam = $%.2f)\n3-Calcular todos los costos:\n4-Informar Resultados\n5-Carga forzada de datos\n6-Salir\n\n",kilometrosIngresados,precioAerolineasIngresado,precioLatamIngresado);
 	strncpy(mensajeMenuError,"No es una opcion valida, reintentelo de nuevo.\n\n\n",sizeof(mensajeMenuError));
 	snprintf(mensajeKmIngreso,sizeof(mensajeKmIngreso),"Ingrese los kilometros de vuelo (maximo %.2f km):\n",kmMaximos);
 	strncpy(mensajeKmError,"\nError! No es un kilometro correcto.\n\n\n",sizeof(mensajeKmError));
@@ -71,7 +71,7 @@ int menuOpcionesEmpresas(void){
 			printf("Usted eligió la opción %d.\n",opcion);
 			switch(opcion){
 			case 1:
-				if(!ingresarFlotante(&kilometrosIngresados,mensajeKmIngreso,mensajeKmError, 1, kmMaximos, REINTENTOS)){
+				if(!ingresarFlotante(&kilometrosIngresados,mensajeKmIngreso,mensajeKmError, INGRESOMINIMO, kmMaximos, REINTENTOS)){
 					printf("KM ingresados: %.2f km.\n\n\n", kilometrosIngresados);
 					flagKilometros = 0;
 				}
@@ -81,14 +81,14 @@ int menuOpcionesEmpresas(void){
 				break;
 			case 2:
 				if(!flagKilometros){
-					if(!ingresarFlotante(&precioAerolineasIngresado,mensajeAerolineasIngreso,mensajeAerolineasError, 1, preciosMaximos, REINTENTOS)){
+					if(!ingresarFlotante(&precioAerolineasIngresado,mensajeAerolineasIngreso,mensajeAerolineasError, INGRESOMINIMO, preciosMaximos, REINTENTOS)){
 						flagAerolineas = 0;
 					}
 					else{
 						puts("No se pudo ingresar el precio para Aerolineas.\nPara poder ingresar el precio para LATAM, en necesario que primero se ingrese un precio para Aerolineas.\n\n\n");
 					}
 					if(!flagAerolineas){
-						if(!ingresarFlotante(&precioLatamIngresado,mensajeLatamIngreso,mensajeLatamError, 1, preciosMaximos, REINTENTOS)){
+						if(!ingresarFlotante(&precioLatamIngresado,mensajeLatamIngreso,mensajeLatamError, INGRESOMINIMO, preciosMaximos, REINTENTOS)){
 							printf("\nEl precio de vuelo para LATAM es $%.2f.\n", precioLatamIngresado);
 							printf("El precio de vuelo para Aerolineas es $%.2f.\n\n\n", precioAerolineasIngresado);
 							flagLatam = 0;
@@ -149,7 +149,7 @@ int menuOpcionesEmpresas(void){
 						puts("No se pudo calcular el precio final con interes para LATAM.\n");
 					}
 					if(!respuestaBitcoinLatam){
-						printf("c) Precio pagando con bitcoin: $%.2f\n", precioBitcoinLatam);
+						printf("c) Precio pagando con bitcoin: %.2f BTC\n", precioBitcoinLatam);
 					}
 					else{
 						puts("No se pudo calcular el precio de LATAM pagando con bitcoin.\n");
@@ -174,7 +174,7 @@ int menuOpcionesEmpresas(void){
 						 puts("No se pudo calcular el precio final con interes para Aerolineas.\n");
 					}
 					if(!respuestaBitcoinAerolineas){
-						 printf("c) Precio pagando con bitcoin: $%.2f\n", precioBitcoinAerolineas);
+						 printf("c) Precio pagando con bitcoin: %.2f BTC\n", precioBitcoinAerolineas);
 					}
 					else{
 						 puts("No se pudo calcular el precio de Aerolineas pagando con bitcoin.\n");
@@ -234,7 +234,7 @@ int menuOpcionesEmpresas(void){
 						puts("No se pudo calcular el precio final con interes para LATAM.\n");
 					}
 					if(!dividir(&precioBitcoinLatam, latamHardcodeado, bitcoinPrecio)){
-						printf("c) Precio pagando con bitcoin: $%.2f\n", precioBitcoinLatam);
+						printf("c) Precio pagando con bitcoin: %.2f BTC\n", precioBitcoinLatam);
 					}
 					else{
 						puts("No se pudo calcular el precio de LATAM pagando con bitcoin.\n");
@@ -259,7 +259,7 @@ int menuOpcionesEmpresas(void){
 						puts("No se pudo calcular el precio final con interes para Aerolineas.\n");
 					}
 					if(!dividir(&precioBitcoinAerolineas, aerolineasHardcodeado, bitcoinPrecio)){
-						printf("c) Precio pagando con bitcoin: $%.2f\n", precioBitcoinAerolineas);
+						printf("c) Precio pagando con bitcoin: %.2f BTC\n", precioBitcoinAerolineas);
 					}
 					else{
 						puts("No se pudo calcular el precio de Aerolineas pagando con bitcoin.\n");
