@@ -33,6 +33,7 @@ int menuOpcionesEmpresas(void){
 	int flagLatam=1;
 	int flagAerolineas=1;
 	int flagCalculos=1;
+	int flagReingresos=1;
 	float bitcoinPrecio=4800000;
 	float precioDescuentoLatam;
 	float precioInteresLatam;
@@ -71,16 +72,26 @@ int menuOpcionesEmpresas(void){
 			printf("Usted eligió la opción %d.\n",opcion);
 			switch(opcion){
 			case 1:
-				if(!ingresarFlotante(&kilometrosIngresados,mensajeKmIngreso,mensajeKmError, INGRESOMINIMO, kmMaximos, REINTENTOS)){
-					printf("KM ingresados: %.2f km.\n\n\n", kilometrosIngresados);
-					flagKilometros = 0;
+				if(!flagReingresos){
+					puts("Ya se ingresaron kilometros previamente. Finalice la operacion para volver a reingresar.\n\n\n");
+					flagReingresos=0;
 				}
 				else{
-					puts("No se pudo ingresar los kilometros de vuelo.\n\n\n");
+					if(!ingresarFlotante(&kilometrosIngresados,mensajeKmIngreso,mensajeKmError, INGRESOMINIMO, kmMaximos, REINTENTOS)){
+						printf("KM ingresados: %.2f km.\n\n\n", kilometrosIngresados);
+						flagKilometros = 0;
+					}
+					else{
+						puts("No se pudo ingresar los kilometros de vuelo.\n\n\n");
+					}
 				}
 				break;
 			case 2:
-				if(!flagKilometros){
+				if(!flagReingresos){
+					puts("Ya se ingresaron los precios previamente. Finalice la operacion para volver a reingresar.\n\n\n");
+					flagReingresos=0;
+				}
+				else if(!flagKilometros){
 					if(!ingresarFlotante(&precioAerolineasIngresado,mensajeAerolineasIngreso,mensajeAerolineasError, INGRESOMINIMO, preciosMaximos, REINTENTOS)){
 						flagAerolineas = 0;
 					}
@@ -102,6 +113,8 @@ int menuOpcionesEmpresas(void){
 					puts("Falta ingresar los kilometros de vuelo para realizar las operaciones.\n\n\n");
 				}
 				break;
+
+
 			case 3:
 				if(flagKilometros){
 					puts("Falta ingresar los kilometros de vuelo para realizar las operaciones.\n\n\n");
@@ -109,8 +122,9 @@ int menuOpcionesEmpresas(void){
 				else if(flagLatam){
 					puts("No se ingresaron los precios de los vuelos para realizar las operaciones.\n\n\n");
 				}
-				else{
+				else if(!flagLatam || !flagReingresos){
 					flagCalculos = 0;
+					flagReingresos=0;
 					puts("Se calcularon todos los costos.\n\n\n");
 					respuestaDescuentoLatam = calcularDescuento(&precioDescuentoLatam, precioLatamIngresado, DESCUENTO);
 					respuestaInteresLatam = calcularInteres(&precioInteresLatam, precioLatamIngresado, INTERES);
@@ -133,7 +147,7 @@ int menuOpcionesEmpresas(void){
 				else if(flagCalculos){
 					puts("Aun no se realizó ninguna operacion.\n\n\n");
 				}
-				else{
+				else if(!flagCalculos || !flagReingresos){
 					printf("\nKMs ingresados: %.2f\n\n",kilometrosIngresados);
 					printf("Latam: %.2f\n",precioLatamIngresado);
 					if(!respuestaDescuentoLatam){
@@ -211,6 +225,7 @@ int menuOpcionesEmpresas(void){
 					flagAerolineas=1;
 					flagLatam=1;
 					flagCalculos=1;
+					flagReingresos=1;
 				}
 				break;
 			case 5:
