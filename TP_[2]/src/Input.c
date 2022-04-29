@@ -1,278 +1,266 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
+#include <string.h>
+#include "ArrayPassenger.h"
 #include "Input.h"
-#include "ArrayEmployees.h"
 
 
-int IngresarDatos(char nombre[], int limiteNombre, char apellido[], int limiteApellido, float* salario, int* sector){
-	int retorno = 0;
-	char nombreIngresado[limiteNombre];
-	char apellidoIngresado[limiteApellido];
-	float salarioIngresado;
-	int sectorIngresado;
-
-	if (IngresarNombre(nombreIngresado, limiteNombre, "Ingrese el nombre del empleado: \n", "Error\n", 5) == 1) {
-		if (IngresarNombre(apellidoIngresado, limiteApellido, "Ingrese el apellido del empleado: \n", "Error\n", 5) == 1) {
-			if (IngresarFlotante(&salarioIngresado, "Ingrese el salario del empleado: \n", "Error\n", 1, 200000, 5) == 1) {
-				if (IngresarEntero(&sectorIngresado, "Ingrese el sector donde trabaja: \n", "Error\n", 1, 10, 5) == 1) {
-
-					strncpy(nombre,nombreIngresado,limiteNombre);
-					strncpy(apellido,apellidoIngresado,limiteApellido);
-					*salario = salarioIngresado;
-					*sector = sectorIngresado;
-					retorno = 1;
-				}
-			}
-		}
-	}
-	else{
-		puts("No se pudo cargar los datos correctamente.\n\n");
-	}
-	return retorno;
-}
-
-int MenuCambioDatosEmpleados(char nombre[], int limiteNombre, char apellido[], int limiteApellido, float* salario, int* sector){
-	int retorno = 0;
-	int opcionCambio=0;
-	char nombreIngresado[limiteNombre];
-	char apellidoIngresado[limiteApellido];
-	float salarioIngresado;
-	int sectorIngresado;
-	do {
-		if (IngresarEntero(&opcionCambio, "\nQue desea modificar?\n1-Nombre\n2-Apellido\n3-Salario\n4-Sector\n5-Finalizar modificaciones", "\nError", 1, 5, 2) == 1){
-			switch(opcionCambio){
-			case 1:
-				if (IngresarNombre(nombreIngresado, limiteNombre, "\nIngrese el nombre del empleado:", "\nError", 5) == 1) {
-					strncpy(nombre,nombreIngresado,limiteNombre);
-				}
-				break;
-			case 2:
-				if (IngresarNombre(apellidoIngresado, limiteApellido, "\nIngrese el apellido del empleado:", "\nError", 5) == 1) {
-					strncpy(apellido,apellidoIngresado,limiteApellido);
-				}
-					break;
-			case 3:
-				if (IngresarFlotante(&salarioIngresado, "\nIngrese el salario del empleado:", "\nError", 1, 200000, 5) == 1) {
-					*salario = salarioIngresado;
-				}
-					break;
-			case 4:
-				if (IngresarEntero(&sectorIngresado, "\nIngrese el sector donde trabaja:", "\nError", 1, 10, 5) == 1) {
-					*sector = sectorIngresado;
-				}
-					break;
-			}
-
-
-		}
-		retorno = 1;
-
-		}while (opcionCambio != 5);
-
-	return retorno;
-}
-
-
-
-int IngresarEntero(int *pEntero, char *mensaje, char *mensajeError, int minimo, int maximo, int reintentos) {
-	int retorno = 0;
-	int bufferInt;
-
-	if (pEntero != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >= 0) {
-		do {
-			printf("%s\n", mensaje);
-			if (RecibirEntero(&bufferInt) == 1 && ValidarRangoEntero(bufferInt,minimo,maximo) == 1) {
-				*pEntero = bufferInt;
-				retorno = 1;
-				break;
-			}
-			printf("%s\n", mensajeError);
-			reintentos--;
-
-		} while (reintentos >= 0);
-	}
-	return retorno;
-}
-
-int ValidarRangoEntero(int numeroIngresado, int minimo, int maximo) {
-	int retorno = 0;
-
-	if (numeroIngresado >= minimo && numeroIngresado <= maximo) {
-		retorno = 1;
-	}
-	return retorno;
-}
-
-int RecibirEntero(int *pResultado) {
-	int retorno = 0;
-	char buffer[100];
-
-	if(pResultado != NULL){
-		if (PedirDatos(buffer,sizeof(buffer)) == 1 && esNumerica(buffer,sizeof(buffer)) == 1) {
-			retorno = 1;
-			*pResultado = atoi(buffer);
-		}
-	}
-
-	return retorno;
-}
-
-int esNumerica(char *cadena, int limite) {
-	int retorno = 0;
-	int i;
-	if(cadena != NULL && limite > 0){
-		for (i = 0; i<limite && cadena[i] != '\0'; i++) {
-			if(i==0 && (cadena[i] == '+' || cadena[i] == '-')){
-				continue;
-			}
-			if (cadena[i] >= '0' && cadena[i] <= '9') {
-				retorno = 1;
-				break;
-			}
-		}
-	}
-
-	return retorno;
-}
-
-
-
-int IngresarFlotante(float *pFlotante, char *mensaje, char *mensajeError, float minimo, float maximo, int reintentos) {
-	int retorno = 0;
-	float bufferFloat;
-
-	if (pFlotante != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >= 0) {
-		do {
-			printf("%s\n", mensaje);
-			if (RecibirFlotante(&bufferFloat) == 1 && ValidarRangoFlotante(bufferFloat,minimo,maximo) == 1) {
-				*pFlotante = bufferFloat;
-				retorno = 1;
-				break;
-			}
-			else {
-				printf("%s\n", mensajeError);
-				reintentos--;
-			}
-		} while (reintentos >= 0);
-	}
-	return retorno;
-}
-
-int ValidarRangoFlotante(float numeroIngresado, float minimo, float maximo) {
-	int retorno = 0;
-
-	if (numeroIngresado >= minimo && numeroIngresado <= maximo) {
-		retorno = 1;
-	}
-	return retorno;
-}
-
-int RecibirFlotante(float *pResultado) {
-	int retorno = 0;
-	char buffer[100];
-
-	if(pResultado != NULL){
-		if (PedirDatos(buffer,sizeof(buffer)) == 1 && esFlotante(buffer,sizeof(buffer)) == 1) {
-			retorno = 1;
-			*pResultado = atof(buffer);
-		}
-	}
-
-	return retorno;
-}
-
-int esFlotante(char *cadena,int limite) {
-	int retorno = 1;
-	int i;
-	int contadorPuntos=0;
-
-	for (i=0; i<limite && cadena[i] != '\0'; i++) {
-		if (i==0 && (cadena[0] == '-' || cadena[0] == '+')) {  //para saber si es negativo y validarlo.
-			continue;
-			}
-		if (cadena[i] < '0' || cadena[i] > '9') {
-			if(cadena[i] == '.' && contadorPuntos == 0){
-				contadorPuntos++;
-			}
-			else{
-				retorno = 0;
-				break;
-			}
-		}
-	}
-	return retorno;
-}
-
-
-int IngresarNombre(char* pNombre, int limite, char *mensaje, char *mensajeError, int reintentos){
-	int retorno = 0;
-	char bufferString[100];
-
-	if (pNombre != NULL && limite > 0 && mensaje != NULL && mensajeError != NULL && reintentos >= 0) {
-		do {
-			printf("%s\n", mensaje);
-			if (RecibirNombre(bufferString,sizeof(bufferString)) == 1 && strnlen(bufferString,sizeof(bufferString))) {
-				strncpy(pNombre,bufferString,limite);
-				retorno = 1;
-				break;
-			}
-			printf("%s\n", mensajeError);
-			reintentos--;
-
-		} while (reintentos >= 0);
-	}
-	return retorno;
-}
-
-int RecibirNombre(char *pResultado, int limite) {
-	int retorno = 0;
-	char bufferString[100];
-
-	if(pResultado != NULL && limite > 0){
-		if (PedirDatos(bufferString,sizeof(bufferString)) == 1 && esSoloLetras(bufferString,sizeof(bufferString)) == 1 && strnlen(bufferString,sizeof(bufferString)) < limite) {
-			retorno = 1;
-			strncpy(pResultado,bufferString,limite);
-		}
-	}
-
-	return retorno;
-}
-
-int esSoloLetras(char *cadena, int limite) {
-	int retorno = 1;
-	int i = 0;
-
-	if(cadena != NULL && limite > 0){
-		for (i = 0; i<limite && cadena[i] != '\0'; i++) {
-			if( (cadena[i] != ' ') && (cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z')) {
-				retorno = 0;
-				break;
-			}
-		}
-	}
-
-	return retorno;
-}
-
-
-int PedirDatos(char *cadena, int longitud){
-	int retorno = 0;
+int obtenerDatos(char* cadena, int limite){
+	int retorno = -1;
 	char bufferString[4096];
-
-	if(cadena != NULL && longitud > 0){
+	if(cadena != NULL && limite > 0){
 		fflush(stdin);
 		if(fgets(bufferString,sizeof(bufferString),stdin) != NULL){
 			if(bufferString[strnlen(bufferString,sizeof(bufferString))-1] == '\n'){
 				bufferString[strnlen(bufferString,sizeof(bufferString))-1] = '\0';
 			}
-			if(strnlen(bufferString,sizeof(bufferString)) <= longitud){
-				strncpy(cadena,bufferString,longitud);
-				retorno = 1;
+			if(strnlen(bufferString,sizeof(bufferString)) <= limite){
+				strncpy(cadena,bufferString,limite);
+				retorno = 0;
 			}
 		}
 	}
+	return retorno;
+}
 
+
+int ingresarEntero(int *pEntero, char *mensaje, char *mensajeError, int minimo, int maximo, int reintentos) {
+	int retorno = -1;
+	int bufferInt;
+	if(pEntero != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >= 0){
+		do{
+			printf("%s",mensaje);
+			if(!conseguirEntero(&bufferInt) && validarRangoEntero(bufferInt,minimo,maximo)){
+				*pEntero = bufferInt;
+				retorno = 0;
+				break;
+			}
+			else{
+				printf("%s",mensajeError);
+				reintentos--;
+			}
+		}while(reintentos>=0);
+	}
+	return retorno;
+}
+
+
+int conseguirEntero(int* pResultado){
+	int retorno = -1;
+	char bufferString[4086];
+	if(pResultado != NULL){
+		if(!obtenerDatos(bufferString,sizeof(bufferString)) && esNumerica(bufferString,sizeof(bufferString))){
+			*pResultado = atoi(bufferString);
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+
+int esNumerica(char cadena[], int limite){
+	int retorno = -1;
+	int i;
+	if(cadena != NULL && limite > 0){
+		retorno = 1;
+		for (i = 0; i<limite && cadena[i] != '\0'; i++) {
+			if(i == 0 && (cadena[i] == '+' || cadena[i] == '-')){
+				continue;
+			}
+			if (cadena[i] < '0' || cadena[i] > '9') {
+				retorno = 0;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
+
+int validarRangoEntero(int numeroIngresado, int minimo, int maximo){
+	int retorno = 0;
+	if (numeroIngresado >= minimo && numeroIngresado <= maximo) {
+		retorno = 1;
+	}
+	return retorno;
+}
+
+
+int ingresarFlotante(float *pFlotante, char *mensaje, char *mensajeError, float minimo, float maximo, int reintentos) {
+	int retorno = -1;
+	float bufferFloat;
+	if(pFlotante != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >= 0){
+		do{
+			printf("%s",mensaje);
+			if(!conseguirFlotante(&bufferFloat) && validarRangoFlotante(bufferFloat,minimo,maximo)){
+				*pFlotante = bufferFloat;
+				retorno = 0;
+				break;
+			}
+			else{
+				printf("%s",mensajeError);
+				reintentos--;
+			}
+		}while(reintentos>=0);
+	}
+	return retorno;
+}
+
+
+int conseguirFlotante(float* pResultado){
+	int retorno = -1;
+	char bufferString[4086];
+	if(pResultado != NULL){
+		if(!obtenerDatos(bufferString,sizeof(bufferString)) && esFlotante(bufferString,sizeof(bufferString))){
+			*pResultado = atof(bufferString);
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+
+int esFlotante(char cadena[],int limite){
+	int retorno = -1;
+	int i;
+	int contadorPuntos=0;
+	if(cadena != NULL && limite > 0){
+		retorno = 1;
+		for (i=0; i<limite && cadena[i] != '\0'; i++) {
+			if (i==0 && (cadena[0] == '-' || cadena[0] == '+')) {
+				continue;
+				}
+			if (cadena[i] < '0' || cadena[i] > '9') {
+				if(cadena[i] == '.' && contadorPuntos == 0){
+					contadorPuntos++;
+				}
+				else{
+					retorno = 0;
+					break;
+				}
+			}
+		}
+	}
+	return retorno;
+}
+
+
+int validarRangoFlotante(float numeroFlotante, float minimo, float maximo){
+	int retorno = 0;
+	if (numeroFlotante >= minimo && numeroFlotante <= maximo) {
+		retorno = 1;
+	}
+	return retorno;
+}
+
+
+
+int ingresarUnSoloNombre(char *pNombre, int limiteNombre, char *mensaje, char *mensajeError,int reintentos){
+	int retorno = -1;
+	char bufferString[limiteNombre];
+	if(pNombre != NULL && limiteNombre > 0 && mensaje != NULL && mensajeError != NULL && reintentos >= 0){
+		do{
+			printf("%s",mensaje);
+			if(!conseguirUnSoloNombre(bufferString,limiteNombre) && strnlen(bufferString,limiteNombre)<limiteNombre){
+				bufferString[0] = toupper(bufferString[0]);
+				strncpy(pNombre,bufferString,limiteNombre);
+				retorno = 0;
+				break;
+			}
+			else{
+				printf("%s",mensajeError);
+				reintentos--;
+			}
+		}while(reintentos>=0);
+	}
+	return retorno;
+}
+
+
+int conseguirUnSoloNombre(char* pResultado, int limiteNombre){
+	int retorno = -1;
+	char bufferString[limiteNombre];
+	if(pResultado != NULL && limiteNombre>0){
+		if(!obtenerDatos(bufferString,limiteNombre) && esUnSoloNombre(bufferString,limiteNombre) && strnlen(bufferString,limiteNombre)<limiteNombre){
+			strncpy(pResultado,bufferString,limiteNombre);
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+
+int esUnSoloNombre(char cadena[], int limite){
+	int retorno = -1;
+	int i;
+	if(cadena != NULL && limite > 0){
+		retorno = 1;
+		for (i = 0; i<limite && cadena[i] != '\0'; i++) {
+			if((cadena[i] != 'ñ') && (cadena[i] != 'Ñ') && (cadena[i] != 'Ç') && (cadena[i] != 'ç') &&
+				(cadena[i] != 'á') && (cadena[i] != 'é') && (cadena[i] != 'í') && (cadena[i] != 'ó') && (cadena[i] != 'ú') &&
+				(cadena[i] != 'Á') && (cadena[i] != 'É') && (cadena[i] != 'Í') && (cadena[i] != 'Ó') && (cadena[i] != 'Ú') &&
+				(cadena[i] != 'ä') && (cadena[i] != 'ë') && (cadena[i] != 'ï') && (cadena[i] != 'ö') && (cadena[i] != 'ü') &&
+				(cadena[i] != 'Ä') && (cadena[i] != 'Ë') && (cadena[i] != 'Ï') && (cadena[i] != 'Ö') && (cadena[i] != 'Ü') &&
+				(cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z')) {
+				retorno = 0;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
+
+int ingresarAlfanumerico(char *pAlfanumerico, int limiteAlfanumerico, char *mensaje, char *mensajeError,int reintentos){
+	int retorno = -1;
+	char bufferString[limiteAlfanumerico];
+	if(pAlfanumerico != NULL && limiteAlfanumerico > 0 && mensaje != NULL && mensajeError != NULL && reintentos >= 0){
+		do{
+			printf("%s",mensaje);
+			if(!conseguirAlfanumerico(bufferString,limiteAlfanumerico) && strnlen(bufferString,limiteAlfanumerico)<limiteAlfanumerico){
+				bufferString[0] = toupper(bufferString[0]);
+				strncpy(pAlfanumerico,bufferString,limiteAlfanumerico);
+				retorno = 0;
+				break;
+			}
+			else{
+				printf("%s",mensajeError);
+				reintentos--;
+			}
+		}while(reintentos>=0);
+	}
+	return retorno;
+}
+
+
+int conseguirAlfanumerico(char* pResultado,int limiteAlfanumerico){
+	int retorno = -1;
+	char bufferString[limiteAlfanumerico];
+	if(pResultado != NULL && limiteAlfanumerico>0){
+		if(!obtenerDatos(bufferString,limiteAlfanumerico) && esAlfanumerico(bufferString,limiteAlfanumerico) && strnlen(bufferString,limiteAlfanumerico)<limiteAlfanumerico){
+			strncpy(pResultado,bufferString,limiteAlfanumerico);
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+
+int esAlfanumerico(char cadena[], int limite){
+	int retorno = -1;
+	int i;
+	if(cadena != NULL && limite > 0){
+		retorno = 1;
+		for (i = 0; i<limite && cadena[i] != '\0'; i++) {
+			if((cadena[i] != ' ') && (cadena[i] != 'ñ') && (cadena[i] != 'Ñ') && (cadena[i] != 'Ç') && (cadena[i] != 'ç') &&
+				(cadena[i] != 'á') && (cadena[i] != 'é') && (cadena[i] != 'í') && (cadena[i] != 'ó') && (cadena[i] != 'ú') &&
+				(cadena[i] != 'Á') && (cadena[i] != 'É') && (cadena[i] != 'Í') && (cadena[i] != 'Ó') && (cadena[i] != 'Ú') &&
+				(cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && (cadena[i] < '0' || cadena[i] > '9')) {
+				retorno = 0;
+				break;
+			}
+		}
+	}
 	return retorno;
 }

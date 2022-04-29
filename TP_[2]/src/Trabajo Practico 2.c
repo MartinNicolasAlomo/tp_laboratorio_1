@@ -11,13 +11,16 @@
 #include <string.h>
 #include <ctype.h>
 #include "Input.h"
-#include "ArrayEmployees.h"
+#include "ArrayPassenger.h"
 #define	CANTEMPLEADOS 100
 
 int main(void) {
 	setbuf(stdout, NULL);
-	Employee listaEmpleados[CANTEMPLEADOS];
-
-	MenuEmpleados(listaEmpleados,CANTEMPLEADOS);
+	if(!menuOpcionesPasajeros()){
+		puts("Finalizó el programa.");
+	}
+	else{
+		puts("Hubo un fallo en el programa.");
+	}
 	return EXIT_SUCCESS;
 }
