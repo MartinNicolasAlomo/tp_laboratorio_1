@@ -2,7 +2,7 @@
 
 										 	  	 	 Trabajo Practico 2
 
-											Martín Nicolás Alomo   -   División E
+											Martín Nicolás Alomo   -   División 1-F
 
  ================================================================================================================================================*/
 
@@ -16,7 +16,7 @@
 
 int main(void) {
 	setbuf(stdout, NULL);
-	if(!menuOpcionesPasajeros()){
+	if(!pasaj_menuPrincipal()){
 		puts("Finalizó el programa.");
 	}
 	else{
