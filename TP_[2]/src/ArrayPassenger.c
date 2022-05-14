@@ -4,7 +4,7 @@
 #include <string.h>
 #include "ArrayPassenger.h"
 #include "Input.h"
-#define CANTPASAJEROS 2000
+#define CANTPASAJEROS 4
 #define CANTTIPOSPASAJERO 4
 #define CANTESTADOSVUELO 4
 #define REINTENTOS 3
@@ -36,7 +36,6 @@ int pasaj_menuPrincipal(void){
 	int cantidadIngresos=0;
 	float calculadorPrecios=0;
 	int contadorPasajeros=0;
-
 	char mensajeOpcionIngreso[LARGOMENSAJE];
 	char mensajeOpcionError[LARGOMENSAJE];
 	char mensajeIDModificar[LARGOMENSAJE];
@@ -152,45 +151,86 @@ int pasaj_menuPrincipal(void){
 				}
 				break;
 			case 5:
-				idPasajeros=pasaj_generarId();
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Camila", "Lolo", 9000, "AJ028", 1, 3)){
-					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-					contadorPasajeros++;
-					cantidadIngresos++;
+				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
+				if(indiceLibre>=0){
+					idPasajeros=pasaj_generarId();
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Camila", "Lolo", 9000, "AJ028", 1, 3)){
+						calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+						contadorPasajeros++;
+						cantidadIngresos++;
+					}
 				}
-				idPasajeros=pasaj_generarId();
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Matias", "Lolo", 60, "CL046", 4, 2)){
-					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-					contadorPasajeros++;
-					cantidadIngresos++;
+				else{
+					puts("No hay mas lugar disponible.\n");
 				}
-				idPasajeros=pasaj_generarId();
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Gonzalo", "Cece", 9000, "CL046", 2, 4)){
-					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-					contadorPasajeros++;
-					cantidadIngresos++;
+
+				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
+				if(indiceLibre>=0){
+					idPasajeros=pasaj_generarId();
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Matias", "Lolo", 60, "CL046", 4, 2)){
+						calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+						contadorPasajeros++;
+						cantidadIngresos++;
+					}
 				}
-				idPasajeros=pasaj_generarId();
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Daiana", "Vivi", 60, "AJ028", 4, 2)){
-					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-					contadorPasajeros++;
-					cantidadIngresos++;
+				else{
+					puts("No hay mas lugar disponible.\n");
 				}
-				idPasajeros=pasaj_generarId();
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Ruben", "Lolo", 60, "AJ028", 3, 1)){
-					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-					contadorPasajeros++;
-					cantidadIngresos++;
+
+				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
+				if(indiceLibre>=0){
+					idPasajeros=pasaj_generarId();
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Gonzalo", "Cece", 9000, "CL046", 2, 4)){
+						calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+						contadorPasajeros++;
+						cantidadIngresos++;
+					}
 				}
-				idPasajeros=pasaj_generarId();
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Zoe", "Cece", 60, "EN050", 1, 3)){
-					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-					contadorPasajeros++;
-					cantidadIngresos++;
+				else{
+					puts("No hay mas lugar disponible.\n");
 				}
+
+				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
+				if(indiceLibre>=0){
+					idPasajeros=pasaj_generarId();
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Daiana", "Vivi", 60, "AJ028", 4, 2)){
+						calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+						contadorPasajeros++;
+						cantidadIngresos++;
+					}
+				}
+				else{
+					puts("No hay mas lugar disponible.\n");
+				}
+
+				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
+				if(indiceLibre>=0){
+					idPasajeros=pasaj_generarId();
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Ruben", "Lolo", 60, "AJ028", 3, 1)){
+						calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+						contadorPasajeros++;
+						cantidadIngresos++;
+					}
+				}
+				else{
+					puts("No hay mas lugar disponible.\n");
+				}
+
+				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
+				if(indiceLibre>=0){
+					idPasajeros=pasaj_generarId();
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Zoe", "Cece", 60, "EN050", 1, 3)){
+						calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+						contadorPasajeros++;
+						cantidadIngresos++;
+					}
+				}
+				else{
+					puts("No hay mas lugar disponible.\n");
+				}
+
 				puts("Se hardcodearon los 6 pasajeros exitosamente.\n");
 				printPassengers(aPasajeros, CANTPASAJEROS);
-
 				break;
 			case 6:
 				puts("Usted finalizó la operación.\n\n");
@@ -380,9 +420,12 @@ int printPassengers(Passenger* list, int length){
 	int i;
 	if(list != NULL && length >0){
 		retorno = 0;
+		puts("  Id	     Nombre	    Apellido	     Precio	Codigo Vuelo	    Tipo Pasajero 	  Estado Vuelo\n");
 		for(i=0;i<length;i++){
 			pasaj_imprimirElemento(&list[i]);
 		}
+		puts("\n\n");
+
 	}
 	return retorno;
 }
