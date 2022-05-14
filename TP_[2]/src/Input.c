@@ -156,7 +156,7 @@ int validarRangoFlotante(float numeroFlotante, float minimo, float maximo){
 
 
 
-int ingresarUnSoloNombre(char *pNombre, int limiteNombre, char *mensaje, char *mensajeError,int reintentos){
+int ingresarNombreUnico(char *pNombre, int limiteNombre, char *mensaje, char *mensajeError,int reintentos){
 	int retorno = -1;
 	char bufferString[limiteNombre];
 	if(pNombre != NULL && limiteNombre > 0 && mensaje != NULL && mensajeError != NULL && reintentos >= 0){

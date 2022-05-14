@@ -35,10 +35,11 @@ int initPassengers(Passenger* list, int len);
 * \param lastName[] char Last name of the passenger
 * \param price float Price of the flight
 * \param typePassenger int Travel class of the flight
+* \param statusFlight int Status of the flight
 * \param flycode[] char Code of the flight
 * \return int Return (-1) if Error [Invalid length or NULL pointer or without free space] - (0) if Ok
 */
-int addPassenger(Passenger* list, int len, int id, char name[],char lastName[],float price,int typePassenger, char flycode[]);
+int addPassenger(Passenger* list,int len,int id, char name[],char lastName[],float price,int typePassenger,int statusFlight,char flycode[]);
 
 /** \brief find a Passenger by Id en returns the index position in array.*
 * \param list Passenger* Pointer to array of passenger
@@ -86,8 +87,15 @@ int sortPassengersByCode(Passenger* list, int len, int order);
 /// @return Retorna 0 (EXITO) si se logro encontrar una posicion vacia, -1 (ERROR) si no se consiguio
 int pasaj_buscarProximoIndiceVacio(Passenger vector[],int limite);
 
+/// @brief Pide datos al usuario para cargarlos a un pasajero
+/// @param vector Es el vector en el que se guardaran los datos ingresados por el usuario
+/// @param limite Define el tamaño del vector
+/// @param id Es el id que se le asignara al nuevo pasajero ingresado
+/// @return  Retorna 0 (EXITO) si se logro cargar y agregar el nuevo pasajero, -1 (ERROR) si no se consiguio ninguno
+int pasaj_cargarPasajero(Passenger vector[],int limite,int id);
+
 /// @brief Es el menu de opciones para modificar los datos de un pasajero a eleccion
-/// @param vector Es el vector en el que se guardaran los nuevos datos ingresados
+/// @param vector Es el vector en el que se guardaran los nuevos datos modificados
 /// @param limite Define el tamaño del vector
 /// @param id Es el id con el cual se identificara el pasajero a modificar
 /// @param mensajeOpcionModificar Es el mensaje de opciones de modificacions
@@ -137,7 +145,7 @@ int pasaj_calcularSuperanPrecioPromedio(Passenger vector[],int limite,int* pResu
 /// @param typePassenger Es la clase de vuelo del pasajero (economico, premium, ejecutivo o primera clase)
 /// @param statusFlight Es el estado del vuelo del pasajero (activo, demorado, reprogramado o cancelado)
 /// @return Retorna 0 (EXITO) si se logro añadir el pasajero hardcodeado, -1 (ERROR) si no se consiguio
-int pasaj_agregarPasajeroForzado(Passenger vector[], int limite, int id,char name[],char lastName[],float price,char flyCode[],int typePassenger,int statusFlight);
+int pasaj_cargaForzadaPasajero(Passenger vector[], int limite, int id,char name[],char lastName[],float price,char flyCode[],int typePassenger,int statusFlight);
 
 
 #endif /* ARRAYPASSENGER_H_ */

@@ -71,7 +71,7 @@ int validarRangoFlotante(float numeroFlotante, float minimo, float maximo);
 /// @param mensajeError Mensasje que se muestra cuando hubo un error
 /// @param reintentos La cantidad de veces que el usuario puede volver a ingresar los datos
 /// @return Retorna 0 (EXITO) si se obtuvo un unico nombre o apellido, y -1 si no se consiguio
-int ingresarUnSoloNombre(char *pNombre, int limiteNombre, char *mensaje, char *mensajeError,int reintentos);
+int ingresarNombreUnico(char *pNombre, int limiteNombre, char *mensaje, char *mensajeError,int reintentos);
 
 /// @brief Obtiene un unico nombre o apellido y verifica si la cadena contiene unicamente letras
 /// @param pResultado Puntero al espacio de memoria donde se dejara el resultado de la funcion

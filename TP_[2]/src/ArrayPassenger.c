@@ -37,12 +37,6 @@ int pasaj_menuPrincipal(void){
 	float calculadorPrecios=0;
 	int contadorPasajeros=0;
 
-	char nombre[LARGONOMBRE];
-	char apellido[LARGOAPELLIDO];
-	float precio=0;
-	int tipoPasajero=0;
-	char codigoVuelo[LARGOCODIGO];
-
 	char mensajeOpcionIngreso[LARGOMENSAJE];
 	char mensajeOpcionError[LARGOMENSAJE];
 	char mensajeIDModificar[LARGOMENSAJE];
@@ -52,8 +46,7 @@ int pasaj_menuPrincipal(void){
 	char mensajeInforme[LARGOMENSAJE];
 	char mensajeOrden[LARGOMENSAJE];
 
-
-	strncpy(mensajeOpcionIngreso,"1-Dar de alta un pasajero\n2-Modificar un pasajero\n3-Dar de baja un pasajero\n4-Informar\n5-Salir\n\n",sizeof(mensajeOpcionIngreso));
+	strncpy(mensajeOpcionIngreso,"1-Dar de alta un pasajero\n2-Modificar un pasajero\n3-Dar de baja un pasajero\n4-Informar\n5-Carga forzada\n6-Salir\n\n",sizeof(mensajeOpcionIngreso));
 	strncpy(mensajeOpcionError,"No es una opción válida, reinténtelo de nuevo.\n\n\n",sizeof(mensajeOpcionError));
 	strncpy(mensajeIDModificar,"Ingrese el ID que desea modificar:\n\n",sizeof(mensajeIDModificar));
 	strncpy(mensajeOpcionModificar,"¿Qué desea informar?\n1-Nombre\n2-Apellido\n3-Precio\n4-Tipo de pasajero\n5-Codigo de vuelo\n6-Finalizar cambios\n\n",sizeof(mensajeOpcionModificar));
@@ -62,7 +55,6 @@ int pasaj_menuPrincipal(void){
 	strncpy(mensajeInforme,"¿Qué desea informar?\n1-Listado de los pasajeros ordenados alfabéticamente por Apellido y Tipo de pasajero.\n2-Total y promedio de los precios de los pasajes, y cuántos pasajeros superan el precio promedio.\n3-Listado de los pasajeros por Código de vuelo y estados de vuelos ‘ACTIVO’.\n\n",sizeof(mensajeInforme));
 	strncpy(mensajeOrden,"¿En qué orden quiere ordenarlos?\n1-Ascendente\n0-Descendente\n\n",sizeof(mensajeOrden));
 
-
 	if(!initPassengers(aPasajeros, CANTPASAJEROS)){
 		puts("Se inicializaron los pasajeros.\n\n");
 	}
@@ -70,52 +62,14 @@ int pasaj_menuPrincipal(void){
 		puts("Falló la inicialización.\n\n\n");
 	}
 
-
-	idPasajeros=pasaj_generarId();
-	if(!pasaj_agregarPasajeroForzado(aPasajeros, CANTPASAJEROS, idPasajeros, "Lolo", "Lolo", 9000, "AJ028", 1, 3)){
-		calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-		contadorPasajeros++;
-		cantidadIngresos++;
-	}
-	idPasajeros=pasaj_generarId();
-	if(!pasaj_agregarPasajeroForzado(aPasajeros, CANTPASAJEROS, idPasajeros, "Lolo", "Lolo", 9000, "CL046", 4, 2)){
-		calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-		contadorPasajeros++;
-		cantidadIngresos++;
-	}
-	idPasajeros=pasaj_generarId();
-	if(!pasaj_agregarPasajeroForzado(aPasajeros, CANTPASAJEROS, idPasajeros, "Tutu", "Tutu", 60, "CL046", 2, 4)){
-		calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-		contadorPasajeros++;
-		cantidadIngresos++;
-	}
-	idPasajeros=pasaj_generarId();
-	if(!pasaj_agregarPasajeroForzado(aPasajeros, CANTPASAJEROS, idPasajeros, "Vivi", "Vivi", 60, "AJ028", 4, 2)){
-		calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-		contadorPasajeros++;
-		cantidadIngresos++;
-	}
-	idPasajeros=pasaj_generarId();
-	if(!pasaj_agregarPasajeroForzado(aPasajeros, CANTPASAJEROS, idPasajeros, "Lolo", "Lolo", 60, "AJ028", 3, 1)){
-		calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-		contadorPasajeros++;
-		cantidadIngresos++;
-	}
-	idPasajeros=pasaj_generarId();
-	if(!pasaj_agregarPasajeroForzado(aPasajeros, CANTPASAJEROS, idPasajeros, "Tutu", "Tutu", 60, "EN050", 1, 3)){
-		calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
-		contadorPasajeros++;
-		cantidadIngresos++;
-	}
-
 	do{
-		if(!ingresarEntero(&opcion, mensajeOpcionIngreso, mensajeOpcionError, 1, 5, REINTENTOS)){
+		if(!ingresarEntero(&opcion, mensajeOpcionIngreso, mensajeOpcionError, 1, 6, REINTENTOS)){
 			switch(opcion){
 			case 1:
 				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
 				if(indiceLibre>=0){
 					idPasajeros=pasaj_generarId();
-					if(!addPassenger(aPasajeros, CANTPASAJEROS, idPasajeros, nombre, apellido, precio, tipoPasajero, codigoVuelo)){
+					if(!pasaj_cargarPasajero(aPasajeros, CANTPASAJEROS, idPasajeros)){
 						printf("Se cargaron los datos del nuevo pasajero. ID: %d.\n\n",idPasajeros);
 						calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
 						contadorPasajeros++;
@@ -189,13 +143,6 @@ int pasaj_menuPrincipal(void){
 					puts("No hay pasajeros para mostrar.\n\n\n");
 				}
 				else{
-					if(!printPassengers(aPasajeros, CANTPASAJEROS)){
-						puts("Impresion finalizada.\n\n\n");
-					}
-					else{
-						puts("No se pudo mostrar el informe.\n\n\n");
-					}
-
 					if(!pasaj_menuInformes(aPasajeros, CANTPASAJEROS, mensajeInforme, mensajeOrden, mensajeOpcionError, calculadorPrecios, contadorPasajeros)){
 						puts("Informe finalizado.\n\n\n");
 					}
@@ -205,6 +152,47 @@ int pasaj_menuPrincipal(void){
 				}
 				break;
 			case 5:
+				idPasajeros=pasaj_generarId();
+				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Camila", "Lolo", 9000, "AJ028", 1, 3)){
+					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+					contadorPasajeros++;
+					cantidadIngresos++;
+				}
+				idPasajeros=pasaj_generarId();
+				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Matias", "Lolo", 60, "CL046", 4, 2)){
+					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+					contadorPasajeros++;
+					cantidadIngresos++;
+				}
+				idPasajeros=pasaj_generarId();
+				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Gonzalo", "Cece", 9000, "CL046", 2, 4)){
+					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+					contadorPasajeros++;
+					cantidadIngresos++;
+				}
+				idPasajeros=pasaj_generarId();
+				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Daiana", "Vivi", 60, "AJ028", 4, 2)){
+					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+					contadorPasajeros++;
+					cantidadIngresos++;
+				}
+				idPasajeros=pasaj_generarId();
+				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Ruben", "Lolo", 60, "AJ028", 3, 1)){
+					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+					contadorPasajeros++;
+					cantidadIngresos++;
+				}
+				idPasajeros=pasaj_generarId();
+				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Zoe", "Cece", 60, "EN050", 1, 3)){
+					calculadorPrecios=calculadorPrecios+aPasajeros[idPasajeros].price;
+					contadorPasajeros++;
+					cantidadIngresos++;
+				}
+				puts("Se hardcodearon los 6 pasajeros exitosamente.\n");
+				printPassengers(aPasajeros, CANTPASAJEROS);
+
+				break;
+			case 6:
 				puts("Usted finalizó la operación.\n\n");
 				retorno=0;
 				break;
@@ -213,12 +201,13 @@ int pasaj_menuPrincipal(void){
 		else{
 			puts("No se pudo ingresar la opción\n\n\n");
 		}
-	}while(opcion!=5);
+	}while(opcion!=6);
 	return retorno;
 }
 
 
-int pasaj_agregarPasajeroForzado(Passenger vector[], int limite, int id,char name[],char lastName[],float price,char flyCode[],int typePassenger,int statusFlight){
+
+int pasaj_cargaForzadaPasajero(Passenger vector[], int limite, int id,char name[],char lastName[],float price,char flyCode[],int typePassenger,int statusFlight){
 	int retorno = -1;
 	Passenger auxPasajero;
 	if(vector != NULL && limite>0 && id>=0 && name != NULL && lastName != NULL && price>0 && flyCode != NULL){
@@ -236,7 +225,6 @@ int pasaj_agregarPasajeroForzado(Passenger vector[], int limite, int id,char nam
 	return retorno;
 }
 
-
 int initPassengers(Passenger* list, int len){
 	int retorno = -1;
 	int i;
@@ -249,48 +237,53 @@ int initPassengers(Passenger* list, int len){
 	return retorno;
 }
 
-
-int addPassenger(Passenger* list, int len, int id, char name[],char lastName[],float price,int typePassenger, char flycode[]){
+int addPassenger(Passenger* list,int len,int id, char name[],char lastName[],float price,int typePassenger,int statusFlight,char flycode[]){
 	int retorno = -1;
 	Passenger auxPasajero;
-	int statusFlight;
 	int confirmar;
-	if(list != NULL && len>0 && id>=0 && name != NULL && lastName != NULL && flycode != NULL){
-		if(!ingresarUnSoloNombre(name, LARGONOMBRE, "Ingrese el nombre:\n", "Error. No es un nombre, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
-			!ingresarUnSoloNombre(lastName, LARGOAPELLIDO, "Ingrese el apellido:\n", "Error. No es un apellido, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
-			!ingresarFlotante(&price, "Ingrese el precio del vuelo:\n", "Error. No es un precio válido, reinténtelo de nuevo.\n\n\n", 0.1, 500000, REINTENTOS) &&
-			!ingresarEntero(&typePassenger, "Ingrese el tipo de pasajero: (1 Económico, 2 Premium, 3 Ejecutivo o 4 Primera Clase)\n", "Error. No es un tipo válido, reinténtelo de nuevo.\n\n\n", 1, 4, REINTENTOS) &&
-			!ingresarEntero(&statusFlight, "Indique el estado de su vuelo: (1 Activo, 2 Demorado, 3 Reprogramado o 4 Cancelado)\n", "Error. No es un estado válido, reinténtelo de nuevo.\n\n\n", 1, 4, REINTENTOS) &&
-			!ingresarAlfanumerico(flycode, LARGOCODIGO, "Ingrese el codigo de pasaje:\n", "Error. No es un tipo válido, reinténtelo de nuevo.\n\n\n", REINTENTOS)) {
-			if(!ingresarEntero(&confirmar, "¿Está seguro/a de quiere agregar este pasajero? (1- Si / 2- No)\n\n", "No es una opción válida, reinténtelo de nuevo.\n\n\n", 1, 2, REINTENTOS)){
-				if(confirmar==1){
-					retorno=0;
-					strncpy(auxPasajero.name,name,sizeof(auxPasajero.name));
-					strncpy(auxPasajero.lastName,lastName,sizeof(auxPasajero.lastName));
-					auxPasajero.price=price;
-					auxPasajero.typePassenger=typePassenger;
-					strncpy(auxPasajero.flyCode,flycode,sizeof(auxPasajero.flyCode));
-					auxPasajero.statusFlight=statusFlight;
-					auxPasajero.id=id;
-					auxPasajero.isEmpty=FALSE;
-					list[id]=auxPasajero;
-					puts("Confirmado.\n");
-				}
-				else if(confirmar==2){
-					puts("Cancelado. No se agregó el álbum.\n");
-				}
+	if(list != NULL && len>0 && id>=0 && name != NULL && lastName != NULL && price>0 && typePassenger>0 && statusFlight>0 && flycode != NULL){
+		if(!ingresarEntero(&confirmar, "\n¿Está seguro/a de quiere agregar este pasajero? (1- Si / 2- No)\n\n", "No es una opción válida, reinténtelo de nuevo.\n\n\n", 1, 2, REINTENTOS)){
+			if(confirmar==1){
+				retorno=0;
+				strncpy(auxPasajero.name,name,sizeof(auxPasajero.name));
+				strncpy(auxPasajero.lastName,lastName,sizeof(auxPasajero.lastName));
+				auxPasajero.price=price;
+				auxPasajero.typePassenger=typePassenger;
+				auxPasajero.statusFlight=statusFlight;
+				strncpy(auxPasajero.flyCode,flycode,sizeof(auxPasajero.flyCode));
+				auxPasajero.id=id;
+				auxPasajero.isEmpty=FALSE;
+				list[id]=auxPasajero;
+				puts("Confirmado.\n");
 			}
-			else{
-				puts("No se pudo confirmar.\n\n");
+			else if(confirmar==2){
+				puts("Cancelado. No se agregó el pasajero.\n");
 			}
 		}
 		else{
-			puts("NO SE CARGO NADA.\n\n");
+			puts("No se pudo confirmar.\n\n");
 		}
 	}
 	return retorno;
 }
 
+int pasaj_cargarPasajero(Passenger vector[],int limite,int id){
+	int retorno=-1;
+	Passenger auxPasajero;
+	if(vector != NULL && limite>0 && id>=0){
+		if(!ingresarNombreUnico(auxPasajero.name, LARGONOMBRE, "Ingrese el nombre:\n", "Error. No es un nombre, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
+			!ingresarNombreUnico(auxPasajero.lastName, LARGOAPELLIDO, "Ingrese el apellido:\n", "Error. No es un apellido, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
+			!ingresarFlotante(&auxPasajero.price, "Ingrese el precio del vuelo:\n", "Error. No es un precio válido, reinténtelo de nuevo.\n\n\n", 0.1, 500000, REINTENTOS) &&
+			!ingresarEntero(&auxPasajero.typePassenger, "Ingrese el tipo de pasajero: (1 Económico, 2 Premium, 3 Ejecutivo o 4 Primera Clase)\n", "Error. No es un tipo válido, reinténtelo de nuevo.\n\n\n", 1, 4, REINTENTOS) &&
+			!ingresarEntero(&auxPasajero.statusFlight, "Indique el estado de su vuelo: (1 Activo, 2 Demorado, 3 Reprogramado o 4 Cancelado)\n", "Error. No es un estado válido, reinténtelo de nuevo.\n\n\n", 1, 4, REINTENTOS) &&
+			!ingresarAlfanumerico(auxPasajero.flyCode, LARGOCODIGO, "Ingrese el codigo de pasaje:\n", "Error. No es un tipo válido, reinténtelo de nuevo.\n\n\n", REINTENTOS)){
+			if(!addPassenger(vector,limite,id,auxPasajero.name,auxPasajero.lastName,auxPasajero.price,auxPasajero.typePassenger,auxPasajero.statusFlight,auxPasajero.flyCode)){
+				retorno=0;
+			}
+		}
+	}
+	return retorno;
+}
 
 int findPassengerById(Passenger* list, int len,int id){
 	int retorno = -1;
@@ -305,7 +298,6 @@ int findPassengerById(Passenger* list, int len,int id){
 	}
 	return retorno;
 }
-
 
 int removePassenger(Passenger* list, int len, int id){
 	int retorno = -1;
@@ -332,7 +324,6 @@ int removePassenger(Passenger* list, int len, int id){
 	}
 	return retorno;
 }
-
 
 int sortPassengers(Passenger* list, int len, int order){
 	int retorno = -1;
@@ -384,7 +375,6 @@ int sortPassengers(Passenger* list, int len, int order){
 	return retorno;
 }
 
-
 int printPassengers(Passenger* list, int length){
 	int retorno = -1;
 	int i;
@@ -396,7 +386,6 @@ int printPassengers(Passenger* list, int length){
 	}
 	return retorno;
 }
-
 
 int sortPassengersByCode(Passenger* list, int len, int order){
 	int retorno = -1;
@@ -448,7 +437,6 @@ int sortPassengersByCode(Passenger* list, int len, int order){
 	return retorno;
 }
 
-
 int pasaj_buscarProximoIndiceVacio(Passenger vector[],int limite){
 	int retorno = -1;
 	int i;
@@ -462,7 +450,6 @@ int pasaj_buscarProximoIndiceVacio(Passenger vector[],int limite){
 	}
 	return retorno;
 }
-
 
 int pasaj_modificarPasajero(Passenger vector[],int limite,int id,char mensajeOpcionModificar[],char mensajeOpcionError[]){
 	int retorno=-1;
@@ -483,7 +470,7 @@ int pasaj_modificarPasajero(Passenger vector[],int limite,int id,char mensajeOpc
 				if(!ingresarEntero(&opcion, mensajeOpcionModificar, mensajeOpcionError, 1, 6, REINTENTOS)){
 					switch(opcion){
 					case 1:
-						if(!ingresarUnSoloNombre(auxPasajero.name, LARGONOMBRE, "Nuevo nombre:\n", "Error\n\n\n", REINTENTOS)){
+						if(!ingresarNombreUnico(auxPasajero.name, LARGONOMBRE, "Nuevo nombre:\n", "Error\n\n\n", REINTENTOS)){
 							puts("Se modificó el nombre exitosamente.\n\n");
 						}
 						else{
@@ -491,7 +478,7 @@ int pasaj_modificarPasajero(Passenger vector[],int limite,int id,char mensajeOpc
 						}
 						break;
 					case 2:
-						if(!ingresarUnSoloNombre(auxPasajero.lastName, LARGOAPELLIDO, "Nuevo apellido:\n", "Error\n\n\n", REINTENTOS)){
+						if(!ingresarNombreUnico(auxPasajero.lastName, LARGOAPELLIDO, "Nuevo apellido:\n", "Error\n\n\n", REINTENTOS)){
 							puts("Se modificó el apellido exitosamente.\n\n");
 						}
 						else{
@@ -547,7 +534,6 @@ int pasaj_modificarPasajero(Passenger vector[],int limite,int id,char mensajeOpc
 	}
 	return retorno;
 }
-
 
 int pasaj_menuInformes(Passenger vector[],int limite,char mensajeInforme[],char mensajeOrden[],char mensajeOpcionError[],float precioTotal,int cantidadTotal){
 	int retorno=-1;
@@ -609,7 +595,6 @@ int pasaj_menuInformes(Passenger vector[],int limite,char mensajeInforme[],char 
 	return retorno;
 }
 
-
 int pasaj_calcularPrecioPromedio(float* pResultado, float precioTotal, float cantidadTotal){
 	int retorno = -1;
 	float resultado;
@@ -620,7 +605,6 @@ int pasaj_calcularPrecioPromedio(float* pResultado, float precioTotal, float can
 	}
 	return retorno;
 }
-
 
 int pasaj_calcularSuperanPrecioPromedio(Passenger vector[],int limite,int* pResultado, float precioPromedio){
 	int retorno = -1;
@@ -638,13 +622,11 @@ int pasaj_calcularSuperanPrecioPromedio(Passenger vector[],int limite,int* pResu
 	return retorno;
 }
 
-
 int pasaj_imprimirElemento(Passenger* pElemento){
 	int retorno=-1;
 	if(pElemento != NULL && pElemento->isEmpty==FALSE){
 		retorno = 0;
-		printf("%4d %10s %10s %.2f %10s %15s %15s\n",pElemento->id,pElemento->name,pElemento->lastName,pElemento->price,pElemento->flyCode,TXT_TYPEPASSENGER[pElemento->typePassenger-1],TXT_STATUSFLIGHT[pElemento->statusFlight-1]);
+		printf("%4d %15s %15s %15.2f %15s %20s %20s\n",pElemento->id,pElemento->name,pElemento->lastName,pElemento->price,pElemento->flyCode,TXT_TYPEPASSENGER[pElemento->typePassenger-1],TXT_STATUSFLIGHT[pElemento->statusFlight-1]);
 	}
 	return retorno;
 }
-
