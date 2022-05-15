@@ -4,7 +4,7 @@
 #include <string.h>
 #include "ArrayPassenger.h"
 #include "Input.h"
-#define CANTPASAJEROS 4
+#define CANTPASAJEROS 2000
 #define CANTTIPOSPASAJERO 4
 #define CANTESTADOSVUELO 4
 #define REINTENTOS 3
@@ -229,7 +229,7 @@ int pasaj_menuPrincipal(void){
 					puts("No hay mas lugar disponible.\n");
 				}
 
-				puts("Se hardcodearon los 6 pasajeros exitosamente.\n");
+				puts("Se hardcodearon los pasajeros exitosamente.\n");
 				printPassengers(aPasajeros, CANTPASAJEROS);
 				break;
 			case 6:
@@ -244,7 +244,6 @@ int pasaj_menuPrincipal(void){
 	}while(opcion!=6);
 	return retorno;
 }
-
 
 
 int pasaj_cargaForzadaPasajero(Passenger vector[], int limite, int id,char name[],char lastName[],float price,char flyCode[],int typePassenger,int statusFlight){
