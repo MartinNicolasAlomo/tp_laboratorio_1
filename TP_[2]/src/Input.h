@@ -6,7 +6,8 @@
 /// @param cadena Puntero al espacio de memoria donde se dejara el resultado de la funcion
 /// @param limite Define el tamaño de la cadena
 /// @return Retorna 0 (EXITO) si se obtiene una cadena, -1 (ERROR) si no se consiguio
-int obtenerDatos(char* cadena, int limite);
+int obtenerCadena(char* cadena, int limite);
+
 
 /// @brief Solicita un numero entero al usuario y luego de verificarlo devuelve el resultado
 /// @param pEntero Puntero al espacio de memoria donde se dejara el resultado de la funcion
@@ -27,7 +28,7 @@ int conseguirEntero(int* pResultado);
 /// @param cadena cadena de caracteres a ser analizada
 /// @param limite Define el tamaño de la cadena
 /// @return Retorna 1 (VERDADERO) si la cadena es numerica, 0(FALSO) si no lo es, y -1 en caso de ERROR
-int esNumerica(char cadena[], int limite);
+int esEntero(char cadena[], int limite);
 
 /// @brief Valida que el numero entero recibido este en el rango pedido
 /// @param numeroIngresado Es el numero entero a evaluar si esta dentro del rango
@@ -35,6 +36,7 @@ int esNumerica(char cadena[], int limite);
 /// @param maximo Es el numero maximo a ser aceptado
 /// @return Retorna 1 (VERDADERO) si esta dentro del rango, y 0 (FALSO) si no lo esta
 int validarRangoEntero(int numeroIngresado, int minimo, int maximo);
+
 
 /// @brief Solicita un numero con decimal al usuario y luego de verificarlo devuelve el resultado
 /// @param pFlotante Puntero al espacio de memoria donde se dejara el resultado de la funcion
@@ -64,6 +66,7 @@ int esFlotante(char cadena[],int limite);
 /// @return Retorna 1 (VERDADERO) si esta dentro del rango, y 0 (FALSO) si no lo esta.
 int validarRangoFlotante(float numeroFlotante, float minimo, float maximo);
 
+
 /// @brief Solicita un unico nombre o apellido al usuario y luego de verificarlo devuelve el resultado
 /// @param pNombre Puntero al espacio de memoria donde se dejara el nombre o apellido ingresado y verificado
 /// @param limiteNombre Define el tamaño de la cadena
@@ -77,13 +80,14 @@ int ingresarNombreUnico(char *pNombre, int limiteNombre, char *mensaje, char *me
 /// @param pResultado Puntero al espacio de memoria donde se dejara el resultado de la funcion
 /// @param limiteNombre Define el tamaño de la cadena
 /// @return Retorna 0 (EXITO) si se obtiene un unico nombre o apellido, y -1 si no se consiguio
-int conseguirUnSoloNombre(char* pResultado, int limiteNombre);
+int conseguirNombreUnico(char* pResultado, int limiteNombre);
 
 /// @brief Verifica si la cadena contiene unicamente letras
 /// @param cadena Cadena de caracteres a ser analizada
 /// @param limite Define el tamaño de la cadena
 /// @return Retorna 1 (VERDADERO) si la cadena contiene unicamente letras, 0 (FALSO) si no lo es, y -1 en caso de ERROR
-int esUnSoloNombre(char cadena[], int limite);
+int esNombreUnico(char cadena[], int limite);
+
 
 /// @brief Solicita un alfanumerico al usuario y luego de verificarlo devuelve el resultado
 /// @param pAlfanumerico Puntero al espacio de memoria donde se dejara el alfanumerico ingresado y verificado

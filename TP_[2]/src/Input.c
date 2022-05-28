@@ -6,7 +6,7 @@
 #include "Input.h"
 
 
-int obtenerDatos(char* cadena, int limite){
+int obtenerCadena(char* cadena, int limite){
 	int retorno = -1;
 	char bufferString[4096];
 	if(cadena != NULL && limite > 0){
@@ -45,12 +45,11 @@ int ingresarEntero(int *pEntero, char *mensaje, char *mensajeError, int minimo, 
 	return retorno;
 }
 
-
 int conseguirEntero(int* pResultado){
 	int retorno = -1;
 	char bufferString[4086];
 	if(pResultado != NULL){
-		if(!obtenerDatos(bufferString,sizeof(bufferString)) && esNumerica(bufferString,sizeof(bufferString))){
+		if(!obtenerCadena(bufferString,sizeof(bufferString)) && esEntero(bufferString,sizeof(bufferString))){
 			*pResultado = atoi(bufferString);
 			retorno = 0;
 		}
@@ -58,8 +57,7 @@ int conseguirEntero(int* pResultado){
 	return retorno;
 }
 
-
-int esNumerica(char cadena[], int limite){
+int esEntero(char cadena[], int limite){
 	int retorno = -1;
 	int i;
 	if(cadena != NULL && limite > 0){
@@ -76,7 +74,6 @@ int esNumerica(char cadena[], int limite){
 	}
 	return retorno;
 }
-
 
 int validarRangoEntero(int numeroIngresado, int minimo, int maximo){
 	int retorno = 0;
@@ -107,19 +104,17 @@ int ingresarFlotante(float *pFlotante, char *mensaje, char *mensajeError, float 
 	return retorno;
 }
 
-
 int conseguirFlotante(float* pResultado){
 	int retorno = -1;
 	char bufferString[4086];
 	if(pResultado != NULL){
-		if(!obtenerDatos(bufferString,sizeof(bufferString)) && esFlotante(bufferString,sizeof(bufferString))){
+		if(!obtenerCadena(bufferString,sizeof(bufferString)) && esFlotante(bufferString,sizeof(bufferString))){
 			*pResultado = atof(bufferString);
 			retorno = 0;
 		}
 	}
 	return retorno;
 }
-
 
 int esFlotante(char cadena[],int limite){
 	int retorno = -1;
@@ -145,7 +140,6 @@ int esFlotante(char cadena[],int limite){
 	return retorno;
 }
 
-
 int validarRangoFlotante(float numeroFlotante, float minimo, float maximo){
 	int retorno = 0;
 	if (numeroFlotante >= minimo && numeroFlotante <= maximo) {
@@ -154,15 +148,14 @@ int validarRangoFlotante(float numeroFlotante, float minimo, float maximo){
 	return retorno;
 }
 
-
-
+		// 		CAMBIAR FUNCION
 int ingresarNombreUnico(char *pNombre, int limiteNombre, char *mensaje, char *mensajeError,int reintentos){
 	int retorno = -1;
 	char bufferString[limiteNombre];
 	if(pNombre != NULL && limiteNombre > 0 && mensaje != NULL && mensajeError != NULL && reintentos >= 0){
 		do{
 			printf("%s",mensaje);
-			if(!conseguirUnSoloNombre(bufferString,limiteNombre) && strnlen(bufferString,limiteNombre)<limiteNombre){
+			if(!conseguirNombreUnico(bufferString,limiteNombre) && strnlen(bufferString,limiteNombre)<limiteNombre){
 				bufferString[0] = toupper(bufferString[0]);
 				strncpy(pNombre,bufferString,limiteNombre);
 				retorno = 0;
@@ -177,12 +170,11 @@ int ingresarNombreUnico(char *pNombre, int limiteNombre, char *mensaje, char *me
 	return retorno;
 }
 
-
-int conseguirUnSoloNombre(char* pResultado, int limiteNombre){
+int conseguirNombreUnico(char* pResultado, int limiteNombre){
 	int retorno = -1;
 	char bufferString[limiteNombre];
 	if(pResultado != NULL && limiteNombre>0){
-		if(!obtenerDatos(bufferString,limiteNombre) && esUnSoloNombre(bufferString,limiteNombre) && strnlen(bufferString,limiteNombre)<limiteNombre){
+		if(!obtenerCadena(bufferString,limiteNombre) && esNombreUnico(bufferString,limiteNombre) && strnlen(bufferString,limiteNombre)<limiteNombre){
 			strncpy(pResultado,bufferString,limiteNombre);
 			retorno = 0;
 		}
@@ -190,8 +182,7 @@ int conseguirUnSoloNombre(char* pResultado, int limiteNombre){
 	return retorno;
 }
 
-
-int esUnSoloNombre(char cadena[], int limite){
+int esNombreUnico(char cadena[], int limite){
 	int retorno = -1;
 	int i;
 	if(cadena != NULL && limite > 0){
@@ -233,19 +224,17 @@ int ingresarAlfanumerico(char *pAlfanumerico, int limiteAlfanumerico, char *mens
 	return retorno;
 }
 
-
 int conseguirAlfanumerico(char* pResultado,int limiteAlfanumerico){
 	int retorno = -1;
 	char bufferString[limiteAlfanumerico];
 	if(pResultado != NULL && limiteAlfanumerico>0){
-		if(!obtenerDatos(bufferString,limiteAlfanumerico) && esAlfanumerico(bufferString,limiteAlfanumerico) && strnlen(bufferString,limiteAlfanumerico)<limiteAlfanumerico){
+		if(!obtenerCadena(bufferString,limiteAlfanumerico) && esAlfanumerico(bufferString,limiteAlfanumerico) && strnlen(bufferString,limiteAlfanumerico)<limiteAlfanumerico){
 			strncpy(pResultado,bufferString,limiteAlfanumerico);
 			retorno = 0;
 		}
 	}
 	return retorno;
 }
-
 
 int esAlfanumerico(char cadena[], int limite){
 	int retorno = -1;
