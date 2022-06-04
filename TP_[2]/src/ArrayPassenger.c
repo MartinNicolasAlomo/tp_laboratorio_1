@@ -8,7 +8,7 @@
 #define CANTTIPOSPASAJERO 4
 #define CANTESTADOSVUELO 4
 #define REINTENTOS 3
-#define LARGOMENSAJE 500
+#define LARGOMsj 500
 #define LARGOTEXTO 16
 #define TRUE 1
 #define FALSE 0
@@ -36,14 +36,14 @@ int pasaj_menuPrincipal(void){
 	int cantidadIngresos=0;
 	float calculadorPrecios=0;
 	int contadorPasajeros=0;
-	char mensajeOpcionIngreso[LARGOMENSAJE];
-	char mensajeOpcionError[LARGOMENSAJE];
-	char mensajeIDModificar[LARGOMENSAJE];
-	char mensajeOpcionModificar[LARGOMENSAJE];
-	char mensajeIDEliminar[LARGOMENSAJE];
-	char mensajeIDError[LARGOMENSAJE];
-	char mensajeInforme[LARGOMENSAJE];
-	char mensajeOrden[LARGOMENSAJE];
+	char mensajeOpcionIngreso[LARGOMsj];
+	char mensajeOpcionError[LARGOMsj];
+	char mensajeIDModificar[LARGOMsj];
+	char mensajeOpcionModificar[LARGOMsj];
+	char mensajeIDEliminar[LARGOMsj];
+	char mensajeIDError[LARGOMsj];
+	char mensajeInforme[LARGOMsj];
+	char mensajeOrden[LARGOMsj];
 
 	strncpy(mensajeOpcionIngreso,"1-Dar de alta un pasajero\n2-Modificar un pasajero\n3-Dar de baja un pasajero\n4-Informar\n5-Carga forzada\n6-Salir\n\n",sizeof(mensajeOpcionIngreso));
 	strncpy(mensajeOpcionError,"No es una opción válida, reinténtelo de nuevo.\n\n\n",sizeof(mensajeOpcionError));
