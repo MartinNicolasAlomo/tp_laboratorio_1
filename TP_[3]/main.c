@@ -98,10 +98,9 @@ int main(){
 	// "..\\data.csv"
 
     do{
-    	if(!ingresarEntero(&option, MSJ_MENUINGRESO, MSJ_ERROROPCION, 1, 10, REINTENTOS)){
+    	if(!ingresarEntero(&option, MSJ_MENUPRINCIPAL, MSJ_ERROROPCION, 1, 10, REINTENTOS)){
 			switch(option){
 				case 1:
-
 					if(!flagCarga){
 						puts("Ya se cargaron los datos previamente, no se pueden volver a cargar.\n\n\n");
 					}
@@ -344,8 +343,6 @@ int main(){
 			}
     	}
     }while(option != 10);
-
-
 
 
 	int edad=24;

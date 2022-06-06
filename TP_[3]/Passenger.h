@@ -16,9 +16,9 @@
 #define LARGOID 8
 #define LARGONUMEROTXT 11
 #define LARGOCODIGO 20
-#define MSJ_MENUINGRESO "1. Cargar los datos de los pasajeros desde el archivo data.csv (modo texto).\n2. Cargar los datos de los pasajeros desde el archivo data.csv (modo binario).\n3. Alta de pasajero.\n4. Modificar datos de pasajero.\n5. Baja de pasajero\n6. Listar pasajeros.\n7. Ordenar pasajeros.\n8. Guardar los datos de los pasajeros en el archivo data.csv (modo texto).\n9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).\n10. Salir\n\n"
+#define MSJ_MENUPRINCIPAL "1. Cargar los datos de los pasajeros desde el archivo data.csv (modo texto).\n2. Cargar los datos de los pasajeros desde el archivo data.csv (modo binario).\n3. Alta de pasajero.\n4. Modificar datos de pasajero.\n5. Baja de pasajero\n6. Listar pasajeros.\n7. Ordenar pasajeros.\n8. Guardar los datos de los pasajeros en el archivo data.csv (modo texto).\n9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).\n10. Salir\n\n"
 #define MSJ_ERROROPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
-#define MSJ_MENUMODIFICAR "¿Qué desea modificar?\n1-Nombre\n2-Apellido\n3-Precio\n4-Codigo de vuelo\n5-Tipo de pasajero\n6-Estado de vuelo\n7-Finalizar cambios\n\n"
+#define MSJ_MENUMODIFICAR "¿Qué desea modificar?\n  1-Nombre\n  2-Apellido\n  3-Precio\n  4-Codigo de vuelo\n  5-Tipo de pasajero\n  6-Estado de vuelo\n  7-Finalizar cambios\n\n"
 #define MSJ_MENUORDENAR "¿Cómo desea ordenarlos?\n  1- Por ID\n  2- Por Apellido\n  3- Por Precio\n  4- Por Codigo de Vuelo\n  5- Volver al Menú Principal\n\n"
 
 
@@ -108,30 +108,8 @@ int Passenger_setEstadoVuelo(Passenger* this,char* estadoVuelo);
 int Passenger_getEstadoVuelo(Passenger* this,char* estadoVuelo);
 
 
-//*******************************************************************************************************************
-
-
-int Passenger_inicializarVector(Passenger* vectorPunteros[],int limite);
-int Passenger_buscarLibre(Passenger* vectorPunteros[],int limite);
-
-int Passenger_eliminarIndiceEnVector(Passenger* vectorPunteros[],int limite,int indice);
-int Passenger_eliminarPorId(Passenger* vectorPunteros[],int limite,int id);
-
-int Passenger_agregarForzadaAlumno(Passenger* vectorPunteros[],int limite,int id,char nombre[],char apellido[],float precio,
-																			char codigoVuelo[],int tipoPasajero,int estadoVuelo);
-int Passenger_agregarForzadaAlumnoTXT(Passenger* vectorPunteros[],char id[],char nombre[],char apellido[],char precio[],
-																			char codigoVuelo[],char tipoPasajero[],char estadoVuelo[]);
-
-int Passenger_calcularPrecioPromedioVector(Passenger* vectorPunteros[],int limite,float* promedio);
-int Passenger_calcularPrecioMaximaVector(Passenger* vectorPunteros[],int limite,int* indice);
-
-
-int Passenger_guardarVectorEnArchivo(Passenger* vectorPunteros[],int limite,char pathArchivo[]);
 
 int Passenger_cargarPasajero(Passenger* this);
-
-
-
 
 /// @brief Da el criterio de ordenamiento segun el ID de los pasajeros
 /// @param primerPasajero Puntero al primer pasajero a comparar
@@ -174,8 +152,6 @@ int Passenger_comparaPorApellido(void* primerPasajero,void* segundoPasajero);
 ///					-2 (ERROR) - No se pudieron obtener los códigos de vuelo de los pasajeros
 ///					-3 (ERROR) - Los parametros son NULL
 int Passenger_comparaPorCodigoVuelo(void* primerPasajero,void* segundoPasajero);
-
-
 
 
 #endif /* PASSENGER_H_ */

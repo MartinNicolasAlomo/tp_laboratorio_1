@@ -9,7 +9,7 @@
  * 						-2 (ERROR) - El puntero a LinkedList es NULL
  * 						-3 (ERROR) - No se pudo agregar el pasajero a la lista
  */
-int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger){		//	FSCANF
+int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger){
     int retorno=-1;
     Passenger* pPasajero;
     char auxTitulo[100];
@@ -23,19 +23,20 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger){		//
 		// LOGRAR LEER CADA LINEA, CONVERTIO MEM DINA CON COSNTRUCTROM Y AGREGARLO CON ADD AL LINKEDLIST
 		// JUNTAR CALSE GERMAN Y GIANNI
 
+		// SEGUN GIANNI - 	EL ID DE LOS QUE AGREGA EL USUARIO ARRANCA EN 1001,		XQ LOS DEL ARCHIVO YA ESTAN ESTABLECIDOS Y NO SE PUEDEN CAMBIAR
+
 	if(pFile!=NULL && pArrayListPassenger!=NULL){
-		fscanf(pFile, "%[^\n]\n", auxTitulo);//for skipping the header
+		fscanf(pFile, "%[^\n]\n", auxTitulo);
 		do{
-			if(fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",auxId, auxNombre, auxApellido, auxPrecio,
-																			auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo)==7){
+			if(fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo)==7){
 				pPasajero = Passenger_newParametros(auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo);
 				if(pPasajero!=NULL){
 					if(!ll_add(pArrayListPassenger, pPasajero)){
-						retorno=0;									// probar listando HACER CONTROLER LISTAR
+						retorno=0;
 					}
 					else{
-						retorno=-3;
 						puts("No se pudo AGREGAR  -  falló ll_add\n");
+						retorno=-3;
 					}
 				}
 				else{
@@ -50,17 +51,17 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger){		//
 	}
 	else if(pArrayListPassenger==NULL){
 		puts("VectorPasajeros es NULO.\n");
-		retorno=-2;		//	El puntero a LinkedList es NULL
+		retorno=-2;
 	}
 	else{
 		puts("Archivo RUTA esta MAL.\n");
 	}
 	return retorno;
 }
+//***********************************************************************************************************************************
 
 
 /** \brief Parsea los datos los datos de los pasajeros desde el archivo data.csv (modo binario).
- *
  * \param path char*
  * \param pArrayListPassenger LinkedList*
  * \return int
