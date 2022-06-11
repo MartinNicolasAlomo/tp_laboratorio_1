@@ -55,13 +55,20 @@ int controller_editPassenger(LinkedList* pArrayListPassenger);
 /** \brief - Baja de pasajero. Elimina un pasajero del sistema
  * \param pArrayListPassenger LinkedList* - Puntero al vector de pasajeros
  * \return int - Retorna 0 (EXITO) - Si se pudo eliminar el pasajero del sistema correctamente
+ * 						 1 (ERROR) - Si se pudo eliminar la lista completa del sistema correctamente
  * 						-1 (ERROR) - El puntero a LinkedList es NULL
- * 						-2 (ERROR) - No se ingresó ningun ID para eliminar
- * 						-3 (ERROR) - No se pudo encontrar el ID buscado
- * 						-4 (ERROR) - No se pudo obtener el pasajero
- * 						-5 (ERROR) - No se obtuvo ninguna confirmación. Volvió al menú principal
- * 						-6 (ERROR) - Se canceló la operación. No se eliminó el pasajero
- * 						-7 (ERROR) - Se eliminó el pasajero de memoria pero no se pudo eliminar de la lista
+ * 						-2 (ERROR) - No se encontró un ID correcto en la lista
+ * 						-3 (ERROR) - Falló la impresión, no se pudo mostrar la lista
+ * 						-4 (ERROR) - No se ingresó una opcion de eliminado correcta
+ * 						-5 (ERROR) - No se ingresó ningun ID para eliminar
+ * 						-6 (ERROR) - No se pudo encontrar el ID buscado
+ * 						-7 (ERROR) - No se pudo obtener el pasajero
+ * 						-8 (ERROR) - No se obtuvo ninguna confirmación. Volvió al menú principal
+ * 						-9 (ERROR) - Se canceló la operación. No se eliminó el pasajero
+ * 						-10 (ERROR) - Se eliminó el pasajero de memoria pero no se pudo eliminar de la lista
+ * 						-11 (ERROR) - Se canceló la operación. No se eliminó la lista
+ * 						-12 (ERROR) - No se pudo eliminar la lista
+ * 						-13 (ERROR) - Se eliminó de memoria pero no se pudo eliminar la lista
  */
 int controller_removePassenger(LinkedList* pArrayListPassenger);
 
@@ -141,5 +148,18 @@ int Controller_generarIdNuevo(LinkedList* pArrayListPassenger);
 
 
 
+
+/** \brief - Busca el maximo id guardado previamente en el archivo id.txt y lo asigna como un idGlobal
+ * \return int - Retorna 0 (EXITO) - Si se cargar y asignar el ultimo id maximo guardado
+ * 						-1 (ERROR) - La ruta del Archivo no es valida
+ * 						-2 (ERROR) - Falló la lectura del archivo
+ */
+int Controller_cargarUltimoId();
+
+/** \brief - Guarda en el archivo id.txt el ultimo id maximo ingresado en el sistema
+ * \return int - Retorna 0 (EXITO) - Si se pudo guardar el ultimo id maximo asignado
+ * 						-1 (ERROR) - Falló la lectura del archivo
+ */
+int Controller_guardarUltimoId();
 
 #endif /* CONTROLLER_H_ */

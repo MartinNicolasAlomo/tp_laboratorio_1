@@ -8,9 +8,9 @@
 #include "Input.h"
 #include "parser.h"
 #include "Validations.h"
-#define ARCHIVO_ID "idmaximo.csv"
 #define ARCHIVO_CSV "data.csv"
 #define ARCHIVO_BIN "data.bin"
+
 
 /****************************************************
     Menu:
@@ -29,21 +29,12 @@
 /*
  * 3- Una vez terminado lo anterior, me pongo a trabajar con guardar el archivo en modo texto. NO GUARDAR EN EL MISMO ARCHIVO
  	 hastq ue no estoy seguro que esta tod0 bien (guardar en data2.csv hastq eu se que el formato es correcto);
-
- * 4- Hacer la funcion de ORDENAR, osea, la funcion criterio y poder ordenar ATRAVES DE LL_SORT
- 	 La funcion criterio recibe dos punteros a void y los compara por alguno de sus campos y termine estableciendo un orden
- 	 ***Se puede order por cualquiera de sus campos*** 	CHEQUEaar
- 	 LA FUNCION CRITERIO  VA EN LA BIBLIOTECA DE PASAJERO, poque establece el criterio de orden entre dos pasajeros
-
- 	tAMBIEN DETERMINAR EL ID MAXIMO Y RETORNARLO SI SALIO BIEN, o -1 SI ERROR
  */
 
 
 int main(){
 	setbuf(stdout, NULL);
 	int option = 0;
-	FILE* pArchivoIdMaximo=NULL;
-	int idMaximoInicial;
 	int devolucion;
 	int flagCarga=1;
 	int flagCambios=1;
@@ -52,15 +43,16 @@ int main(){
 
     LinkedList* listaPasajeros = ll_newLinkedList();
 
-  /*  pArchivoIdMaximo = fopen(ARCHIVO_ID,"r");
-	if(pArchivoIdMaximo!=NULL){
-		if(fscanf(pArchivoIdMaximo,"%[^\n]\n", idMaximoInicial)==1){
-			Controller_encontrarIdMaximo(listaPasajeros); //  ????????
-			fclose(pArchivoIdMaximo);
-		}
-	}
-*/
-
+    devolucion=Controller_cargarUltimoId();
+    if(devolucion==0){
+    	puts("Ultimo id maximo cargado exitosamente.\n\n");
+    }
+    else if(devolucion==-1){
+    	puts("La ruta del Archivo no es valida.\n\n");
+    }
+    else{
+    	puts("Falló la lectura del archivo.\n\n");
+    }
 
     //CHEQUAR		CUANDO SE GUARDEN CAMBIOS	Y DESPUES SE VUELVAN A HACER CAMBIOS	PREGUNTAR SIEMPRE SI SE QUIEREN GUARDAR		CONTADOR
 
@@ -184,26 +176,48 @@ int main(){
     					    	puts("Se eliminó el pasajero exitosamente.\n\n");
     							flagCambios=0;
     						}
+    						else if(devolucion==1){
+    					    	puts("Se eliminó la lista completa exitosamente.\n\n");
+    							flagCambios=0;
+    						}
     						else if(devolucion==-1){
         						puts("El puntero a LinkedList es NULL.\n\n\n");
     						}
         					else if(devolucion==-2){
-        			    		puts("No se ingresó ningun ID para eliminar.\n\n\n");
+        			    		puts("No se encontró un ID correcto en la lista.\n\n\n");
         					}
         					else if(devolucion==-3){
-        		        		puts("No se pudo encontrar el ID buscado.\n\n\n");
+        			    		puts("Falló la impresión, no se pudo mostrar la lista.\n\n\n");
         					}
         					else if(devolucion==-4){
-        						puts("No se pudo obtener el pasajero.\n\n\n");
+        			    		puts("No se ingresó una opcion de eliminado correcta.\n\n\n");
         					}
         					else if(devolucion==-5){
-        						puts("No se obtuvo ninguna confirmación. Volvió al menú principal.\n\n\n");
+        						puts("No se ingresó ningun ID para eliminar.\n\n\n");
         					}
         					else if(devolucion==-6){
+        						puts("No se pudo encontrar el ID buscado.\n\n\n");
+        					}
+    						else if(devolucion==-7){
+    							puts("No se pudo obtener el pasajero.\n\n\n");
+    						}
+        					else if(devolucion==-8){
+        						puts("No se obtuvo ninguna confirmación. Volvió al menú principal.\n\n\n");
+        					}
+        					else if(devolucion==-9){
         						puts("Se canceló la operación. No se eliminó el pasajero.\n\n\n");
         					}
+        					else if(devolucion==-10){
+        						puts("Se eliminó el pasajero de memoria pero no se pudo eliminar de la lista.\n\n\n");
+        					}
+        					else if(devolucion==-11){
+        						puts("Se canceló la operación. No se eliminó la lista.\n\n\n");
+        					}
+        					else if(devolucion==-12){
+    			        		puts("No se pudo eliminar la lista.\n\n\n");
+        					}
         					else{
-								puts("Se eliminó el pasajero de memoria pero no se pudo eliminar de la lista.\n\n\n");
+        						puts("Se eliminó de memoria pero no se pudo eliminar la lista.\n\n\n");
         					}
     					}
     					break;

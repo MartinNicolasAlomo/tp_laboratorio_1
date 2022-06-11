@@ -368,6 +368,42 @@ int Passenger_cargarPasajero(Passenger* this){
 
 
 
+
+
+/*
+
+
+
+    								else{
+    									retorno=-7;
+    								}
+    							}
+    							else{
+    								retorno=-6;
+    							}
+    						}
+    						else{
+    							retorno=-5;
+    						}
+    					}
+    					else{
+    						retorno=-4;
+    					}
+    				}
+    			}
+    			else{
+
+    			}
+    		}
+    		else{
+    			retorno=-3;
+    		}
+    	}
+    	else{
+    		retorno=-2;
+       	}
+	}*/
+
 int Passenger_compararPorId(void* primerPasajero,void* segundoPasajero){
 	int retorno=-2;
 	Passenger* pasajeroUno;
