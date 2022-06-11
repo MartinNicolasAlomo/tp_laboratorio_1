@@ -33,8 +33,6 @@ int controller_loadFromText(char* path , LinkedList* pArrayListPassenger);
  */
 int controller_loadFromBinary(char* path , LinkedList* pArrayListPassenger);
 
-
-
 /** \brief - Alta de pasajero. Solicita los datos al usuario y agrega el pasajero al vector
  * \param pArrayListPassenger LinkedList* - Puntero al vector de pasajeros
  * \return int - Retorna 0 (EXITO) - Si se pudieron cargar los datos y se pudo agregar el pasajero a la lista
@@ -49,13 +47,26 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListPassenger);
  */
 int controller_addPassenger(LinkedList* pArrayListPassenger);
 
-
+/** \brief - Modificar datos de pasajero. Modifica los datos de un pasajero dentro de la lista
+ * \param pArrayListPassenger LinkedList* - Puntero al vector de pasajeros
+ * \return int - Retorna 0 (EXITO) - Si se pudieron modificar los datos del Pasajero
+ * 						-1 (ERROR) - El puntero a LinkedList es NULL
+ * 						-2 (ERROR) - No se ingresó ningun ID para modificar
+ * 						-3 (ERROR) - No se pudo encontrar el ID buscado
+ * 						-4 (ERROR) - No se pudo obtener el pasajero
+ * 						-5 (ERROR) - No se pudieron obtener los datos del pasajero
+ * 						-6 (ERROR) - No se ingresó una opcion correcta para modificar
+ * 						-7 (ERROR) - No se realizó ningun cambio en los datos del pasajero
+ * 						-8 (ERROR) - No se obtuvo ninguna confirmación. Volvió al menú principal
+ * 						-9 (ERROR) - Se canceló la operación. No se modificaron los datos del pasajero
+ * 						-10 (ERROR) - No se pudieron setear los datos correctamente
+ */
 int controller_editPassenger(LinkedList* pArrayListPassenger);
 
 /** \brief - Baja de pasajero. Elimina un pasajero del sistema
  * \param pArrayListPassenger LinkedList* - Puntero al vector de pasajeros
  * \return int - Retorna 0 (EXITO) - Si se pudo eliminar el pasajero del sistema correctamente
- * 						 1 (ERROR) - Si se pudo eliminar la lista completa del sistema correctamente
+ * 						 1 (EXITO) - Si se pudo eliminar la lista completa del sistema correctamente
  * 						-1 (ERROR) - El puntero a LinkedList es NULL
  * 						-2 (ERROR) - No se encontró un ID correcto en la lista
  * 						-3 (ERROR) - Falló la impresión, no se pudo mostrar la lista
@@ -121,7 +132,6 @@ int controller_saveAsText(char* path , LinkedList* pArrayListPassenger);
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListPassenger);
 
-
 /** \brief - Busca un pasajero por id
  * \param pArrayListPassenger LinkedList* - Puntero al vector de pasajeros
  * \param id int - El id del pasajero que se intenta encontrar
@@ -130,24 +140,6 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListPassenger);
  * 									 no se pudo obtener el ID del pasajero o no se encontró ninguna coincidencia
  */
 int Controller_buscarPorId(LinkedList* pArrayListPassenger,int id);
-
-/** \brief - Busca en el array el maximo id ya cargado.
- * \param pArrayListPassenger LinkedList* - Puntero al vector de pasajeros
- * \return int - Retorna 0 (EXITO) - Si se pudo encontrar el id mas grande dentro de la lista
- * 						-1 (ERROR) - El puntero a LinkedList es NULL, la lista está vacia,
- * 									 no se pudo obtener el pasajero o no se pudo obtener el ID del pasajero
- */
-int Controller_encontrarIdMaximo(LinkedList* pArrayListPassenger);
-
-/** \brief - Busca el id maximo hasta el momento y luego genera un nuevo id para un el nuevo pasajero ingresado a partir del id maximo encontrado
- * \param pArrayListPassenger LinkedList* - Puntero al vector de pasajeros
- * \return int - Retorna 0 (EXITO) - Si se pudo generar un nuevo id mayor al encontrado en la lista
- * 						-1 (ERROR) - El puntero a LinkedList es NULL o la lista está vacia
- */
-int Controller_generarIdNuevo(LinkedList* pArrayListPassenger);
-
-
-
 
 /** \brief - Busca el maximo id guardado previamente en el archivo id.txt y lo asigna como un idGlobal
  * \return int - Retorna 0 (EXITO) - Si se cargar y asignar el ultimo id maximo guardado

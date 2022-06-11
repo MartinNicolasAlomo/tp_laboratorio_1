@@ -47,7 +47,7 @@ int parser_PassengerFromBinary(FILE* pFile , LinkedList* pArrayListPassenger){
 	if(pFile!=NULL && pArrayListPassenger!=NULL){
 		do{
 			pPasajero=Passenger_new();
-			if(pPasajero!=NULL && fread(pPasajero,sizeof(Passenger),1,pFile)==1){
+			if(pPasajero!=NULL && fread(pPasajero,sizeof(Passenger),1,pFile)){
 				if(!ll_add(pArrayListPassenger, pPasajero)){
 					retorno=0;
 				}
@@ -60,9 +60,6 @@ int parser_PassengerFromBinary(FILE* pFile , LinkedList* pArrayListPassenger){
 			}
 			else if(pPasajero==NULL){
 				puts("No se creó el Pasajero, falló la Función Passenger_newParametros.\n");
-			}
-			else if(fread(pPasajero,sizeof(Passenger),1,pFile)!=1){
-				puts("No funcionó la Función de lectura FREAD.\n");
 			}
 		}while(!feof(pFile));
 	}

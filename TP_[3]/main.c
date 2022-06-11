@@ -26,20 +26,13 @@
     10. Salir
 *****************************************************/
 
-/*
- * 3- Una vez terminado lo anterior, me pongo a trabajar con guardar el archivo en modo texto. NO GUARDAR EN EL MISMO ARCHIVO
- 	 hastq ue no estoy seguro que esta tod0 bien (guardar en data2.csv hastq eu se que el formato es correcto);
- */
-
-
 int main(){
 	setbuf(stdout, NULL);
-	int option = 0;
+	int opcionMenu = 0;
 	int devolucion;
 	int flagCarga=1;
 	int flagCambios=1;
-	int opcionDeseaGuardar;
-	int opcionModoGuardado;
+	int opcionGuardar;
 
     LinkedList* listaPasajeros = ll_newLinkedList();
 
@@ -54,12 +47,10 @@ int main(){
     	puts("Falló la lectura del archivo.\n\n");
     }
 
-    //CHEQUAR		CUANDO SE GUARDEN CAMBIOS	Y DESPUES SE VUELVAN A HACER CAMBIOS	PREGUNTAR SIEMPRE SI SE QUIEREN GUARDAR		CONTADOR
-
     if(listaPasajeros!=NULL){
         do{
-        	if(!ingresarEntero(&option, MSJ_MENUPRINCIPAL, MSJ_ERROROPCION, 1, 10, REINTENTOS)){
-    			switch(option){
+        	if(!ingresarEntero(&opcionMenu, MSJ_MENUPRINCIPAL, MSJ_ERROROPCION, 1, 10, REINTENTOS)){
+    			switch(opcionMenu){
     				case 1:
     					if(!flagCarga){
     						puts("Ya se cargaron los datos previamente, no se pueden volver a cargar.\n\n\n");
@@ -147,24 +138,40 @@ int main(){
     					else{
     						devolucion = controller_editPassenger(listaPasajeros);
     						if(devolucion==0){
-    					    	puts("Se modificó el pasajero exitosamente.\n\n");
+								puts("Se modificaron los datos del pasajero exitosamente.\n\n");
     							flagCambios=0;
     						}
     						else if(devolucion==-1){
         						puts("El puntero a LinkedList es NULL.\n\n\n");
     						}
     						else if(devolucion==-2){
-    				    		puts("No se ingresó ningun ID para modificar.\n\n\n");
+        						puts("No se ingresó ningun ID para modificar.\n\n\n");
     						}
     						else if(devolucion==-3){
-    			        		puts("No se pudo encontrar el ID buscado.\n\n\n");
+        						puts("No se pudo encontrar el ID buscado.\n\n\n");
+    						}
+    						else if(devolucion==-4){
+    							puts("No se pudo obtener el pasajero.\n\n\n");
+    						}
+    						else if(devolucion==-5){
+    							puts("No se pudieron obtener los datos del pasajero.\n\n\n");
+    						}
+    						else if(devolucion==-6){
+        			    		puts("No se ingresó una opcion correcta para modificar.\n\n\n");
+    						}
+    						else if(devolucion==-7){
+  								puts("No se realizó ningun cambio en los datos del pasajero.\n\n\n");
+    						}
+    						else if(devolucion==-8){
+        						puts("No se obtuvo ninguna confirmación. Volvió al menú principal.\n\n\n");
+    						}
+    						else if(devolucion==-9){
+        						puts("Se canceló la operación. No se modificaron los datos del pasajero.\n\n\n");
     						}
     						else {
-    							puts("No se pudo crear el Pasajero, falló la Función Passenger_new.\n");
+        						puts("No se pudieron setear los datos correctamente.\n\n\n");
     						}
     					}
-
-
     					break;
     				case 5:
     					if(flagCarga){
@@ -265,11 +272,28 @@ int main(){
     					if(flagCambios){
     						puts("No hay ningun cambio para guardar.\n\n\n");
     					}
-    					else if(flagCambios==2 || flagCambios==1){
+    					else if(flagCambios==0){
     						devolucion = controller_saveAsText(ARCHIVO_CSV, listaPasajeros);
+							if(devolucion==0){
+								puts("Se guardaron los cambios en modo texto exitosamente.\n\n");
+    							flagCambios=1;
+							}
+    						else if(devolucion==-1){
+    							puts("La ruta del Archivo no es valida.\n\n\n");
+    						}
+    						else if(devolucion==-2){
+    							puts("El puntero a LinkedList es NULL.\n\n\n");
+    						}
+    						else if(devolucion==-3){
+    							puts("No se pudo abrir el Archivo.\n\n\n");
+    						}
+    						else {
+    							puts("La lista está vacia, no hay pasajeros.\n\n\n");
+    						}
+    						devolucion = controller_saveAsBinary(ARCHIVO_BIN, listaPasajeros);
     						if(devolucion==0){
-    					    	puts("Se guardaron los cambios en modo texto exitosamente.\n\n");
-    							flagCambios=2;
+    					    	puts("Se guardaron los cambios en modo binario exitosamente.\n\n");
+    							flagCambios=1;
     						}
     						else if(devolucion==-1){
     							puts("La ruta del Archivo no es valida.\n\n\n");
@@ -289,11 +313,28 @@ int main(){
     					if(flagCambios){
     						puts("No hay ningun cambio para guardar.\n\n\n");
     					}
-    					else if(flagCambios==2 || flagCambios==1){
+    					else if(flagCambios==0){
+    						devolucion = controller_saveAsText(ARCHIVO_CSV, listaPasajeros);
+							if(devolucion==0){
+								puts("Se guardaron los cambios en modo texto exitosamente.\n\n");
+    							flagCambios=1;
+							}
+    						else if(devolucion==-1){
+    							puts("La ruta del Archivo no es valida.\n\n\n");
+    						}
+    						else if(devolucion==-2){
+    							puts("El puntero a LinkedList es NULL.\n\n\n");
+    						}
+    						else if(devolucion==-3){
+    							puts("No se pudo abrir el Archivo.\n\n\n");
+    						}
+    						else {
+    							puts("La lista está vacia, no hay pasajeros.\n\n\n");
+    						}
     						devolucion = controller_saveAsBinary(ARCHIVO_BIN, listaPasajeros);
     						if(devolucion==0){
     					    	puts("Se guardaron los cambios en modo binario exitosamente.\n\n");
-    							flagCambios=2;
+    							flagCambios=1;
     						}
     						else if(devolucion==-1){
     							puts("La ruta del Archivo no es valida.\n\n\n");
@@ -312,55 +353,49 @@ int main(){
     				case 10:
     					if(flagCambios){
     						puts("Usted finalizó la operación.\n\n");
+							puts("\n\n\nFinalizó el programa.\n");
     						break;
     					}
     					else{
-    						if(!ingresarEntero(&opcionDeseaGuardar, "\n\nHay cambios sin guardar ¿Desea guardar los cambios?\n1- Si, 2- No\n\n", MSJ_ERROROPCION, 1, 2, REINTENTOS)){
-    							if(opcionDeseaGuardar==1){
-    								if(!ingresarEntero(&opcionModoGuardado, "¿De qué modo lo quiere guardar?\n1- Texto, 2- Binario\n\n", MSJ_ERROROPCION, 1, 2, REINTENTOS)){
-    									if(opcionModoGuardado==1){
-    										devolucion = controller_saveAsText(ARCHIVO_CSV, listaPasajeros);
-    										if(devolucion==0){
-    									    	puts("Se guardaron los cambios en modo texto exitosamente.\n\n");
-    			    						}
-    			    						else if(devolucion==-1){
-    			    							puts("La ruta del Archivo no es valida.\n\n\n");
-    			    						}
-    			    						else if(devolucion==-2){
-    			    							puts("El puntero a LinkedList es NULL.\n\n\n");
-    			    						}
-    			    						else if(devolucion==-3){
-    			    							puts("No se pudo abrir el Archivo.\n\n\n");
-    			    						}
-    			    						else {
-    			    							puts("La lista está vacia, no hay pasajeros.\n\n\n");
-    			    						}
-    									}
-    									else{
-    										devolucion = controller_saveAsBinary(ARCHIVO_BIN, listaPasajeros);
-											if(devolucion==0){
-												puts("Se guardaron los cambios en modo binario exitosamente.\n\n");
-				    						}
-				    						else if(devolucion==-1){
-				    							puts("La ruta del Archivo no es valida.\n\n\n");
-				    						}
-				    						else if(devolucion==-2){
-				    							puts("El puntero a LinkedList es NULL.\n\n\n");
-				    						}
-				    						else if(devolucion==-3){
-				    							puts("No se pudo abrir el Archivo.\n\n\n");
-				    						}
-				    						else {
-				    							puts("La lista está vacia, no hay pasajeros.\n\n\n");
-				    						}
-    									}
-    								}
-    								else{
-    								puts("No se pudo seleccionar opcion de modo\n\n\n");
-    								}
+    						if(!ingresarEntero(&opcionGuardar, "\n\nHay cambios sin guardar ¿Desea guardar los cambios?\n1- Si, 0- No\n\n", MSJ_ERROROPCION, 0, 1, REINTENTOS)){
+    							if(opcionGuardar){
+									devolucion = controller_saveAsText(ARCHIVO_CSV, listaPasajeros);
+									if(devolucion==0){
+										puts("Se guardaron los cambios en modo texto exitosamente.\n");
+									}
+									else if(devolucion==-1){
+										puts("La ruta del Archivo no es valida.\n\n\n");
+									}
+									else if(devolucion==-2){
+										puts("El puntero a LinkedList es NULL.\n\n\n");
+									}
+									else if(devolucion==-3){
+										puts("No se pudo abrir el Archivo.\n\n\n");
+									}
+									else {
+										puts("La lista está vacia, no hay pasajeros.\n\n\n");
+									}
+									devolucion = controller_saveAsBinary(ARCHIVO_BIN, listaPasajeros);
+									if(devolucion==0){
+										puts("Se guardaron los cambios en modo binario exitosamente.\n\n");
+									}
+									else if(devolucion==-1){
+										puts("La ruta del Archivo no es valida.\n\n\n");
+									}
+									else if(devolucion==-2){
+										puts("El puntero a LinkedList es NULL.\n\n\n");
+									}
+									else if(devolucion==-3){
+										puts("No se pudo abrir el Archivo.\n\n\n");
+									}
+									else {
+										puts("La lista está vacia, no hay pasajeros.\n\n\n");
+									}
+    								puts("\n\n\nFinalizó el programa.\n");
     							}
     							else{
-    								puts("No se guardo ningun dato\n\n\n");
+    								puts("No se guardó ningun dato.\n\n\n");
+    								puts("\n\n\nFinalizó el programa.\n");
     								break;
     							}
     						}
@@ -368,7 +403,7 @@ int main(){
     					break;
     			}
         	}
-        }while(option != 10);
+        }while(opcionMenu != 10);
     }
     return 0;
 }

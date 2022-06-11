@@ -994,8 +994,14 @@ id,name,lastName,price,flyCode,typePassenger,statusFlight
 993,Angelia,Moreno,50000.00,MM0987B,EconomyClass,En Horario
 994,Raquela,Álvarez,12000.00,MM0987B,EconomyClass,En Horario
 995,Maxi,Muñoz,18000.00,MM0987B,EconomyClass,En Horario
-996,Atalanta,Romero,37000.00,MM0987B,EconomyClass,En Horario
-997,De witt,Alonso,12000.00,MM0987B,EconomyClass,En Horario
+996,Aldana,Romero,37000.00,MM0987B,EconomyClass,En Horario
+997,Damian,Alonso,12000.00,MM0987B,EconomyClass,En Horario
 998,Jaye,Gutiérrez,25000.00,MM0987B,EconomyClass,En Horario
-1,aal,la,46546.00,Asda,EconomyClass,En Vuelo
-1003,COQUI,ARGENTO,33134.00,Asdas,ExecutiveClass,En Horario
+999,Tamara,Navarro,15000.00,MM0987B,EconomyClass,En Horario
+1000,Salem,Torres,20000.00,MM0987B,EconomyClass,En Horario
+1001,Camilo,Perez,90000.00,FRA51VC,ExecutiveClass,Demorado
+1002,Viviana,Sanchez,80000.00,ITA34RD,EconomyClass,En Vuelo
+1004,Rafel,Nadal,95000.00,ESP59NB,FirstClass,En Vuelo
+1005,Ramiro,Corsa,15000.00,DEU38ÑB,ExecutiveClass,En Vuelo
+1006,Yael,Moreno,40000.00,ARG03,FirstClass,Aterrizado
+1007,Freddie,Mercury,500000.00,TZA98CT,FirstClass,Demorado

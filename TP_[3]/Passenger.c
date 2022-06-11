@@ -1,8 +1,4 @@
 #include "Passenger.h"
-#define LARGOMsj 1000
-
-
-
 
 Passenger* Passenger_new(){
 	Passenger* auxPuntero=NULL;
@@ -62,12 +58,10 @@ int Passenger_getId(Passenger* this,int* id){
 	return retorno;
 }
 
-
 int Passenger_setIdTXT(Passenger* this,char id[]){
 	int retorno=-1;
 	if(this!=NULL && id!=NULL && esEntero(id, LARGONUMEROTXT)){
 		this->id=atoi(id);
-		printf("atoi %d  -  this %d\n",atoi(id),this->id);
 		retorno=0;
 	}
 	else{
@@ -245,7 +239,6 @@ int Passenger_setTipoPasajeroNumerico(Passenger* this,int tipoPasajero){
 	return retorno;
 }
 
-
 int Passenger_getTipoPasajeroNumerico(Passenger* this,int* tipoPasajero){
 	int retorno=-1;
 	if(this!=NULL && tipoPasajero!=NULL){
@@ -256,24 +249,6 @@ int Passenger_getTipoPasajeroNumerico(Passenger* this,int* tipoPasajero){
 }
 //***********************************************************************************************
 
-
-int Passenger_setEstadoVueloNumerico(Passenger* this,int estadoVuelo){
-	int retorno=-1;
-	if(this!=NULL && estadoVuelo>0 && estadoVuelo<5){
-		this->estadoVuelo=estadoVuelo;
-		retorno=0;
-	}
-	return retorno;
-}
-
-int Passenger_getEstadoVueloNumerico(Passenger* this,int* estadoVuelo){
-	int retorno=-1;
-	if(this!=NULL && estadoVuelo!=NULL){
-		*estadoVuelo=this->estadoVuelo;
-		retorno=0;
-	}
-	return retorno;
-}
 
 int Passenger_setEstadoVueloTXT_NUM(Passenger* this,char* estadoVuelo){
 	int retorno=-1;
@@ -326,33 +301,36 @@ int Passenger_getEstadoVueloNUM_TXT(Passenger* this,char* estadoVuelo){
 	}
 	return retorno;
 }
+
+int Passenger_setEstadoVueloNumerico(Passenger* this,int estadoVuelo){
+	int retorno=-1;
+	if(this!=NULL && estadoVuelo>0 && estadoVuelo<5){
+		this->estadoVuelo=estadoVuelo;
+		retorno=0;
+	}
+	return retorno;
+}
+
+int Passenger_getEstadoVueloNumerico(Passenger* this,int* estadoVuelo){
+	int retorno=-1;
+	if(this!=NULL && estadoVuelo!=NULL){
+		*estadoVuelo=this->estadoVuelo;
+		retorno=0;
+	}
+	return retorno;
+}
 //***********************************************************************************************************************************
 
 
 int Passenger_cargarPasajero(Passenger* this){
 	int retorno=-1;
 	Passenger auxPasajero;
-	/*
-	 * Ingrese el tipo de pasajero: (1 EconomyClass, 2 ExecutiveClass o 3 FirstClass)\n
-	 * Indique el estado de su vuelo: (1 En Horario, 2 En Vuelo, 3 Demorado o 4 Aterrizado)\n
-	 *
-	 * 			CORREGIR		TIPOPSADAJERO  Y  ESTADOVUELO 	A TIPO INT
-	 * */
-
-/*	ingrese numero segun 1-en horario
- * 	switch, segun lo que ingreso, llamar al setter y pasarle los datos:
- * 		case 1:
- * 			auxEstadoVuelo="En Horario";
- * 			setterEstado  (auxPasajero,auxEstadoVuelo);
- *
- * */
 
 	if(this!=NULL){
 		if(!ingresarNombre(auxPasajero.nombre, LARGONOMBRE, "Ingrese el nombre:\n", "Error. No es un nombre correcto, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
 			!ingresarNombre(auxPasajero.apellido, LARGONOMBRE, "Ingrese el apellido:\n", "Error. No es un apellido correcto, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
 			!ingresarFlotante(&auxPasajero.precio, "Ingrese el precio del vuelo:\n", "Error. No es un precio correcto, reinténtelo de nuevo.\n\n\n", 0.1, 500000, REINTENTOS) &&
 			!ingresarAlfanumerico(auxPasajero.codigoVuelo, LARGOCODIGO, "Ingrese el código del pasaje:\n", "Error. No es un código válido, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
-			//		-------------			toppuer CODIGOdeVUELO	--------------------------
 			!ingresarEntero(&auxPasajero.tipoPasajero, "Ingrese el tipo de pasajero: (1- EconomyClass, 2- ExecutiveClass o 3- FirstClass)\n", "Error. No es un tipo válido, reinténtelo de nuevo.\n\n\n", 1, 3, REINTENTOS) &&
 			!ingresarEntero(&auxPasajero.estadoVuelo, "Indique el estado de su vuelo: (1- En Horario, 2- En Vuelo, 3- Demorado o 4- Aterrizado)\n", "Error. No es un estado válido, reinténtelo de nuevo.\n\n\n", 1, 4, REINTENTOS)){
 			retorno=0;
@@ -362,47 +340,8 @@ int Passenger_cargarPasajero(Passenger* this){
 	else{
 		puts("El puntero a pasajero es NULL.\n\n\n");
 	}
-
 	return retorno;
 }
-
-
-
-
-
-/*
-
-
-
-    								else{
-    									retorno=-7;
-    								}
-    							}
-    							else{
-    								retorno=-6;
-    							}
-    						}
-    						else{
-    							retorno=-5;
-    						}
-    					}
-    					else{
-    						retorno=-4;
-    					}
-    				}
-    			}
-    			else{
-
-    			}
-    		}
-    		else{
-    			retorno=-3;
-    		}
-    	}
-    	else{
-    		retorno=-2;
-       	}
-	}*/
 
 int Passenger_compararPorId(void* primerPasajero,void* segundoPasajero){
 	int retorno=-2;
@@ -429,12 +368,6 @@ int Passenger_compararPorId(void* primerPasajero,void* segundoPasajero){
 		else{
 			puts("No se pudo obtener los datos de los pasajeros.\n");
 		}
-	}
-	else if(primerPasajero==NULL){
-		puts("El puntero al primer pasajero es NULO.\n");
-	}
-	else{
-		puts("El puntero al segundo pasajero es NULO.\n");
 	}
 	return retorno;
 }
@@ -464,12 +397,6 @@ int Passenger_compararPorPrecio(void* primerPasajero,void* segundoPasajero){
 		else{
 			puts("No se pudo obtener los datos de los pasajeros.\n");
 		}
-	}
-	else if(primerPasajero==NULL){
-		puts("El puntero al primer pasajero es NULO.\n");
-	}
-	else{
-		puts("El puntero al segundo pasajero es NULO.\n");
 	}
 	return retorno;
 }
@@ -502,12 +429,6 @@ int Passenger_compararPorApellido(void* primerPasajero,void* segundoPasajero){
 			puts("No se pudo obtener los datos de los pasajeros.\n");
 		}
 	}
-	else if(primerPasajero==NULL){
-		puts("El puntero al primer pasajero es NULO.\n");
-	}
-	else{
-		puts("El puntero al segundo pasajero es NULO.\n");
-	}
 	return retorno;
 }
 
@@ -539,15 +460,8 @@ int Passenger_compararPorCodigoVuelo(void* primerPasajero,void* segundoPasajero)
 			puts("No se pudo obtener los datos de los pasajeros.\n");
 		}
 	}
-	else if(primerPasajero==NULL){
-		puts("El puntero al primer pasajero es NULO.\n");
-	}
-	else{
-		puts("El puntero al segundo pasajero es NULO.\n");
-	}
 	return retorno;
 }
-
 
 int Passenger_compararPorNombre(void* primerPasajero,void* segundoPasajero){
 	int retorno=-2;
@@ -577,15 +491,8 @@ int Passenger_compararPorNombre(void* primerPasajero,void* segundoPasajero){
 			puts("No se pudo obtener los datos de los pasajeros.\n");
 		}
 	}
-	else if(primerPasajero==NULL){
-		puts("El puntero al primer pasajero es NULO.\n");
-	}
-	else{
-		puts("El puntero al segundo pasajero es NULO.\n");
-	}
 	return retorno;
 }
-
 
 
 int Passenger_compararPorTipoPasajero(void* primerPasajero,void* segundoPasajero){
@@ -613,12 +520,6 @@ int Passenger_compararPorTipoPasajero(void* primerPasajero,void* segundoPasajero
 		else{
 			puts("No se pudo obtener los datos de los pasajeros.\n");
 		}
-	}
-	else if(primerPasajero==NULL){
-		puts("El puntero al primer pasajero es NULO.\n");
-	}
-	else{
-		puts("El puntero al segundo pasajero es NULO.\n");
 	}
 	return retorno;
 }
@@ -648,12 +549,6 @@ int Passenger_compararPorEstadoVuelo(void* primerPasajero,void* segundoPasajero)
 		else{
 			puts("No se pudo obtener los datos de los pasajeros.\n");
 		}
-	}
-	else if(primerPasajero==NULL){
-		puts("El puntero al primer pasajero es NULO.\n");
-	}
-	else{
-		puts("El puntero al segundo pasajero es NULO.\n");
 	}
 	return retorno;
 }

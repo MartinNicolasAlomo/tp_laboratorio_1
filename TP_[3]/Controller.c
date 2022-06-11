@@ -118,10 +118,7 @@ int controller_addPassenger(LinkedList* pArrayListPassenger){
 		if(pPasajero!=NULL && !Passenger_cargarPasajero(&auxiliar)){
 			if(!ingresarEntero(&confirmar, "¿Está seguro/a de quiere agregar este pasajero?\n  1- Si\n  0- No\n\n", MSJ_ERROROPCION, 0, 1, REINTENTOS)){
 				if(confirmar){
-					//auxiliar.id=Controller_generarIdNuevo(pArrayListPassenger);
 					auxiliar.id=idIncremental();
-					// crear archivo id.txt,
-
 					if(auxiliar.id>0 && !Passenger_setId(pPasajero, auxiliar.id) &&
 							!Passenger_setNombre(pPasajero, auxiliar.nombre) &&
 							!Passenger_setApellido(pPasajero, auxiliar.apellido) &&
@@ -166,7 +163,7 @@ int controller_addPassenger(LinkedList* pArrayListPassenger){
 //****************************************************************************************************************************************************
 
 
-int Controller_buscarPorId(LinkedList* pArrayListPassenger,int id){					//	CORREGIR CUANDO PRINTEA EL 	ID QUE SE ENCONTRO
+int Controller_buscarPorId(LinkedList* pArrayListPassenger,int id){
 	int retorno=-1;
     Passenger* pPasajero=NULL;
 	int i;
@@ -177,114 +174,36 @@ int Controller_buscarPorId(LinkedList* pArrayListPassenger,int id){					//	CORRE
     	largo=ll_len(pArrayListPassenger);
 		for(i=0;i<largo;i++){
 			pPasajero=(Passenger*)ll_get(pArrayListPassenger, i);
-			if(pPasajero!=NULL && !Passenger_getId(pPasajero, &bufferId) && bufferId==id){
+			if(pPasajero!=NULL && !Passenger_getId(pPasajero, &bufferId) && id==bufferId){
 				retorno=i;
 				break;
 			}
 			else if(pPasajero==NULL){
-				puts("No se pudo obtener el pasajero en Controller_buscarPorID.\n");
+				puts("No se pudo obtener el pasajero en la busqueda de id.\n");
 			}
 			else if(Passenger_getId(pPasajero, &bufferId)==-1){
-				puts("No se pudo obtener el ID del pasajero en Controller_buscarPorID.\n");
-			}
-			else if(bufferId!=id){
-				puts("No se encontró ninguna coincidencia.\n");
+				puts("No se pudo obtener el ID del pasajero en la busqueda de id.\n");
 			}
 		}
-	}
-	else{
-		puts("El puntero a LinkedList es NULL en Controller_buscarPorID.\n");
 	}
 	return retorno;
 }
 //****************************************************************************************************************************************************
 
 
-int Controller_encontrarIdMaximo(LinkedList* pArrayListPassenger){
-    Passenger* pPasajero;
-    int id=-1;
-	int maximo;
-	int largo;
-	int i;
-
-	if(pArrayListPassenger!=NULL){
-		largo=ll_len(pArrayListPassenger);
-		if(largo>0){
-			for(i=0;i<largo;i++){
-				pPasajero=(Passenger*)ll_get(pArrayListPassenger, i);
-				if(pPasajero!=NULL && !Passenger_getId(pPasajero, &id)){
-					if (i==0 || id>maximo){
-						maximo=id;
-					}
-				}
-				else if(pPasajero==NULL){
-					puts("No se pudo obtener el pasajero en Controller_encontrarIdMaximo.\n");
-				}
-				else{
-					puts("No se pudo obtener el ID del pasajero en Controller_encontrarIdMaximo.\n");
-				}
-			}
-			id=maximo;
-		}
-		else{
-			puts("La lista está vacia, no hay pasajeros en Controller_encontrarIdMaximo.\n");
-		}
-	}
-	else{
-		puts("El puntero a LinkedList es NULL en Controller_encontrarIdMaximo.\n");
-	}
-	return id;
-}
-//****************************************************************************************************************************************************
-
-
-int Controller_generarIdNuevo(LinkedList* pArrayListPassenger){
-	int id=-1;
-	int flagPrimera=1;
-
-	if(pArrayListPassenger!=NULL){
-		if(flagPrimera && !ll_isEmpty(pArrayListPassenger)){	//	0 si esta cargada  -  1 si esta vacia
-			id=Controller_encontrarIdMaximo(pArrayListPassenger);
-			flagPrimera=0;
-		}
-		else{
-			puts("La lista está vacia, no hay pasajeros en Controller_generarIdNuevo.\n");
-		}
-		id++;
-	}
-	else{
-		puts("El puntero a LinkedList es NULL en Controller_generarIdNuevo.\n");
-	}
-	return id;
-}
-
-//****************************************************************************************************************************************************
-
-
-/** \brief Modificar datos de pasajero Modifica los datos de un pasajero dentro de la lista
- * \param pArrayListPassenger LinkedList* Puntero al vector de pasajeros
- * \return int Retorna 0 (EXITO) - Si se pudieron modificar los datos del Pasajero
- * 						-1 (ERROR) - El puntero a LinkedList es NULL
- * 						-2 (ERROR) - No se pudo encontrar el ID buscado
- * 						-3 (ERROR) - No se pudo obtener el Pasajero
- */
 int controller_editPassenger(LinkedList* pArrayListPassenger){
     int retorno=-1;
     Passenger auxiliar;
     Passenger* pPasajero;
 	int opcion;
 	int confirmar;
-	int maximoIdActual=1200;		//	CORREGIR
 	int indice;
 	int flagCambio=1;
 
     if(pArrayListPassenger!=NULL){
-		maximoIdActual=Controller_encontrarIdMaximo(pArrayListPassenger);
-    	if(maximoIdActual>0 && !controller_ListPassenger(pArrayListPassenger) &&
-    			!ingresarEntero(&auxiliar.id, "Ingrese el ID del pasajero que desea modificar\n\n", MSJ_ERROROPCION, 1, maximoIdActual, REINTENTOS)){
+    	if(!controller_ListPassenger(pArrayListPassenger) &&
+    			!ingresarEntero(&auxiliar.id, "Ingrese el ID del pasajero que desea modificar\n\n", MSJ_ERROROPCION, 1, idGlobal, REINTENTOS)){
     		indice=Controller_buscarPorId(pArrayListPassenger, auxiliar.id);
-    		puts("\n\n\n\n\nCada vez que busco un ID me sale que NO LO ENCONTRÓ, pero en realidad SI LO ENCONTRÓ, y me deja hacer todas las modificaciones bien\n\n\n\n\n");
-    		printf("se encontro indice: %d   -   Yo busque el N: %d\n\n",indice,auxiliar.id);
     		if(indice!=-1){
     		Controller_imprimirElemento(pArrayListPassenger, indice);
     			pPasajero=(Passenger*)ll_get(pArrayListPassenger, indice);
@@ -335,8 +254,6 @@ int controller_editPassenger(LinkedList* pArrayListPassenger){
     							}
     							break;
     						case 5:
-    							//	if(!ingresarDescripcion( , , )){
-
     							if(!ingresarEntero(&auxiliar.tipoPasajero, "Nuevo tipo de pasajero: (1- EconomyClass, 2- ExecutiveClass o 3- FirstClass)\n", "Error. No es un tipo válido, reinténtelo de nuevo.\n\n\n", 1, 3, REINTENTOS)){
 									puts("Tipo de pasajero ingresado correctamente.\n\n");
 									flagCambio=0;
@@ -365,45 +282,43 @@ int controller_editPassenger(LinkedList* pArrayListPassenger){
 													!Passenger_setTipoPasajeroNumerico(pPasajero, auxiliar.tipoPasajero) &&
 													!Passenger_setEstadoVueloNumerico(pPasajero, auxiliar.estadoVuelo)){
         										retorno=0;
-        										puts("Se modificaron los datos exitosamente.\n\n");
         									}
         									else{
-            									puts("No se setaron.\n\n");
+        										retorno=-10;
         									}
         								}
         								else{
-        									puts("No se guardaron los cambios.\n\n");
+        									retorno=-9;
         								}
         							}
         							else{
-        								puts("No se pudo confirmar.\n\n\n");
+        								retorno=-8;
         							}
     							}
     							else{
-      								puts("No se realizaron cambios en los datos del pasajero.\n\n");
-									retorno=0;
+									retorno=-7;
     							}
     							break;
     	            		}
     	            	}
 						else{
-							puts("No se pudo ingresar una opción.\n\n\n");
+							retorno=-6;
 						}
     	        	}while(opcion!=7);
 				}
-				else{
+				else if(pPasajero==NULL){
 					retorno=-4;
-					puts("No se pudo crear el Pasajero, falló la Función Passenger_new.\n");
+				}
+				else{
+					retorno=-5;
 				}
     		}
     		else{
     			retorno=-3;
-        		puts("No se pudo encontrar el ID buscado.\n\n\n");
     		}
 		}
     	else{
     		retorno=-2;
-    		puts("No se ingresó ningun ID para modificar.\n\n\n");
     	}
     }
     return retorno;
@@ -416,18 +331,14 @@ int controller_removePassenger(LinkedList* pArrayListPassenger){
     Passenger* pPasajero=NULL;
 	int indice;
 	int bufferId;
-	int maximoIdActual;
 	int confirmar;
 	int opcion;
 
 	if(pArrayListPassenger!=NULL){
-		maximoIdActual=Controller_encontrarIdMaximo(pArrayListPassenger);
-		if(maximoIdActual>0 && !controller_ListPassenger(pArrayListPassenger) &&
+		if(!controller_ListPassenger(pArrayListPassenger) &&
 				!ingresarEntero(&opcion, "¿Que desea eliminar?\n  1- Un pasajero\n  2- La lista completa\n\n", MSJ_ERROROPCION, 1, 2, REINTENTOS)){
-			if(opcion==1 && !ingresarEntero(&bufferId, "Ingrese el ID del pasajero que desea eliminar\n\n", MSJ_ERROROPCION, 1, maximoIdActual, REINTENTOS)){
+			if(opcion==1 && !ingresarEntero(&bufferId, "Ingrese el ID del pasajero que desea eliminar\n\n", MSJ_ERROROPCION, 1, idGlobal, REINTENTOS)){
 				indice=Controller_buscarPorId(pArrayListPassenger, bufferId);
-				puts("\n\n\n\n\nCada vez que busco un ID me sale que NO LO ENCONTRÓ, pero en realidad SI LO ENCONTRÓ, y me deja hacer todas las modificaciones bien\n\n\n\n\n");
-				printf("se encontro indice: %d   -   Yo busque el n: %d\n\n\n\n",indice,bufferId);
 	    		if(indice!=-1){
 	    			pPasajero=(Passenger*)ll_get(pArrayListPassenger, indice);
 					if(pPasajero!=NULL && !Controller_imprimirElemento(pArrayListPassenger, indice)){
@@ -481,9 +392,6 @@ int controller_removePassenger(LinkedList* pArrayListPassenger){
 			else{
 				retorno=-5;
 			}
-		}
-		else if(maximoIdActual<=0){
-    		retorno=-2;
 		}
 		else if(controller_ListPassenger(pArrayListPassenger)==-1){
     		retorno=-3;
@@ -668,6 +576,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListPassenger){
     	largo = ll_len(pArrayListPassenger);
 		if(pArchivo!=NULL && largo>0){
 			fprintf(pArchivo, "id,name,lastName,price,flyCode,typePassenger,statusFlight\n");
+			ll_sort(pArrayListPassenger, Passenger_compararPorId, 1);
 			for(i=0;i<largo;i++){
 				pPasajero=(Passenger*)ll_get(pArrayListPassenger, i);
 				if(pPasajero!=NULL &&
@@ -715,9 +624,10 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListPassenger){
     int largo;
 
     if(path!=NULL && pArrayListPassenger!=NULL){
-		pArchivo = fopen(path,"wb");
+    	pArchivo = fopen(path,"wb");
     	largo = ll_len(pArrayListPassenger);
 		if(pArchivo!=NULL && largo>0){
+			ll_sort(pArrayListPassenger, Passenger_compararPorId, 1);
 			for(i=0;i<largo;i++){
 				pPasajero=(Passenger*)ll_get(pArrayListPassenger, i);
 				if(pPasajero!=NULL){
@@ -743,4 +653,3 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListPassenger){
 	}
 	return retorno;
 }
-//****************************************************************************************************************************************************

@@ -15,7 +15,7 @@
 #define LARGODESCRIPCION 20
 #define LARGOID 8
 #define LARGONUMEROTXT 11
-#define LARGOCODIGO 20
+#define LARGOCODIGO 10
 #define MSJ_MENUPRINCIPAL "1. Cargar los datos de los pasajeros desde el archivo data.csv (modo texto).\n2. Cargar los datos de los pasajeros desde el archivo data.csv (modo binario).\n3. Alta de pasajero.\n4. Modificar datos de pasajero.\n5. Baja de pasajero\n6. Listar pasajeros.\n7. Ordenar pasajeros.\n8. Guardar los datos de los pasajeros en el archivo data.csv (modo texto).\n9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).\n10. Salir\n\n"
 #define MSJ_ERROROPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
 #define MSJ_MENUMODIFICAR "¿Qué desea modificar?\n  1-Nombre\n  2-Apellido\n  3-Precio\n  4-Codigo de vuelo\n  5-Tipo de pasajero\n  6-Estado de vuelo\n  7-Finalizar cambios\n\n"
@@ -31,8 +31,6 @@ typedef struct
 	char codigoVuelo[LARGOCODIGO];
 	int tipoPasajero;
 	int estadoVuelo;
-	//char tipoPasajero[LARGONOMBRE];
-	//char estadoVuelo[LARGONOMBRE];
 }Passenger;
 
 
@@ -66,7 +64,6 @@ void Passenger_delete(Passenger* this);
 /// @return - Retorna 0 (EXITO) - Si se pudo cargar el ID en el campo del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el ID no es valido
 int Passenger_setId(Passenger* this,int id);
-
 
 /// @brief - Obtiene el ID del pasajero
 /// @param this - Puntero a pasajero
@@ -170,48 +167,65 @@ int Passenger_getCodigoVuelo(Passenger* this,char* codigoVuelo);
 //***********************************************************************************************
 
 
-
-int Passenger_setTipoPasajeroTXT_NUM(Passenger* this,char* estadoVuelo);
-
-
-int Passenger_getTipoPasajeroNUM_TXT(Passenger* this,char* tipoPasajero);
-
-/// @brief - Carga el tipo de pasajero en el campo del pasajero y valida que el dato sea correcto
+/// @brief - Recibe una cadena de caracteres (descripcion del tipo de pasajero), valida que el dato sea correcto
+/// 		 y segun el texto, le carga un numero en el campo del tipo de pasajero del pasajero (dato tratado como int)
 /// @param this - Puntero a pasajero
 /// @param tipoPasajero - Puntero al tipo de pasajero que se va a cargar
-/// @return - Retorna 0 (EXITO) - Si se pudo cargar el tipo de pasajero en el campo del pasajero
-/// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al tipo de pasajero es NULL
-int Passenger_setTipoPasajeroNumerico(Passenger* this,int estadoVuelo);
+/// @return - Retorna 0 (EXITO) - Si se pudo asignar el numero correspondiente al campo segun el texto recibido
+/// 				 -1 (ERROR) - Si el puntero al pasajero o al tipo de pasajero es NULL o si el tipo de pasajero es invalido
+int Passenger_setTipoPasajeroTXT_NUM(Passenger* this,char* tipoPasajero);
 
-/// @brief - Obtiene el tipo de pasajero del empleado
+/// @brief - Obtiene el numero asignado al tipo de pasajero y le carga su descripcion correspondiente al auxiliar
+/// @param this - Puntero a pasajero
+/// @param tipoPasajero - Puntero al espacio donde se va a guardar la descripcion del tipo de pasajero (texto) obtenido
+/// @return - Retorna 0 (EXITO) - Si se pudo cargar la descripcion del tipo de pasajero (texto) en el auxiliar
+/// 				 -1 (ERROR) - Si el puntero al pasajero o al tipo de pasajero es NULL o si el tipo de pasajero es invalido
+int Passenger_getTipoPasajeroNUM_TXT(Passenger* this,char* tipoPasajero);
+
+/// @brief - Carga el tipo de pasajero (de forma numerica) en el campo del pasajero y valida que el dato sea correcto
+/// @param this - Puntero a pasajero
+/// @param tipoPasajero - Tipo de pasajero a cargar (numerico)
+/// @return - Retorna 0 (EXITO) - Si se pudo cargar el tipo de pasajero (numerico) en el campo del pasajero
+/// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el tipo de pasajero es invalido
+int Passenger_setTipoPasajeroNumerico(Passenger* this,int tipoPasajero);
+
+/// @brief - Obtiene el tipo de pasajero del pasajero (de forma numerica)
 /// @param this - Puntero a empleado
-/// @param tipoPasajero - Puntero al espacio donde se va a guardar el tipo de pasajero obtenido
-/// @return - Retorna 0 (EXITO) - Si se pudo obtener el tipo de pasajero del pasajero
+/// @param tipoPasajero - Puntero al espacio donde se va a guardar el tipo de pasajero (numerico) obtenido
+/// @return - Retorna 0 (EXITO) - Si se pudo obtener el tipo de pasajero (numerico) del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al tipo de pasajero es NULL
-int Passenger_getTipoPasajeroNumerico(Passenger* this,int* estadoVuelo);
-
+int Passenger_getTipoPasajeroNumerico(Passenger* this,int* tipoPasajero);
 //***********************************************************************************************
 
 
-int Passenger_setEstadoVueloTXT_NUM(Passenger* this,char* estadoVuelo);
-
-int Passenger_getEstadoVueloNUM_TXT(Passenger* this,char* estadoVuelo);
-
-/// @brief - Carga el estado de vuelo en el campo del pasajero y valida que el dato sea correcto
+/// @brief - Recibe una cadena de caracteres (descripcion del estado de vuelo), valida que el dato sea correcto
+/// 		 y segun el texto, le carga un numero en el campo del estado de vuelo del pasajero (dato tratado como int)
 /// @param this - Puntero a pasajero
 /// @param estadoVuelo - Puntero al estado de vuelo que se va a cargar
-/// @return - Retorna 0 (EXITO) - Si se pudo cargar el estado de vuelo en el campo del pasajero
-/// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al estado de vuelo es NULL
+/// @return - Retorna 0 (EXITO) - Si se pudo asignar el numero correspondiente al campo segun el texto recibido
+/// 				 -1 (ERROR) - Si el puntero al pasajero o al estado de vuelo es NULL o si el estado de vuelo es invalido
+int Passenger_setEstadoVueloTXT_NUM(Passenger* this,char* estadoVuelo);
+
+/// @brief - Obtiene el numero asignado al estado de vuelo y le carga su descripcion correspondiente al auxiliar
+/// @param this - Puntero a pasajero
+/// @param estadoVuelo - Puntero al espacio donde se va a guardar la descripcion del estado de vuelo (texto) obtenido
+/// @return - Retorna 0 (EXITO) - Si se pudo cargar la descripcion del estado de vuelo (texto) en el auxiliar
+/// 				 -1 (ERROR) - Si el puntero al pasajero o al estado de vuelo es NULL o si el estado de vuelo es invalido
+int Passenger_getEstadoVueloNUM_TXT(Passenger* this,char* estadoVuelo);
+
+/// @brief - Carga el estado de vuelo (de forma numerica) en el campo del pasajero y valida que el dato sea correcto
+/// @param this - Puntero a pasajero
+/// @param estadoVuelo - Estado de vuelo a cargar (numerico)
+/// @return - Retorna 0 (EXITO) - Si se pudo cargar el estado de vuelo (numerico) en el campo del pasajero
+/// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el estado de vuelo es invalido
 int Passenger_setEstadoVueloNumerico(Passenger* this,int estadoVuelo);
 
-
-/// @brief - Obtiene el estado de vuelo del empleado
+/// @brief - Obtiene el estado de vuelo del pasajero (de forma numerica)
 /// @param this - Puntero a empleado
-/// @param estadoVuelo - Puntero al espacio donde se va a guardar el estado de vuelo obtenido
-/// @return - Retorna 0 (EXITO) - Si se pudo obtener el estado de vuelo del pasajero
+/// @param estadoVuelo - Puntero al espacio donde se va a guardar el estado de vuelo (numerico) obtenido
+/// @return - Retorna 0 (EXITO) - Si se pudo obtener el estado de vuelo (numerico) del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al estado de vuelo es NULL
 int Passenger_getEstadoVueloNumerico(Passenger* this,int* estadoVuelo);
-
 //***********************************************************************************************
 
 
@@ -220,7 +234,6 @@ int Passenger_getEstadoVueloNumerico(Passenger* this,int* estadoVuelo);
 /// @return - Retorna 0 (EXITO) - Si se pudo ingresar correctamente todos los datos solicitados al usuario
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si alguno de los datos solicitados es erronéo
 int Passenger_cargarPasajero(Passenger* this);
-
 
 /// @brief Da el criterio de ordenamiento segun el ID de los pasajeros
 /// @param primerPasajero Puntero al primer pasajero a comparar
