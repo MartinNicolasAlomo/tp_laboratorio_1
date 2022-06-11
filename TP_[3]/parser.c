@@ -11,7 +11,6 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger){
 	char auxCodigoVuelo[100];
 	char auxTipoPasajero[100];
 	char auxEstadoVuelo[100];
-	int indice;
 
 	if(pFile!=NULL && pArrayListPassenger!=NULL){
 		fscanf(pFile, "%[^\n]\n", auxTitulo);
@@ -20,8 +19,6 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger){
 				pPasajero = Passenger_newParametros(auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo);
 				if(pPasajero!=NULL){
 					if(!ll_add(pArrayListPassenger, pPasajero)){
-						indice=ll_indexOf(pArrayListPassenger, pPasajero);
-						printf("indexOf me tira %d\n",indice);
 						retorno=0;
 					}
 					else{

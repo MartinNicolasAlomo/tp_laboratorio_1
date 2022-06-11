@@ -19,7 +19,7 @@
 #define MSJ_MENUPRINCIPAL "1. Cargar los datos de los pasajeros desde el archivo data.csv (modo texto).\n2. Cargar los datos de los pasajeros desde el archivo data.csv (modo binario).\n3. Alta de pasajero.\n4. Modificar datos de pasajero.\n5. Baja de pasajero\n6. Listar pasajeros.\n7. Ordenar pasajeros.\n8. Guardar los datos de los pasajeros en el archivo data.csv (modo texto).\n9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).\n10. Salir\n\n"
 #define MSJ_ERROROPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
 #define MSJ_MENUMODIFICAR "¿Qué desea modificar?\n  1-Nombre\n  2-Apellido\n  3-Precio\n  4-Codigo de vuelo\n  5-Tipo de pasajero\n  6-Estado de vuelo\n  7-Finalizar cambios\n\n"
-#define MSJ_MENUORDENAR "¿Cómo desea ordenarlos?\n  1- Por ID\n  2- Por Apellido\n  3- Por Precio\n  4- Por Codigo de Vuelo\n  5- Volver al Menú Principal\n\n"
+#define MSJ_MENUORDENAR "¿Cómo desea ordenarlos?\n  1- Por ID\n  2- Por Nombre\n  3- Por Apellido\n  4- Por Precio\n  5- Por Codigo de Vuelo\n  6- Por Tipo de Pasajero\n  7- Por Estado de Vuelo\n  8- Volver al Menú Principal\n\n"
 
 
 typedef struct
@@ -29,10 +29,10 @@ typedef struct
 	char apellido[LARGONOMBRE];
 	float precio;
 	char codigoVuelo[LARGOCODIGO];
-	//int tipoPasajero;
-	//int estadoVuelo;
-	char tipoPasajero[LARGONOMBRE];
-	char estadoVuelo[LARGONOMBRE];
+	int tipoPasajero;
+	int estadoVuelo;
+	//char tipoPasajero[LARGONOMBRE];
+	//char estadoVuelo[LARGONOMBRE];
 }Passenger;
 
 
@@ -170,38 +170,48 @@ int Passenger_getCodigoVuelo(Passenger* this,char* codigoVuelo);
 //***********************************************************************************************
 
 
+
+int Passenger_setTipoPasajeroTXT_NUM(Passenger* this,char* estadoVuelo);
+
+
+int Passenger_getTipoPasajeroNUM_TXT(Passenger* this,char* tipoPasajero);
+
 /// @brief - Carga el tipo de pasajero en el campo del pasajero y valida que el dato sea correcto
 /// @param this - Puntero a pasajero
 /// @param tipoPasajero - Puntero al tipo de pasajero que se va a cargar
 /// @return - Retorna 0 (EXITO) - Si se pudo cargar el tipo de pasajero en el campo del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al tipo de pasajero es NULL
-int Passenger_setTipoPasajero(Passenger* this,char* tipoPasajero);
+int Passenger_setTipoPasajeroNumerico(Passenger* this,int estadoVuelo);
 
 /// @brief - Obtiene el tipo de pasajero del empleado
 /// @param this - Puntero a empleado
 /// @param tipoPasajero - Puntero al espacio donde se va a guardar el tipo de pasajero obtenido
 /// @return - Retorna 0 (EXITO) - Si se pudo obtener el tipo de pasajero del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al tipo de pasajero es NULL
-int Passenger_getTipoPasajero(Passenger* this,char* tipoPasajero);
+int Passenger_getTipoPasajeroNumerico(Passenger* this,int* estadoVuelo);
+
 //***********************************************************************************************
 
+
+int Passenger_setEstadoVueloTXT_NUM(Passenger* this,char* estadoVuelo);
+
+int Passenger_getEstadoVueloNUM_TXT(Passenger* this,char* estadoVuelo);
 
 /// @brief - Carga el estado de vuelo en el campo del pasajero y valida que el dato sea correcto
 /// @param this - Puntero a pasajero
 /// @param estadoVuelo - Puntero al estado de vuelo que se va a cargar
 /// @return - Retorna 0 (EXITO) - Si se pudo cargar el estado de vuelo en el campo del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al estado de vuelo es NULL
-int Passenger_setEstadoVuelo(Passenger* this,char* estadoVuelo);
+int Passenger_setEstadoVueloNumerico(Passenger* this,int estadoVuelo);
+
 
 /// @brief - Obtiene el estado de vuelo del empleado
 /// @param this - Puntero a empleado
 /// @param estadoVuelo - Puntero al espacio donde se va a guardar el estado de vuelo obtenido
 /// @return - Retorna 0 (EXITO) - Si se pudo obtener el estado de vuelo del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al estado de vuelo es NULL
-int Passenger_getEstadoVuelo(Passenger* this,char* estadoVuelo);
+int Passenger_getEstadoVueloNumerico(Passenger* this,int* estadoVuelo);
 
-
-int Passenger_setEstadoVueloNUMERO(Passenger* this,int numeroEstadoVuelo);
 //***********************************************************************************************
 
 
@@ -218,9 +228,8 @@ int Passenger_cargarPasajero(Passenger* this);
 /// @return Retorna 1 (EXITO) - Si el ID del primer pasajero es mayor, respecto al segundo
 ///					0 (EXITO) - Si ambos IDs son iguales
 ///					-1 (ERROR) - Si el ID del segundo pasajero es mayor, respecto al primero
-///					-2 (ERROR) - No se pudieron obtener los IDs de los pasajeros
-///					-3 (ERROR) - Los parametros son NULL
-int Passenger_comparaPorId(void* primerPasajero,void* segundoPasajero);
+///					-2 (ERROR) - Si: El puntero a los pasajeros es NULL o no se pudo obtener los datos de los pasajeros
+int Passenger_compararPorId(void* primerPasajero,void* segundoPasajero);
 
 /// @brief Da el criterio de ordenamiento segun el precio de los pasajeros
 /// @param primerPasajero Puntero al primer pasajero a comparar
@@ -228,9 +237,8 @@ int Passenger_comparaPorId(void* primerPasajero,void* segundoPasajero);
 /// @return Retorna 1 (EXITO) - Si el sueldo del primer pasajero es mayor, respecto al segundo
 ///					0 (EXITO) - Si ambos precios son iguales
 ///					-1 (ERROR) - Si el sueldo del segundo pasajero es mayor, respecto al primero
-///					-2 (ERROR) - No se pudieron obtener los precios de los pasajeros
-///					-3 (ERROR) - Los parametros son NULL
-int Passenger_comparaPorPrecio(void* primerPasajero,void* segundoPasajero);
+///					-2 (ERROR) - Si: El puntero a los pasajeros es NULL o no se pudo obtener los datos de los pasajeros
+int Passenger_compararPorPrecio(void* primerPasajero,void* segundoPasajero);
 
 /// @brief Da el criterio de ordenamiento segun el apellido de los pasajeros
 /// @param primerPasajero Puntero al primer pasajero a comparar
@@ -238,11 +246,8 @@ int Passenger_comparaPorPrecio(void* primerPasajero,void* segundoPasajero);
 /// @return Retorna 1 (EXITO) - Si el apellido del primer pasajero viene antes que el del segundo
 ///					0 (EXITO) - Si ambos apellidos son iguales
 ///					-1 (ERROR) - Si el apellido del segundo pasajero viene antes que el del primero
-///					-2 (ERROR) - No se pudieron obtener los apellidos de los pasajeros
-///					-3 (ERROR) - Los parametros son NULL
-int Passenger_comparaPorApellido(void* primerPasajero,void* segundoPasajero);
-
-
+///					-2 (ERROR) - Si: El puntero a los pasajeros es NULL o no se pudo obtener los datos de los pasajeros
+int Passenger_compararPorApellido(void* primerPasajero,void* segundoPasajero);
 
 /// @brief Da el criterio de ordenamiento segun el código de vuelo de los pasajeros
 /// @param primerPasajero Puntero al primer pasajero a comparar
@@ -250,9 +255,36 @@ int Passenger_comparaPorApellido(void* primerPasajero,void* segundoPasajero);
 /// @return Retorna 1 (EXITO) - Si el código de vuelo del primer pasajero viene antes que el del segundo
 ///					0 (EXITO) - Si ambos códigos de vuelo son iguales
 ///					-1 (ERROR) - Si el código de vuelo del segundo pasajero viene antes que el del primero
-///					-2 (ERROR) - No se pudieron obtener los códigos de vuelo de los pasajeros
-///					-3 (ERROR) - Los parametros son NULL
-int Passenger_comparaPorCodigoVuelo(void* primerPasajero,void* segundoPasajero);
+///					-2 (ERROR) - Si: El puntero a los pasajeros es NULL o no se pudo obtener los datos de los pasajeros
+int Passenger_compararPorCodigoVuelo(void* primerPasajero,void* segundoPasajero);
+
+/// @brief Da el criterio de ordenamiento segun el nombre de los pasajeros
+/// @param primerPasajero Puntero al primer pasajero a comparar
+/// @param segundoPasajero Puntero al segundo pasajero a comparar
+/// @return Retorna 1 (EXITO) - Si el nombre del primer pasajero viene antes que el del segundo
+///					0 (EXITO) - Si ambos nombres de vuelo son iguales
+///					-1 (ERROR) - Si el nombre del segundo pasajero viene antes que el del primero
+///					-2 (ERROR) - Si: El puntero a los pasajeros es NULL o no se pudo obtener los datos de los pasajeros
+int Passenger_compararPorNombre(void* primerPasajero,void* segundoPasajero);
+
+/// @brief Da el criterio de ordenamiento segun el código de vuelo de los pasajeros
+/// @param primerPasajero Puntero al primer pasajero a comparar
+/// @param segundoPasajero Puntero al segundo pasajero a comparar
+/// @return Retorna 1 (EXITO) - Si el tipo de pasajero del primer pasajero viene antes que el del segundo
+///					0 (EXITO) - Si ambos tipos de pasajero son iguales
+///					-1 (ERROR) - Si el tipo de pasajero del segundo pasajero viene antes que el del primero
+///					-2 (ERROR) - Si: El puntero a los pasajeros es NULL o no se pudo obtener los datos de los pasajeros
+int Passenger_compararPorTipoPasajero(void* primerPasajero,void* segundoPasajero);
+
+/// @brief Da el criterio de ordenamiento segun el estado de vuelo de los pasajeros
+/// @param primerPasajero Puntero al primer pasajero a comparar
+/// @param segundoPasajero Puntero al segundo pasajero a comparar
+/// @return Retorna 1 (EXITO) - Si el estado de vuelo del primer pasajero viene antes que el del segundo
+///					0 (EXITO) - Si ambos estados de vuelo son iguales
+///					-1 (ERROR) - Si el estado de vuelo del segundo pasajero viene antes que el del primero
+///					-2 (ERROR) - Si: El puntero a los pasajeros es NULL o no se pudo obtener los datos de los pasajeros
+int Passenger_compararPorEstadoVuelo(void* primerPasajero,void* segundoPasajero);
+
 
 
 #endif /* PASSENGER_H_ */
