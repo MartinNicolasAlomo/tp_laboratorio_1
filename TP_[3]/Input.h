@@ -92,5 +92,11 @@ int ingresarAlfanumerico(char *pAlfanumerico, int limiteAlfanumerico, char *mens
 /// @return Retorna 0 (EXITO) si se obtiene un alfanumerico, y -1 si no se consiguio
 int conseguirAlfanumerico(char* pResultado,int limiteAlfanumerico);
 
+/// @brief Recibe un nombre como una cadena de caracteres, primero transforma todos los caracteres en minusculas,
+/// 		y luego transforma las iniciales a mayusculas
+/// @param nombre Cadena de caracteres a ser modificada
+/// @param limite Define el tamaño de la cadena
+/// @return Retorna 0 (EXITO) si se pudo modificar el nombre correctamente, y -1 si no se consiguio
+int pasarInicialesNombreMayusculas(char* nombre,int limite);
 
 #endif /* INPUT_H_ */

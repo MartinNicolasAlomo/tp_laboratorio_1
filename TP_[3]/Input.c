@@ -186,3 +186,21 @@ int conseguirAlfanumerico(char* pResultado,int limiteAlfanumerico){
 	}
 	return retorno;
 }
+
+
+int pasarInicialesNombreMayusculas(char* nombre,int limite){
+	int retorno=-1;
+	int i;
+
+	if(nombre!=NULL){
+		strlwr(nombre);
+		nombre[0]=toupper(nombre[0]);
+		for(i=0;i<limite;i++){
+			if((nombre[i]==' ' && nombre[i+1]!=' ') || (nombre[i]=='-' && nombre[i+1]!='-')){
+				nombre[i+1]=toupper(nombre[i+1]);
+			}
+		}
+		retorno=0;
+	}
+	return retorno;
+}

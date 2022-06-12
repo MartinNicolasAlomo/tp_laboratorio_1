@@ -103,7 +103,7 @@ int main(){
     					devolucion = controller_addPassenger(listaPasajeros);
     					if(devolucion==0){
     						puts("Se agregó el nuevo pasajero a la lista.\n\n");
-    						flagCarga=0;
+    						flagCarga=2;
     						flagCambios=0;
     					}
     					else if(devolucion==-1){
@@ -132,7 +132,7 @@ int main(){
     					}
     					break;
     				case 4:
-    					if(flagCarga){
+    					if(flagCarga==1){
     						puts("No hay pasajeros ingresados o cargados. Por favor, ingrese o carge pasajeros para poder operar.\n\n\n");
     					}
     					else{
@@ -174,7 +174,7 @@ int main(){
     					}
     					break;
     				case 5:
-    					if(flagCarga){
+    					if(flagCarga==1){
     						puts("No hay pasajeros ingresados o cargados. Por favor, ingrese o carge pasajeros para poder operar.\n\n\n");
     					}
     					else{
@@ -229,7 +229,7 @@ int main(){
     					}
     					break;
     				case 6:
-    					if(flagCarga){
+    					if(flagCarga==1){
     						puts("No hay pasajeros ingresados o cargados. Por favor, ingrese o carge pasajeros para poder operar.\n\n\n");
     					}
     					else{
@@ -246,7 +246,7 @@ int main(){
     					}
     					break;
     				case 7:
-    					if(flagCarga){
+    					if(flagCarga==1){
     						puts("No hay pasajeros ingresados o cargados. Por favor, ingrese o carge pasajeros para poder operar.\n\n\n");
     					}
     					else{
@@ -272,7 +272,7 @@ int main(){
     					if(flagCambios){
     						puts("No hay ningun cambio para guardar.\n\n\n");
     					}
-    					else if(flagCambios==0){
+    					else{
     						devolucion = controller_saveAsText(ARCHIVO_CSV, listaPasajeros);
 							if(devolucion==0){
 								puts("Se guardaron los cambios en modo texto exitosamente.\n\n");
@@ -313,7 +313,7 @@ int main(){
     					if(flagCambios){
     						puts("No hay ningun cambio para guardar.\n\n\n");
     					}
-    					else if(flagCambios==0){
+    					else{
     						devolucion = controller_saveAsText(ARCHIVO_CSV, listaPasajeros);
 							if(devolucion==0){
 								puts("Se guardaron los cambios en modo texto exitosamente.\n\n");

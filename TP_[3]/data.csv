@@ -387,7 +387,7 @@ id,name,lastName,price,flyCode,typePassenger,statusFlight
 386,Demeter,Fuentes,10000.00,TU6789B,EconomyClass,Aterrizado
 387,Juliann,Hernández,50000.00,TU6789B,EconomyClass,Aterrizado
 388,Shauna,Torres,25000.00,TU6789B,EconomyClass,Aterrizado
-389,Anna-maria,Araya,42000.00,TU6789B,EconomyClass,Aterrizado
+389,Anna-Maria,Araya,42000.00,TU6789B,EconomyClass,Aterrizado
 390,Ag,Flores,50000.00,TU6789B,EconomyClass,Aterrizado
 391,Sherwin,Espinoza,50000.00,MM0987B,ExecutiveClass,En Horario
 392,Vikki,Valenzuela,33000.00,MM0987B,ExecutiveClass,En Horario
@@ -526,7 +526,7 @@ id,name,lastName,price,flyCode,typePassenger,statusFlight
 525,Edan,Sánchez,20000.00,GU2345F,EconomyClass,En Vuelo
 526,Homer,Fernández,10000.00,GU2345F,EconomyClass,En Vuelo
 527,Eveline,Ramírez,37000.00,GU2345F,EconomyClass,En Vuelo
-528,Helen-elizabeth,Carrasco,20000.00,GU2345F,EconomyClass,En Vuelo
+528,Helen-Elizabeth,Carrasco,20000.00,GU2345F,EconomyClass,En Vuelo
 529,Daveta,Gómez,20000.00,GU2345F,EconomyClass,En Vuelo
 530,Mort,Cortés,42000.00,GU2345F,EconomyClass,En Vuelo
 531,Maxi,Herrera,37000.00,GU2345F,EconomyClass,En Vuelo
@@ -670,7 +670,7 @@ id,name,lastName,price,flyCode,typePassenger,statusFlight
 669,Beverlee,Sandoval,25000.00,HY4567D,EconomyClass,Demorado
 670,Arlette,Orellana,30000.00,HY4567D,EconomyClass,Demorado
 671,Jacqueline,Cárdenas,50000.00,HY4567D,EconomyClass,Demorado
-672,Sheila-kathryn,Olivares,10000.00,HY4567D,EconomyClass,Demorado
+672,Sheila-Kathryn,Olivares,10000.00,HY4567D,EconomyClass,Demorado
 673,Lambert,Alarcón,42000.00,HY4567D,EconomyClass,Demorado
 674,Lamont,Gallardo,33000.00,HY4567D,EconomyClass,Demorado
 675,Immanuel,Ortiz,33000.00,HY4567D,EconomyClass,Demorado
@@ -748,7 +748,7 @@ id,name,lastName,price,flyCode,typePassenger,statusFlight
 747,Graehme,Rojas,18000.00,FR5678G,FirstClass,En Horario
 748,Mitchael,Díaz,33000.00,FR5678G,FirstClass,En Horario
 749,Carola,Pérez,10000.00,FR5678G,FirstClass,En Horario
-750,Zsa zsa,Soto,20000.00,FR5678G,FirstClass,En Horario
+750,Zsa Zsa,Soto,20000.00,FR5678G,FirstClass,En Horario
 751,Jude,Contreras,12000.00,FR5678G,FirstClass,En Horario
 752,Arch,Silva,33000.00,FR5678G,FirstClass,En Horario
 753,Andrej,Martínez,50000.00,FR5678G,FirstClass,En Horario
@@ -1005,3 +1005,7 @@ id,name,lastName,price,flyCode,typePassenger,statusFlight
 1005,Ramiro,Corsa,15000.00,DEU38ÑB,ExecutiveClass,En Vuelo
 1006,Yael,Moreno,40000.00,ARG03,FirstClass,Aterrizado
 1007,Freddie,Mercury,500000.00,TZA98CT,FirstClass,Demorado
+1008,Lola,Perez,50000.00,FRA45OP,EconomyClass,Demorado
+1009,Anne-Sophia,Smith-Johnson,40000.00,USA43SH,EconomyClass,En Vuelo
+1010,Roger,Federer,95000.00,CHE89DE,ExecutiveClass,Demorado
+1011,Novak,Djokovic,80000.00,SER91,ExecutiveClass,Demorado

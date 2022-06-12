@@ -83,7 +83,7 @@ int Passenger_getIdTXT(Passenger* this,char id[]){
 
 int Passenger_setNombre(Passenger* this,char* nombre){
 	int retorno=-1;
-	if(this!=NULL && nombre!=NULL && esNombre(nombre, LARGONOMBRE)){
+	if(this!=NULL && nombre!=NULL && esNombre(nombre, LARGONOMBRE) && !pasarInicialesNombreMayusculas(nombre, LARGONOMBRE)){
 		strncpy(this->nombre, nombre, LARGONOMBRE);
 		retorno=0;
 	}
@@ -103,7 +103,7 @@ int Passenger_getNombre(Passenger* this,char* nombre){
 
 int Passenger_setApellido(Passenger* this,char* apellido){
 	int retorno=-1;
-	if(this!=NULL && apellido!=NULL && esNombre(apellido, LARGONOMBRE)){
+	if(this!=NULL && apellido!=NULL && esNombre(apellido, LARGONOMBRE) && !pasarInicialesNombreMayusculas(apellido, LARGONOMBRE)){
 		strncpy(this->apellido, apellido, LARGONOMBRE);
 		retorno=0;
 	}
@@ -169,6 +169,7 @@ int Passenger_getPrecioTXT(Passenger* this,char precio[]){
 int Passenger_setCodigoVuelo(Passenger* this,char* codigoVuelo){
 	int retorno=-1;
 	if(this!=NULL && codigoVuelo!=NULL && esAlfanumerico(codigoVuelo, LARGOCODIGO)){
+		strupr(codigoVuelo);
 		strncpy(this->codigoVuelo, codigoVuelo, LARGOCODIGO);
 		retorno=0;
 	}
