@@ -45,10 +45,10 @@ int main(void){
 //	startTesting(13); // ll_push					 - 4/5 - 80%
 //	startTesting(14); // ll_pop						OK
 //	startTesting(15); // ll_contains				 - 1/3 - 33%
-//	startTesting(16); // ll_containsAll				 - 3/4 - 75%
+//	startTesting(16); // ll_containsAll				 - 1/4 - 25%
 //	startTesting(17); // ll_subList					OK
 //	startTesting(18); // ll_clone					OK
-//	startTesting(19); // ll_sort					 - 3/5 - 60%
+//	startTesting(19); // ll_sort					 - 4/5 - 80%
 
     return 0;
 }
