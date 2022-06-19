@@ -25,10 +25,6 @@
 
 
 int main(void){
-//	setbuf(stdout, NULL);
-//	puts("Hola de prueba");
-
-
 
 //	startTesting(1);  // ll_newLinkedList			OK
 //	startTesting(2);  // ll_len						OK
@@ -37,7 +33,7 @@ int main(void){
 //	startTesting(5);  // ll_add						OK
 //	startTesting(6);  // ll_get						OK
 //	startTesting(7);  // ll_set						OK
-//	startTesting(8);  // ll_remove					 - 4/5 - 80%
+//	startTesting(8);  // ll_remove					OK
 //	startTesting(9);  // ll_clear					OK
 //	startTesting(10); // ll_deleteLinkedList		OK
 //	startTesting(11); // ll_indexOf					 - 1/2 - 50%
@@ -45,10 +41,10 @@ int main(void){
 //	startTesting(13); // ll_push					 - 4/5 - 80%
 //	startTesting(14); // ll_pop						OK
 //	startTesting(15); // ll_contains				 - 1/3 - 33%
-//	startTesting(16); // ll_containsAll				 - 1/4 - 25%
+//	startTesting(16); // ll_containsAll				OK
 //	startTesting(17); // ll_subList					OK
 //	startTesting(18); // ll_clone					OK
-//	startTesting(19); // ll_sort					 - 4/5 - 80%
+//	startTesting(19); // ll_sort					OK
 
     return 0;
 }
