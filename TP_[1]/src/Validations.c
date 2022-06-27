@@ -1,6 +1,5 @@
 #include "Validations.h"
 
-
 int esEntero(char* cadena,int limite){
 	int retorno=-1;
 	int i;
@@ -26,7 +25,6 @@ int validarRangoEntero(int numero,int minimo,int maximo){
 	}
 	return retorno;
 }
-
 
 int esFlotante(char* cadena,int limite){
 	int retorno=-1;
@@ -60,7 +58,6 @@ int validarRangoFlotante(float numero,float minimo,float maximo){
 	return retorno;
 }
 
-
 int esNombre(char* cadena,int limite){
 	int retorno=-1;
 	int i;
@@ -80,7 +77,6 @@ int esNombre(char* cadena,int limite){
 	}
 	return retorno;
 }
-
 
 int esDescripcion(char* cadena,int limite){
 	int retorno=-1;
@@ -106,7 +102,6 @@ int esDescripcion(char* cadena,int limite){
 	return retorno;
 }
 
-
 int esAlfanumerico(char* cadena,int limite){
 	int retorno=-1;
 	int i;
@@ -124,4 +119,3 @@ int esAlfanumerico(char* cadena,int limite){
 	}
 	return retorno;
 }
-

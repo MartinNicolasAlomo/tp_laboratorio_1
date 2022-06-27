@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "Validations.h"
+#define REINTENTOS 3
 
 
 /// @brief Lee desde stdin hasta que encuentre un '\n' o hasta que haya copiado en cadena un maximo de 'longitud-1' caracteres

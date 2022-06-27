@@ -1,5 +1,4 @@
 #include "Input.h"
-#define REINTENTOS 3
 
 int obtenerCadena(char* cadena,int limite){
 	int retorno=-1;

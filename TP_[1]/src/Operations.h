@@ -1,5 +1,20 @@
 #ifndef OPERATIONS_H_
 #define OPERATIONS_H_
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#include "Input.h"
+#include "Validations.h"
+#define LONGMENSAJEMENU 500
+#define LONGMENSAJES 100
+#define INGRESOMINIMO 10
+#define KMMAXIMOS 15000.00
+#define PRECIOMAXIMO 750000.00
+#define BITCOINPRECIO 4800000
+#define REINTENTOS 3
+#define DESCUENTO 10
+#define INTERES 25
 
 /// @brief Es el menu interactivo del programa
 /// @return Retorna 0 (EXITO) si se pudo finalizar el menu interactivo, y -1 (ERROR) si hubo un fallo en el programa

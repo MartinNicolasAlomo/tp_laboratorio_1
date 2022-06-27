@@ -1,20 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
-#include "Input.h"
-#include "Validations.h"
 #include "Operations.h"
-#define LONGMENSAJEMENU 500
-#define LONGMENSAJES 100
-#define INGRESOMINIMO 10
-#define KMMAXIMOS 15000.00
-#define PRECIOMAXIMO 750000.00
-#define BITCOINPRECIO 4800000
-#define REINTENTOS 3
-#define DESCUENTO 10
-#define INTERES 25
-
 
 int menuOpcionesEmpresas(void){
 	int retorno=-1;
@@ -78,7 +62,7 @@ int menuOpcionesEmpresas(void){
 				else{
 					if(!ingresarFlotante(&kilometrosIngresados,mensajeKmIngreso,mensajeKmError, INGRESOMINIMO, KMMAXIMOS, REINTENTOS)){
 						printf("KM ingresados: %.2f km.\n\n\n\n", kilometrosIngresados);
-						flagKilometros = 0;
+						flagKilometros=0;
 					}
 					else{
 						puts("No se pudo ingresar los kilometros de vuelo.\n\n\n");
@@ -120,18 +104,18 @@ int menuOpcionesEmpresas(void){
 					puts("No se ingresaron los precios de los vuelos para realizar las operaciones.\n\n\n");
 				}
 				else if(!flagLatam || !flagReingresos){
-					flagCalculos = 0;
+					flagCalculos=0;
 					flagReingresos=0;
 					puts("Se calcularon todos los costos.\n\n\n");
-					respuestaDescuentoLatam = calcularDescuento(&precioDescuentoLatam, precioLatamIngresado, DESCUENTO);
-					respuestaInteresLatam = calcularInteres(&precioInteresLatam, precioLatamIngresado, INTERES);
-					respuestaBitcoinLatam = dividir(&precioBitcoinLatam, precioLatamIngresado, BITCOINPRECIO);
-					respuestaUnitarioLatam = dividir(&precioUnitarioLatam, precioLatamIngresado, kilometrosIngresados);
-					respuestaDescuentoAerolineas = calcularDescuento(&precioDescuentoAerolineas, precioAerolineasIngresado, DESCUENTO);
-					respuestaInteresAerolineas = calcularInteres(&precioInteresAerolineas, precioAerolineasIngresado, INTERES);
-					respuestaBitcoinAerolineas = dividir(&precioBitcoinAerolineas, precioAerolineasIngresado, BITCOINPRECIO);
-					respuestaUnitarioAerolineas = dividir(&precioUnitarioAerolineas, precioAerolineasIngresado, kilometrosIngresados);
-					respuestaDiferenciaPrecios = calcularDiferenciaPrecios(&diferenciaPrecios, precioLatamIngresado, precioAerolineasIngresado);
+					respuestaDescuentoLatam=calcularDescuento(&precioDescuentoLatam, precioLatamIngresado, DESCUENTO);
+					respuestaInteresLatam=calcularInteres(&precioInteresLatam, precioLatamIngresado, INTERES);
+					respuestaBitcoinLatam=dividir(&precioBitcoinLatam, precioLatamIngresado, BITCOINPRECIO);
+					respuestaUnitarioLatam=dividir(&precioUnitarioLatam, precioLatamIngresado, kilometrosIngresados);
+					respuestaDescuentoAerolineas=calcularDescuento(&precioDescuentoAerolineas, precioAerolineasIngresado, DESCUENTO);
+					respuestaInteresAerolineas=calcularInteres(&precioInteresAerolineas, precioAerolineasIngresado, INTERES);
+					respuestaBitcoinAerolineas=dividir(&precioBitcoinAerolineas, precioAerolineasIngresado, BITCOINPRECIO);
+					respuestaUnitarioAerolineas=dividir(&precioUnitarioAerolineas, precioAerolineasIngresado, kilometrosIngresados);
+					respuestaDiferenciaPrecios=calcularDiferenciaPrecios(&diferenciaPrecios, precioLatamIngresado, precioAerolineasIngresado);
 				}
 				break;
 			case 4:
@@ -145,67 +129,67 @@ int menuOpcionesEmpresas(void){
 					puts("Aun no se realizó ninguna operacion.\n\n\n");
 				}
 				else if(!flagCalculos || !flagReingresos){
-					printf("KMs ingresados: %.2f\n\n",kilometrosIngresados);
-					printf("Latam: %.2f\n",precioLatamIngresado);
+					printf("KMs ingresados: %.2f.\n\n",kilometrosIngresados);
+					printf("Latam: %.2f.\n",precioLatamIngresado);
 					if(!respuestaDescuentoLatam){
-						printf("a) Precio con tarjeta de débito: $%.2f\n", precioDescuentoLatam);
+						printf("a) Precio con tarjeta de débito: $%.2f.\n", precioDescuentoLatam);
 					}
 					else{
 						puts("No se pudo calcular el precio final con descuento para LATAM.\n");
 					}
 					if(!respuestaInteresLatam){
-						printf("b) Precio con tarjeta de crédito: $%.2f\n", precioInteresLatam);
+						printf("b) Precio con tarjeta de crédito: $%.2f.\n", precioInteresLatam);
 					}
 					else{
 						puts("No se pudo calcular el precio final con interes para LATAM.\n");
 					}
 					if(!respuestaBitcoinLatam){
-						printf("c) Precio pagando con bitcoin: %.2f BTC\n", precioBitcoinLatam);
+						printf("c) Precio pagando con bitcoin: %.2f BTC.\n", precioBitcoinLatam);
 					}
 					else{
 						puts("No se pudo calcular el precio de LATAM pagando con bitcoin.\n");
 					}
 					if(!respuestaUnitarioLatam){
-						printf("d) Precio unitario: $%.2f\n\n", precioUnitarioLatam);
+						printf("d) Precio unitario: $%.2f.\n\n", precioUnitarioLatam);
 					}
 					else{
 						puts("No se pudo calcular el precio unitario para LATAM.\n\n");
 					}
-					printf("Aerolineas: %.2f\n",precioAerolineasIngresado);
+					printf("Aerolineas: %.2f.\n",precioAerolineasIngresado);
 					if(!respuestaDescuentoAerolineas){
-						printf("a) Precio con tarjeta de débito: $%.2f\n", precioDescuentoAerolineas);
+						printf("a) Precio con tarjeta de débito: $%.2f.\n", precioDescuentoAerolineas);
 					}
 					else{
 						puts("No se pudo calcular el precio final con descuento para Aerolineas.\n");
 					}
 					if(!respuestaInteresAerolineas){
-						printf("b) Precio con tarjeta de crédito: $%.2f\n", precioInteresAerolineas);
+						printf("b) Precio con tarjeta de crédito: $%.2f.\n", precioInteresAerolineas);
 					}
 					else{
 						 puts("No se pudo calcular el precio final con interes para Aerolineas.\n");
 					}
 					if(!respuestaBitcoinAerolineas){
-						 printf("c) Precio pagando con bitcoin: %.2f BTC\n", precioBitcoinAerolineas);
+						 printf("c) Precio pagando con bitcoin: %.2f BTC.\n", precioBitcoinAerolineas);
 					}
 					else{
 						 puts("No se pudo calcular el precio de Aerolineas pagando con bitcoin.\n");
 					}
 					if(!respuestaUnitarioAerolineas){
-						 printf("d) Precio unitario: $%.2f\n\n", precioUnitarioAerolineas);
+						 printf("d) Precio unitario: $%.2f.\n\n", precioUnitarioAerolineas);
 					}
 					else{
 						puts("No se pudo calcular el precio unitario para Aerolineas.\n");
 					}
 					if(respuestaDiferenciaPrecios==1){
-						printf("La diferencia de precio es: $%.2f\n\n", diferenciaPrecios);
+						printf("e) La diferencia de precio es: $%.2f.\n\n", diferenciaPrecios);
 					}
 					else if(respuestaDiferenciaPrecios==0){
-						puts("Ambos precios son iguales.\n\n\n");
+						puts("e) Ambos precios son iguales.\n\n");
 					}
 					else {
 						puts("No se pudo calcular la diferencia entre los precios ingresados.\n\n\n");
 					}
-					puts("Luego de mostrar los resultados se reiniciarán todos los valores\n\n\n");
+					puts("Luego de mostrar los resultados se reiniciarán todos los valores.\n\n\n");
 					kilometrosIngresados=0;
 					precioLatamIngresado=0;
 					precioDescuentoLatam=0;
@@ -284,10 +268,10 @@ int menuOpcionesEmpresas(void){
 					}
 					respuestaDiferenciaPreciosHardcodeado=calcularDiferenciaPrecios(&diferenciaPrecios, latamHardcodeado, aerolineasHardcodeado);
 					if(respuestaDiferenciaPreciosHardcodeado==1){
-						printf("La diferencia de precio es: $%.2f\n\n\n", diferenciaPrecios);
+						printf("e) La diferencia de precio es: $%.2f\n\n\n\n", diferenciaPrecios);
 					}
 					else if(respuestaDiferenciaPreciosHardcodeado==0){
-						puts("Ambos precios son iguales.\n\n\n");
+						puts("e) Ambos precios son iguales.\n\n\n");
 					}
 					else {
 						puts("No se pudo calcular la diferencia entre los precios ingresados.\n\n\n");
@@ -313,7 +297,6 @@ int menuOpcionesEmpresas(void){
 	return retorno;
 }
 
-
 int dividir(float* pResultado,float operandoUno,float operandoDos){
 	int retorno=-1;
 	float resultado;
@@ -325,7 +308,6 @@ int dividir(float* pResultado,float operandoUno,float operandoDos){
 	return retorno;
 }
 
-
 int calcularDescuento(float* pResultado,float precio,float descuento){
 	int retorno=-1;
 	float resultado;
@@ -335,11 +317,11 @@ int calcularDescuento(float* pResultado,float precio,float descuento){
 		retorno=0;
 	}
 	if(descuento==0){
+		puts("No hay ningún descuento para aplicar.\n\n\n");
 		retorno=-2;
 	}
 	return retorno;
 }
-
 
 int calcularInteres(float* pResultado,float precio,float interes){
 	int retorno=-1;
@@ -350,11 +332,10 @@ int calcularInteres(float* pResultado,float precio,float interes){
 		retorno=0;
 	}
 	if(interes==0){
-		retorno=-2;
+		puts("No hay ningún interés para aplicar.\n\n\n");
 	}
 	return retorno;
 }
-
 
 int calcularDiferenciaPrecios(float* pResultado,float precioUno,float precioDos){
 	int retorno=-1;
