@@ -79,7 +79,6 @@ int controller_editPassenger(LinkedList* pArrayListPassenger);
  * 						-10 (ERROR) - Se eliminó el pasajero de memoria pero no se pudo eliminar de la lista
  * 						-11 (ERROR) - Se canceló la operación. No se eliminó la lista
  * 						-12 (ERROR) - No se pudo eliminar la lista
- * 						-13 (ERROR) - Se eliminó de memoria pero no se pudo eliminar la lista
  */
 int controller_removePassenger(LinkedList* pArrayListPassenger);
 

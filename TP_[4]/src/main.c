@@ -36,11 +36,11 @@ int main(void){
 //	startTesting(8);  // ll_remove					OK
 //	startTesting(9);  // ll_clear					OK
 //	startTesting(10); // ll_deleteLinkedList		OK
-//	startTesting(11); // ll_indexOf					 - 1/2 - 50%
+//	startTesting(11); // ll_indexOf					OK
 //	startTesting(12); // ll_isEmpty					OK
-//	startTesting(13); // ll_push					 - 4/5 - 80%
+//	startTesting(13); // ll_push					OK
 //	startTesting(14); // ll_pop						OK
-//	startTesting(15); // ll_contains				 - 1/3 - 33%
+//	startTesting(15); // ll_contains				OK
 //	startTesting(16); // ll_containsAll				OK
 //	startTesting(17); // ll_subList					OK
 //	startTesting(18); // ll_clone					OK

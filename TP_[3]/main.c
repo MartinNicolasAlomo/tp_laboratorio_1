@@ -220,11 +220,8 @@ int main(){
         					else if(devolucion==-11){
         						puts("Se canceló la operación. No se eliminó la lista.\n\n\n");
         					}
-        					else if(devolucion==-12){
-    			        		puts("No se pudo eliminar la lista.\n\n\n");
-        					}
         					else{
-        						puts("Se eliminó de memoria pero no se pudo eliminar la lista.\n\n\n");
+    			        		puts("No se pudo eliminar la lista.\n\n\n");
         					}
     					}
     					break;

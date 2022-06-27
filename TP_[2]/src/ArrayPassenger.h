@@ -1,20 +1,56 @@
 #ifndef ARRAYPASSENGER_H_
 #define ARRAYPASSENGER_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#include "Input.h"
+
+#define CANTPASAJEROS 2000
+#define CANTTIPOSPASAJERO 4
+#define CANTESTADOSVUELO 4
+#define REINTENTOS 3
+#define LARGOTEXTO 16
+#define TRUE 1
+#define FALSE 0
 #define LARGONOMBRE 51
-#define LARGOAPELLIDO 51
 #define LARGOCODIGO 10
+
+#define MSJ_MENUPRINCIPAL "Seleccione una opción.\n1. Dar de alta un pasajero.\n2. Modificar un pasajero.\n3. Dar de baja un pasajero.\n4. Informar.\n5. Carga forzada,\n6. Salir.\n\n"
+#define MSJ_ERROROPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
+#define MSJ_MENUMODIFICAR "¿Qué desea modificar?\n  1- Nombre.\n  2- Apellido.\n  3- Precio.\n  4- Tipo de pasajero.\n  5- Codigo de vuelo.\n  6- Finalizar cambios.\n\n"
+#define MSJ_MENUINFORME "¿Qué desea informar?\n  1- Listado de los pasajeros ordenados alfabéticamente por Apellido y Tipo de pasajero.\n  2- Total y promedio de los precios de los pasajes, y cuántos pasajeros superan el precio promedio.\n  3- Listado de los pasajeros por Código de vuelo y estados de vuelos ‘ACTIVO’.\n\n"
+#define MSJ_IDMODIFICAR "Ingrese el ID que desea modificar:\n\n"
+#define MSJ_IDELIMINAR "Ingrese el ID que desea eliminar:\n\n"
+#define MSJ_ERRORID "No es un ID válido, reinténtelo de nuevo.\n\n\n"
+#define MSJ_OPCIONORDEN "¿En qué orden quiere ordenarlos?\n  1- Ascendente\n  0- Descendente\n\n"
+#define MSJ_CONFIRMARAGREGADO "¿Está seguro/a de quiere agregar este pasajero?\n  1- Si\n  0- No\n\n"
+#define MSJ_CONFIRMARMODIFICACION "¿Está seguro/a de quiere realizar las modificaciones?\n  1- Si\n  0- No\n\n"
+#define MSJ_CONFIRMARELIMINADO "¿Está seguro/a de quiere eliminar este pasajero?\n  1- Si\n  0- No\n\n"
+
+/*
+typedef struct{
+	int id;
+	int statusFlight;
+	char statusDescription[LARGOTEXTO];
+	char flyCode[LARGOCODIGO];
+	int isEmpty;
+}Flight;
+*/
+
 
 typedef struct{
 	int id;
 	char name[LARGONOMBRE];
-	char lastName[LARGOAPELLIDO];
+	char lastName[LARGONOMBRE];
 	float price;
 	char flyCode[LARGOCODIGO];
 	int typePassenger;
 	int statusFlight;
 	int isEmpty;
 }Passenger;
+
 
 /// @brief Es el menu principal de la entidad Passenger, se usa un ABM
 /// @return Retorna 0 (EXITO) si logro finalizar la operatoria, -1 (ERROR) si no se consiguio
@@ -98,10 +134,8 @@ int pasaj_cargarPasajero(Passenger vector[],int limite,int id);
 /// @param vector Es el vector en el que se guardaran los nuevos datos modificados
 /// @param limite Define el tamaño del vector
 /// @param id Es el id con el cual se identificara el pasajero a modificar
-/// @param mensajeOpcionModificar Es el mensaje de opciones de modificacions
-/// @param mensajeOpcionError Mensasje que se muestra cuando hubo se ingreso mal la opcion
 /// @return Retorna 0 (EXITO) si se logro modificar el pasajero, -1 (ERROR) si no se consiguio
-int pasaj_modificarPasajero(Passenger vector[],int limite,int id,char mensajeOpcionModificar[],char mensajeOpcionError[]);
+int pasaj_modificarPasajero(Passenger vector[],int limite,int id);
 
 /// @brief Imprime un solo elemento del vector
 /// @param pElemento Es el elemento a imprimir
@@ -117,7 +151,7 @@ int pasaj_imprimirElemento(Passenger* pElemento);
 /// @param precioTotal Es el total de precios ingresados hasta el momento
 /// @param cantidadTotal Es el total de pasajeros ingresados hasta el momento
 /// @return Retorna 0 (EXITO) si se logro informar los solicitado, -1 (ERROR) si no se consiguio
-int pasaj_menuInformes(Passenger vector[],int limite,char mensajeInforme[],char mensajeOrden[],char mensajeOpcionError[],float precioTotal,int cantidadTotal);
+int pasaj_menuInformes(Passenger vector[],int limite,float precioTotal,int cantidadTotal);
 
 /// @brief Calcula el precio promedio de los importes ingresados totales
 /// @param pResultado Puntero al espacio de memoria donde se dejara el resultado del promedio
@@ -145,7 +179,6 @@ int pasaj_calcularSuperanPrecioPromedio(Passenger vector[],int limite,int* pResu
 /// @param typePassenger Es la clase de vuelo del pasajero (economico, premium, ejecutivo o primera clase)
 /// @param statusFlight Es el estado del vuelo del pasajero (activo, demorado, reprogramado o cancelado)
 /// @return Retorna 0 (EXITO) si se logro añadir el pasajero hardcodeado, -1 (ERROR) si no se consiguio
-int pasaj_cargaForzadaPasajero(Passenger vector[], int limite, int id,char name[],char lastName[],float price,char flyCode[],int typePassenger,int statusFlight);
-
+int pasaj_cargaForzadaPasajero(Passenger vector[],int limite,int id,char name[],char lastName[],float price,char flyCode[],int typePassenger,int statusFlight);
 
 #endif /* ARRAYPASSENGER_H_ */

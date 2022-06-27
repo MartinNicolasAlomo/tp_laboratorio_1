@@ -371,14 +371,11 @@ int controller_removePassenger(LinkedList* pArrayListPassenger){
 			else if(opcion==2){
 				if(!ingresarEntero(&confirmar, "¿Está seguro/a de quiere eliminar la lista?\n  1- Si\n  0- No\n\n", MSJ_ERROROPCION, 0, 1, REINTENTOS)){
 					if(confirmar==1){
-						if(!ll_clear(pArrayListPassenger) && !ll_deleteLinkedList(pArrayListPassenger)){
+						if(!ll_clear(pArrayListPassenger)){
 							retorno=1;
 						}
-						else if(ll_clear(pArrayListPassenger)==-1){
-							retorno=-12;
-						}
 						else{
-							retorno=-13;
+							retorno=-12;
 						}
 					}
 					else{
