@@ -181,10 +181,10 @@ int menuOpcionesEmpresas(void){
 						puts("No se pudo calcular el precio unitario para LATAM.\n\n");
 					}
 					if(respuestaDiferenciaPrecios==1){
-						printf("e) La diferencia de precio es: $%.2f.\n\n", diferenciaPrecios);
+						printf("La diferencia de precio es: $%.2f.\n\n", diferenciaPrecios);
 					}
 					else if(respuestaDiferenciaPrecios==0){
-						puts("e) Ambos precios son iguales.\n\n");
+						puts("Ambos precios son iguales.\n\n");
 					}
 					else {
 						puts("No se pudo calcular la diferencia entre los precios ingresados.\n\n\n");
@@ -210,7 +210,8 @@ int menuOpcionesEmpresas(void){
 				}
 				break;
 			case 5:
-				if(!flagKilometros){
+				if(!flagKilometros)
+				{
 					puts("Ya hay otra operatoria en proceso, espere a que termine para poder mostrar los datos hardcodeades:\n\n\n");
 				}
 				else{
@@ -268,10 +269,10 @@ int menuOpcionesEmpresas(void){
 					}
 					respuestaDiferenciaPreciosHardcodeado=calcularDiferenciaPrecios(&diferenciaPrecios, latamHardcodeado, aerolineasHardcodeado);
 					if(respuestaDiferenciaPreciosHardcodeado==1){
-						printf("e) La diferencia de precio es: $%.2f\n\n\n\n", diferenciaPrecios);
+						printf("La diferencia de precio es: $%.2f\n\n\n\n", diferenciaPrecios);
 					}
 					else if(respuestaDiferenciaPreciosHardcodeado==0){
-						puts("e) Ambos precios son iguales.\n\n\n");
+						puts("Ambos precios son iguales.\n\n\n\n");
 					}
 					else {
 						puts("No se pudo calcular la diferencia entre los precios ingresados.\n\n\n");
