@@ -9,9 +9,9 @@
 #define LONGMENSAJEMENU 500
 #define LONGMENSAJES 100
 #define INGRESOMINIMO 10
-#define KMMAXIMOS 15000.00
+#define KMMAXIMOS 50000.00
 #define PRECIOMAXIMO 750000.00
-#define BITCOINPRECIO 4800000
+#define BITCOINPRECIO 4800000.00
 #define REINTENTOS 3
 #define DESCUENTO 10
 #define INTERES 25
@@ -47,5 +47,6 @@ int calcularInteres(float* pResultado,float precio,float interes);
 /// @param precioDos Es el segundo precio que se paso.
 /// @return Retorna 1 si encontro que uno es mayor al otro y se realizo la resta, 0 si ambos precios son iguales, -1 si hubo ERROR
 int calcularDiferenciaPrecios(float* pResultado,float precioUno,float precioDos);
+
 
 #endif /* OPERATIONS_H_ */

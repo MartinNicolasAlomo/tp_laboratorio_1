@@ -126,35 +126,10 @@ int menuOpcionesEmpresas(void){
 					puts("No se ingresaron los precios de los vuelos para realizar las operaciones.\n\n\n");
 				}
 				else if(flagCalculos){
-					puts("Aun no se realizó ninguna operacion.\n\n\n");
+					puts("Aun no se realizó ningún calculo de precio.\n\n\n");
 				}
 				else if(!flagCalculos || !flagReingresos){
 					printf("KMs ingresados: %.2f.\n\n",kilometrosIngresados);
-					printf("Latam: %.2f.\n",precioLatamIngresado);
-					if(!respuestaDescuentoLatam){
-						printf("a) Precio con tarjeta de débito: $%.2f.\n", precioDescuentoLatam);
-					}
-					else{
-						puts("No se pudo calcular el precio final con descuento para LATAM.\n");
-					}
-					if(!respuestaInteresLatam){
-						printf("b) Precio con tarjeta de crédito: $%.2f.\n", precioInteresLatam);
-					}
-					else{
-						puts("No se pudo calcular el precio final con interes para LATAM.\n");
-					}
-					if(!respuestaBitcoinLatam){
-						printf("c) Precio pagando con bitcoin: %.2f BTC.\n", precioBitcoinLatam);
-					}
-					else{
-						puts("No se pudo calcular el precio de LATAM pagando con bitcoin.\n");
-					}
-					if(!respuestaUnitarioLatam){
-						printf("d) Precio unitario: $%.2f.\n\n", precioUnitarioLatam);
-					}
-					else{
-						puts("No se pudo calcular el precio unitario para LATAM.\n\n");
-					}
 					printf("Aerolineas: %.2f.\n",precioAerolineasIngresado);
 					if(!respuestaDescuentoAerolineas){
 						printf("a) Precio con tarjeta de débito: $%.2f.\n", precioDescuentoAerolineas);
@@ -179,6 +154,31 @@ int menuOpcionesEmpresas(void){
 					}
 					else{
 						puts("No se pudo calcular el precio unitario para Aerolineas.\n");
+					}
+					printf("Latam: %.2f.\n",precioLatamIngresado);
+					if(!respuestaDescuentoLatam){
+						printf("a) Precio con tarjeta de débito: $%.2f.\n", precioDescuentoLatam);
+					}
+					else{
+						puts("No se pudo calcular el precio final con descuento para LATAM.\n");
+					}
+					if(!respuestaInteresLatam){
+						printf("b) Precio con tarjeta de crédito: $%.2f.\n", precioInteresLatam);
+					}
+					else{
+						puts("No se pudo calcular el precio final con interes para LATAM.\n");
+					}
+					if(!respuestaBitcoinLatam){
+						printf("c) Precio pagando con bitcoin: %.2f BTC.\n", precioBitcoinLatam);
+					}
+					else{
+						puts("No se pudo calcular el precio de LATAM pagando con bitcoin.\n");
+					}
+					if(!respuestaUnitarioLatam){
+						printf("d) Precio unitario: $%.2f.\n\n", precioUnitarioLatam);
+					}
+					else{
+						puts("No se pudo calcular el precio unitario para LATAM.\n\n");
 					}
 					if(respuestaDiferenciaPrecios==1){
 						printf("e) La diferencia de precio es: $%.2f.\n\n", diferenciaPrecios);
@@ -216,31 +216,6 @@ int menuOpcionesEmpresas(void){
 				else{
 					puts("Datos forzados:\n");
 					printf("KMs ingresados: %.2f\n\n",kilometrosHardcodeado);
-					printf("Latam: %.2f\n",latamHardcodeado);
-					if(!calcularDescuento(&precioDescuentoLatam, latamHardcodeado, DESCUENTO)){
-						printf("a) Precio con tarjeta de débito: $%.2f\n", precioDescuentoLatam);
-					}
-					else{
-						puts("No se pudo calcular el precio final con descuento para LATAM.\n");
-					}
-					if(!calcularInteres(&precioInteresLatam, latamHardcodeado, INTERES)){
-						printf("b) Precio con tarjeta de crédito: $%.2f\n", precioInteresLatam);
-					}
-					else{
-						puts("No se pudo calcular el precio final con interes para LATAM.\n");
-					}
-					if(!dividir(&precioBitcoinLatam, latamHardcodeado, BITCOINPRECIO)){
-						printf("c) Precio pagando con bitcoin: %.2f BTC\n", precioBitcoinLatam);
-					}
-					else{
-						puts("No se pudo calcular el precio de LATAM pagando con bitcoin.\n");
-					}
-					if(!dividir(&precioUnitarioLatam, latamHardcodeado, kilometrosHardcodeado)){
-						printf("d) Precio unitario: $%.2f\n\n", precioUnitarioLatam);
-					}
-					else{
-						puts("No se pudo calcular el precio unitario para LATAM.\n");
-					}
 					printf("Aerolineas: %.2f\n",aerolineasHardcodeado);
 					if(!calcularDescuento(&precioDescuentoAerolineas, aerolineasHardcodeado, DESCUENTO)){
 						printf("a) Precio con tarjeta de débito: $%.2f\n", precioDescuentoAerolineas);
@@ -265,6 +240,31 @@ int menuOpcionesEmpresas(void){
 					}
 					else{
 						puts("No se pudo calcular el precio unitario para Aerolineas.\n\n");
+					}
+					printf("Latam: %.2f\n",latamHardcodeado);
+					if(!calcularDescuento(&precioDescuentoLatam, latamHardcodeado, DESCUENTO)){
+						printf("a) Precio con tarjeta de débito: $%.2f\n", precioDescuentoLatam);
+					}
+					else{
+						puts("No se pudo calcular el precio final con descuento para LATAM.\n");
+					}
+					if(!calcularInteres(&precioInteresLatam, latamHardcodeado, INTERES)){
+						printf("b) Precio con tarjeta de crédito: $%.2f\n", precioInteresLatam);
+					}
+					else{
+						puts("No se pudo calcular el precio final con interes para LATAM.\n");
+					}
+					if(!dividir(&precioBitcoinLatam, latamHardcodeado, BITCOINPRECIO)){
+						printf("c) Precio pagando con bitcoin: %.2f BTC\n", precioBitcoinLatam);
+					}
+					else{
+						puts("No se pudo calcular el precio de LATAM pagando con bitcoin.\n");
+					}
+					if(!dividir(&precioUnitarioLatam, latamHardcodeado, kilometrosHardcodeado)){
+						printf("d) Precio unitario: $%.2f\n\n", precioUnitarioLatam);
+					}
+					else{
+						puts("No se pudo calcular el precio unitario para LATAM.\n");
 					}
 					respuestaDiferenciaPreciosHardcodeado=calcularDiferenciaPrecios(&diferenciaPrecios, latamHardcodeado, aerolineasHardcodeado);
 					if(respuestaDiferenciaPreciosHardcodeado==1){
