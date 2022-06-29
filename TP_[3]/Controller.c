@@ -114,13 +114,13 @@ int controller_addPassenger(LinkedList* pArrayListPassenger){
 	int confirmar;
 
 	if(pArrayListPassenger!=NULL){
-		pPasajero=Passenger_new();
+		pPasajero=Computer_new();
 		if(pPasajero!=NULL && !Passenger_cargarPasajero(&auxiliar)){
 			if(!ingresarEntero(&confirmar, "¿Está seguro/a de quiere agregar este pasajero?\n  1- Si\n  0- No\n\n", MSJ_ERROROPCION, 0, 1, REINTENTOS)){
 				if(confirmar){
 					auxiliar.id=idIncremental();
 					if(auxiliar.id>0 && !Passenger_setId(pPasajero, auxiliar.id) &&
-							!Passenger_setNombre(pPasajero, auxiliar.nombre) &&
+							!Computer_setDescripcion(pPasajero, auxiliar.nombre) &&
 							!Passenger_setApellido(pPasajero, auxiliar.apellido) &&
 							!Passenger_setPrecio(pPasajero, auxiliar.precio) &&
 							!Passenger_setCodigoVuelo(pPasajero, auxiliar.codigoVuelo)&&
@@ -208,7 +208,7 @@ int controller_editPassenger(LinkedList* pArrayListPassenger){
     		Controller_imprimirElemento(pArrayListPassenger, indice);
     			pPasajero=(Passenger*)ll_get(pArrayListPassenger, indice);
 				if(pPasajero!=NULL &&
-						!Passenger_getNombre(pPasajero, auxiliar.nombre) &&
+						!Computer_getDescripcion(pPasajero, auxiliar.nombre) &&
 						!Passenger_getApellido(pPasajero, auxiliar.apellido) &&
 						!Passenger_getPrecio(pPasajero, &auxiliar.precio) &&
 						!Passenger_getCodigoVuelo(pPasajero, auxiliar.codigoVuelo) &&
@@ -275,7 +275,7 @@ int controller_editPassenger(LinkedList* pArrayListPassenger){
     							if(!flagCambio){
         							if(!ingresarEntero(&confirmar, "¿Está seguro/a de quiere realizar las modificaciones?\n  1- Si\n  0- No\n\n", MSJ_ERROROPCION, 0, 1, REINTENTOS)){
         								if(confirmar==1){
-        									if(!Passenger_setNombre(pPasajero, auxiliar.nombre) &&
+        									if(!Computer_setDescripcion(pPasajero, auxiliar.nombre) &&
 													!Passenger_setApellido(pPasajero, auxiliar.apellido) &&
 													!Passenger_setPrecio(pPasajero, auxiliar.precio) &&
 													!Passenger_setCodigoVuelo(pPasajero, auxiliar.codigoVuelo) &&
@@ -436,7 +436,7 @@ int Controller_imprimirElemento(LinkedList* pArrayListPassenger,int indice){
 		pPasajero=(Passenger*)ll_get(pArrayListPassenger, indice);
 		if(pPasajero!=NULL &&
 			!Passenger_getId(pPasajero, &auxiliar.id) &&
-			!Passenger_getNombre(pPasajero, auxiliar.nombre) &&
+			!Computer_getDescripcion(pPasajero, auxiliar.nombre) &&
 			!Passenger_getApellido(pPasajero, auxiliar.apellido) &&
 			!Passenger_getPrecio(pPasajero, &auxiliar.precio) &&
 			!Passenger_getCodigoVuelo(pPasajero, auxiliar.codigoVuelo) &&
@@ -474,7 +474,9 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger){
 			if(opcion!=8 && !ingresarEntero(&orden, "¿En qué orden quiere ordenarlos?\n  1- Ascendente\n  0- Descendente\n\n", MSJ_ERROROPCION, 0, 1, REINTENTOS)){
 				switch(opcion){
 				case 1:
-					if(!ll_sort(pArrayListPassenger, Passenger_compararPorId, orden)){
+					//if(!ll_sort(pArrayListPassenger, Passenger_compararPorId, orden)){
+						if(!Prueba_ll_sort(pArrayListPassenger, Passenger_compararPorId, orden)){
+
 						puts("Se ordenó por ID exitosamente.\n\n");
 						retorno=0;
 					}
@@ -483,8 +485,9 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger){
 					}
 					break;
 				case 2:
-					if(!ll_sort(pArrayListPassenger, Passenger_compararPorNombre, orden)){
-						puts("Se ordenó por nombre exitosamente.\n\n");
+					//if(!ll_sort(pArrayListPassenger, Passenger_compararPorNombre, orden)){
+						if(!Prueba_ll_sort(pArrayListPassenger, Passenger_compararPorNombre, orden)){
+							puts("Se ordenó por nombre exitosamente.\n\n");
 						retorno=0;
 					}
 					else{
@@ -492,8 +495,9 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger){
 					}
 					break;
 				case 3:
-					if(!ll_sort(pArrayListPassenger, Passenger_compararPorApellido, orden)){
-						puts("Se ordenó por apellido exitosamente.\n\n");
+					//if(!ll_sort(pArrayListPassenger, Passenger_compararPorApellido, orden)){
+						if(!Prueba_ll_sort(pArrayListPassenger, Passenger_compararPorApellido, orden)){
+							puts("Se ordenó por apellido exitosamente.\n\n");
 						retorno=0;
 					}
 					else{
@@ -501,8 +505,9 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger){
 					}
 					break;
 				case 4:
-					if(!ll_sort(pArrayListPassenger, Passenger_compararPorPrecio, orden)){
-						puts("Se ordenó por precio exitosamente.\n\n");
+					//if(!ll_sort(pArrayListPassenger, Passenger_compararPorPrecio, orden)){
+						if(!Prueba_ll_sort(pArrayListPassenger, Passenger_compararPorPrecio, orden)){
+							puts("Se ordenó por precio exitosamente.\n\n");
 						retorno=0;
 					}
 					else{
@@ -510,8 +515,9 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger){
 					}
 					break;
 				case 5:
-					if(!ll_sort(pArrayListPassenger, Passenger_compararPorCodigoVuelo, orden)){
-						puts("Se ordenó por código de vuelo exitosamente.\n\n");
+					//if(!ll_sort(pArrayListPassenger, Passenger_compararPorCodigoVuelo, orden)){
+						if(!Prueba_ll_sort(pArrayListPassenger, Passenger_compararPorCodigoVuelo, orden)){
+							puts("Se ordenó por código de vuelo exitosamente.\n\n");
 						retorno=0;
 					}
 					else{
@@ -519,8 +525,9 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger){
 					}
 					break;
 				case 6:
-					if(!ll_sort(pArrayListPassenger, Passenger_compararPorTipoPasajero, orden)){
-						puts("Se ordenó por tipo de pasajero exitosamente.\n\n");
+					//if(!ll_sort(pArrayListPassenger, Passenger_compararPorTipoPasajero, orden)){
+						if(!Prueba_ll_sort(pArrayListPassenger, Passenger_compararPorTipoPasajero, orden)){
+							puts("Se ordenó por tipo de pasajero exitosamente.\n\n");
 						retorno=0;
 					}
 					else{
@@ -528,8 +535,9 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger){
 					}
 					break;
 				case 7:
-					if(!ll_sort(pArrayListPassenger, Passenger_compararPorEstadoVuelo, orden)){
-						puts("Se ordenó por estado de vuelo exitosamente.\n\n");
+					//if(!ll_sort(pArrayListPassenger, Passenger_compararPorEstadoVuelo, orden)){
+						if(!Prueba_ll_sort(pArrayListPassenger, Passenger_compararPorEstadoVuelo, orden)){
+							puts("Se ordenó por estado de vuelo exitosamente.\n\n");
 						retorno=0;
 					}
 					else{
@@ -578,7 +586,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListPassenger){
 				pPasajero=(Passenger*)ll_get(pArrayListPassenger, i);
 				if(pPasajero!=NULL &&
 					!Passenger_getId(pPasajero, &auxId) &&
-					!Passenger_getNombre(pPasajero, auxNombre) &&
+					!Computer_getDescripcion(pPasajero, auxNombre) &&
 					!Passenger_getApellido(pPasajero, auxApellido) &&
 					!Passenger_getPrecio(pPasajero, &auxPrecio) &&
 					!Passenger_getCodigoVuelo(pPasajero, auxCodigoVuelo) &&

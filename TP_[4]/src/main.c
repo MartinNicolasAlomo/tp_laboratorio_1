@@ -16,68 +16,111 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
+#include "Computer.h"
+#include "Controller.h"
+#include "Input.h"
+#include "LinkedList.h"
+#include "Parser.h"
+#include "Validations.h"
 #include "../testing/inc/main_test.h"
 #include "../inc/LinkedList.h"
+#define MSJ_MENUPRINCIPAL "1. Cargar los datos desde el archivo data.csv (modo texto).\n2. Ordernar lista por idTipo.\n3. Imprimir lista.\n4. Funcion map.\n5. Generar archivo de salida\n6. Salir\n\n"
+#define MSJ_ERROROPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
 
 
 int main(void){
+	setbuf(stdout, NULL);
+	int opcionMenu=0;
+	int devolucion;
+	int flagCarga=1;
+	int flagCambios=1;
 
-//	startTesting(1);  // ll_newLinkedList			OK
-//	startTesting(2);  // ll_len						OK
-//	startTesting(3);  // getNode - test_getNode		OK
-//	startTesting(4);  // addNode - test_addNode		OK
-//	startTesting(5);  // ll_add						OK
-//	startTesting(6);  // ll_get						OK
-//	startTesting(7);  // ll_set						OK
-//	startTesting(8);  // ll_remove					OK
-//	startTesting(9);  // ll_clear					OK
-//	startTesting(10); // ll_deleteLinkedList		OK
-//	startTesting(11); // ll_indexOf					OK
-//	startTesting(12); // ll_isEmpty					OK
-//	startTesting(13); // ll_push					OK
-//	startTesting(14); // ll_pop						OK
-//	startTesting(15); // ll_contains				OK
-//	startTesting(16); // ll_containsAll				OK
-//	startTesting(17); // ll_subList					OK
-//	startTesting(18); // ll_clone					OK
-//	startTesting(19); // ll_sort					OK
+    LinkedList* listaComputadoras = ll_newLinkedList();
 
+    if(listaComputadoras!=NULL){
+        do{
+        	if(!ingresarEntero(&opcionMenu, MSJ_MENUPRINCIPAL, MSJ_ERROROPCION, 1, 6, REINTENTOS)){
+    			switch(opcionMenu){
+    				case 1:
+    					if(!flagCarga){
+    						puts("Ya se cargaron los datos previamente, no se pueden volver a cargar.\n\n\n");
+    					}
+    					else{
+    						devolucion = controller_loadFromText("datos_SP.csv",listaComputadoras);
+    						if(devolucion==0){
+    					    	puts("Archivo en modo texto cargado exitosamente.\n\n");
+    							flagCarga=0;
+    						}
+    						else if(devolucion==-1){
+    							puts("La ruta del Archivo no es valida.\n\n\n");
+    						}
+    						else if(devolucion==-2){
+    							puts("El puntero a LinkedList es NULL.\n\n\n");
+    						}
+    						else if(devolucion==-3){
+    							puts("No se pudo abrir el Archivo.\n\n\n");
+    						}
+    						else {
+    							puts("No se pudieron parsear los Datos del Archivo.\n\n\n");
+    						}
+    					}
+    					break;
+    				case 2:
+    					if(flagCarga){
+    						puts("No se cargaron los datos.\n\n\n");
+    					}
+    					else{
+    						devolucion = controller_sortPassenger(listaComputadoras);
+							if(devolucion==0){
+								puts("Se ordeno correctamente.\n\n\n");
+							}
+    					}
+    					break;
+    				case 3:
+    					if(flagCarga){
+    						puts("No se cargaron los datos.\n\n\n");
+    					}
+    					else{
+    						devolucion = controller_ListPassenger(listaComputadoras);
+							if(devolucion==0){
+								puts("Se imprimio la lista correctamente.\n\n\n");
+							}
+    					}
+    					break;
+					case 4:
+    					if(flagCarga){
+    						puts("No se cargaron los datos.\n\n\n");
+    					}
+    					else{
+    						devolucion=ll_map(listaComputadoras, Passenger_compararPrecios);
+    						if(devolucion==0){
+    							flagCambios=0;
+								puts("Se uso la funcion LL_MAP la lista correctamente.\n\n\n");
+    						}
+    					}
+						break;
+					case 5:
+    					if(flagCambios){
+    						puts("No se genero un lista previa.\n\n\n");
+    					}
+    					else{
+    						devolucion=controller_saveAsText("mapeado.csv", listaComputadoras);
+							if(devolucion==0){
+								puts("Se creó el archivo nuevo la lista correctamente.\n\n\n");
+							}
+    					}
+						break;
+					case 6:
+    						puts("Usted finalizó la operación.\n\n");
+							puts("\n\nFinalizó el programa.\n");
+						break;
+    			}
+        	}
+        }while(opcionMenu!=6);
+    }
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

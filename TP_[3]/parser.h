@@ -9,6 +9,7 @@
 #include "Controller.h"
 #include "Input.h"
 #include "Validations.h"
+#include "Zprueba.h"
 
 
 /** \brief - Parsea los datos los datos de los pasajeros desde el archivo data.csv (modo texto).

@@ -1,9 +1,9 @@
 #include "ArrayPassenger.h"
 
 static const char TXT_TYPEPASSENGER[CANTTIPOSPASAJERO][LARGOTEXTO]={"Economico","Premium","Ejecutivo","Primera Clase"};
-static const char TXT_STATUSFLIGHT[CANTESTADOSVUELO][LARGOTEXTO]={"Activo","Demorado","Reprogramado","Cancelado"};
+static const char TXT_STATUSFLIGHT[CANTESTADOSVUELO][LARGOTEXTO]={"En Horario","En Vuelo","Demorado","Aterrizado"};
 
-static int idIncremental=0;
+static int idIncremental=1;
 /// @brief Genera un codigo que se incrementa en 1 cada vez que se llama a la funcion
 /// @return Retorna el codigo incrementado en 1 respecto al anterior
 static int pasaj_generarId(void);
@@ -121,7 +121,7 @@ int pasaj_menuPrincipal(void){
 				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
 				if(indiceLibre>=0){
 					idPasajeros=pasaj_generarId();
-					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Camila", "Lolo", 9000, "AJ028", 1, 3)){
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Camila", "Lolo", 9000, "ARG09BA", 1, 3)){
 						totalPrecios=totalPrecios+aPasajeros[idPasajeros].price;
 						totalPasajeros++;
 					}
@@ -133,7 +133,7 @@ int pasaj_menuPrincipal(void){
 				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
 				if(indiceLibre>=0){
 					idPasajeros=pasaj_generarId();
-					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Matias", "Lolo", 60, "CL046", 4, 2)){
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Matias", "Lolo", 60, "ITA18RM", 4, 2)){
 						totalPrecios=totalPrecios+aPasajeros[idPasajeros].price;
 						totalPasajeros++;
 					}
@@ -145,7 +145,7 @@ int pasaj_menuPrincipal(void){
 				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
 				if(indiceLibre>=0){
 					idPasajeros=pasaj_generarId();
-					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Gonzalo", "Cece", 9000, "CL046", 2, 4)){
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Gonzalo", "Cece", 9000, "ARG09BA", 2, 4)){
 						totalPrecios=totalPrecios+aPasajeros[idPasajeros].price;
 						totalPasajeros++;
 					}
@@ -157,7 +157,7 @@ int pasaj_menuPrincipal(void){
 				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
 				if(indiceLibre>=0){
 					idPasajeros=pasaj_generarId();
-					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Daiana", "Vivi", 60, "AJ028", 4, 2)){
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Daiana", "Vivi", 60, "ARG09BA", 4, 2)){
 						totalPrecios=totalPrecios+aPasajeros[idPasajeros].price;
 						totalPasajeros++;
 					}
@@ -169,7 +169,7 @@ int pasaj_menuPrincipal(void){
 				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
 				if(indiceLibre>=0){
 					idPasajeros=pasaj_generarId();
-					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Ruben", "Lolo", 60, "AJ028", 3, 1)){
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Ruben", "Lolo", 60, "ITA18RM", 3, 1)){
 						totalPrecios=totalPrecios+aPasajeros[idPasajeros].price;
 						totalPasajeros++;
 					}
@@ -181,7 +181,7 @@ int pasaj_menuPrincipal(void){
 				indiceLibre=pasaj_buscarProximoIndiceVacio(aPasajeros, CANTPASAJEROS);
 				if(indiceLibre>=0){
 					idPasajeros=pasaj_generarId();
-					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Zoe", "Cece", 60, "EN050", 1, 3)){
+					if(!pasaj_cargaForzadaPasajero(aPasajeros, CANTPASAJEROS, idPasajeros, "Zoe", "Cece", 60, "JAP27TK", 1, 3)){
 						totalPrecios=totalPrecios+aPasajeros[idPasajeros].price;
 						totalPasajeros++;
 					}
@@ -207,7 +207,16 @@ int pasaj_menuPrincipal(void){
 }
 
 
-int pasaj_cargaForzadaPasajero(Passenger vector[],int limite,int id,char name[],char lastName[],float price,char flyCode[],int typePassenger,int statusFlight){
+
+
+
+
+
+
+
+
+
+int pasaj_cargaForzadaPasajero(Passenger* vector,int limite,int id,char* name,char* lastName,float price,char* flyCode,int typePassenger,int statusFlight){
 	int retorno=-1;
 	Passenger auxPasajero;
 	if(vector!=NULL && limite>0 && id>=0 && name!=NULL && lastName!=NULL && price>0 && flyCode!=NULL){
@@ -271,7 +280,7 @@ int addPassenger(Passenger* list,int len,int id,char name[],char lastName[],floa
 	return retorno;
 }
 
-int pasaj_cargarPasajero(Passenger vector[],int limite,int id){
+int pasaj_cargarPasajero(Passenger* vector,int limite,int id){
 	int retorno=-1;
 	Passenger auxPasajero;
 	if(vector!=NULL && limite>0 && id>=0){
@@ -428,7 +437,7 @@ int sortPassengersByCode(Passenger* list,int len,int order){
 	return retorno;
 }
 
-int pasaj_buscarProximoIndiceVacio(Passenger vector[],int limite){
+int pasaj_buscarProximoIndiceVacio(Passenger* vector,int limite){
 	int retorno=-1;
 	int i;
 	if(vector!=NULL && limite>0){
@@ -442,7 +451,7 @@ int pasaj_buscarProximoIndiceVacio(Passenger vector[],int limite){
 	return retorno;
 }
 
-int pasaj_modificarPasajero(Passenger vector[],int limite,int id){
+int pasaj_modificarPasajero(Passenger* vector,int limite,int id){
 	int retorno=-1;
 	Passenger auxiliar;
 	int opcion;
@@ -545,7 +554,7 @@ int pasaj_modificarPasajero(Passenger vector[],int limite,int id){
 	return retorno;
 }
 
-int pasaj_menuInformes(Passenger vector[],int limite,float precioTotal,int cantidadTotal){
+int pasaj_menuInformes(Passenger* vector,int limite,float precioTotal,int cantidadTotal){
 	int retorno=-1;
 	int tipoInforme;
 	int orden;
@@ -616,7 +625,7 @@ int pasaj_calcularPrecioPromedio(float* pResultado,float precioTotal,float canti
 	return retorno;
 }
 
-int pasaj_calcularSuperanPrecioPromedio(Passenger vector[],int limite,int* pResultado,float precioPromedio){
+int pasaj_calcularSuperanPrecioPromedio(Passenger* vector,int limite,int* pResultado,float precioPromedio){
 	int retorno=-1;
 	int i;
 	int contadorMayorPromedio=0;
@@ -644,7 +653,6 @@ int printPassengers(Passenger* list,int length){
 			pasaj_imprimirElemento(&list[i]);
 		}
 		puts("\n\n");
-
 	}
 	return retorno;
 }

@@ -6,7 +6,6 @@
 #include <ctype.h>
 #include <string.h>
 #include "Input.h"
-
 #define CANTPASAJEROS 2000
 #define CANTTIPOSPASAJERO 4
 #define CANTESTADOSVUELO 4
@@ -16,8 +15,7 @@
 #define FALSE 0
 #define LARGONOMBRE 51
 #define LARGOCODIGO 10
-
-#define MSJ_MENUPRINCIPAL "Seleccione una opción.\n1. Dar de alta un pasajero.\n2. Modificar un pasajero.\n3. Dar de baja un pasajero.\n4. Informar.\n5. Carga forzada,\n6. Salir.\n\n"
+#define MSJ_MENUPRINCIPAL "Seleccione una opción.\n1. Dar de alta un pasajero.\n2. Modificar un pasajero.\n3. Dar de baja un pasajero.\n4. Informar.\n5. Carga forzada.\n6. Salir.\n\n"
 #define MSJ_ERROROPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
 #define MSJ_MENUMODIFICAR "¿Qué desea modificar?\n  1- Nombre.\n  2- Apellido.\n  3- Precio.\n  4- Tipo de pasajero.\n  5- Codigo de vuelo.\n  6- Finalizar cambios.\n\n"
 #define MSJ_MENUINFORME "¿Qué desea informar?\n  1- Listado de los pasajeros ordenados alfabéticamente por Apellido y Tipo de pasajero.\n  2- Total y promedio de los precios de los pasajes, y cuántos pasajeros superan el precio promedio.\n  3- Listado de los pasajeros por Código de vuelo y estados de vuelos ‘ACTIVO’.\n\n"

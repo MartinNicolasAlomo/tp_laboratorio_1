@@ -8,6 +8,8 @@
 #include "Input.h"
 #include "parser.h"
 #include "Validations.h"
+#include "Zprueba.h"
+
 #define ARCHIVO_CSV "data.csv"
 #define ARCHIVO_BIN "data.bin"
 
@@ -28,7 +30,7 @@
 
 int main(){
 	setbuf(stdout, NULL);
-	int opcionMenu = 0;
+	int opcionMenu=0;
 	int devolucion;
 	int flagCarga=1;
 	int flagCambios=1;

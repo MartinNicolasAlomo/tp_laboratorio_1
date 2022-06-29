@@ -88,7 +88,7 @@ int menuOpcionesEmpresas(void){
 							flagLatam=0;
 						}
 						else{
-							puts("No se pudo ingresar el precio para LATAM.\n.Para poder continuar con las operaciones, en necesario que primero se ingrese un precio para Latam.\n\n\n");
+							puts("No se pudo ingresar el precio para LATAM.\nPara poder continuar con las operaciones, en necesario que primero se ingrese un precio para Latam.\n\n\n");
 						}
 					}
 				}

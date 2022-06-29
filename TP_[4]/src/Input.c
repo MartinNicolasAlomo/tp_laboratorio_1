@@ -52,32 +52,6 @@ int conseguirEntero(int* pResultado){
 	return retorno;
 }
 
-int esEntero(char* cadena,int limite){
-	int retorno=-1;
-	int i;
-	if(cadena!=NULL && limite>0){
-		retorno=1;
-		for (i=0;i<limite && cadena[i]!='\0';i++) {
-			if(i==0 && (cadena[i]=='+' || cadena[i]=='-')){
-				continue;
-			}
-			if (cadena[i]<'0' || cadena[i]>'9'){
-				retorno=0;
-				break;
-			}
-		}
-	}
-	return retorno;
-}
-
-int validarRangoEntero(int numero,int minimo,int maximo){
-	int retorno=0;
-	if (numero>=minimo && numero<=maximo) {
-		retorno=1;
-	}
-	return retorno;
-}
-
 
 int ingresarFlotante(float* pFlotante,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos) {
 	int retorno=-1;
@@ -111,43 +85,11 @@ int conseguirFlotante(float* pResultado){
 	return retorno;
 }
 
-int esFlotante(char* cadena,int limite){
-	int retorno=-1;
-	int i;
-	int contadorPuntos=0;
-	if(cadena!=NULL && limite>0){
-		retorno=1;
-		for (i=0;i<limite && cadena[i]!='\0';i++) {
-			if (i==0 && (cadena[0]=='-' || cadena[0]=='+')){
-				continue;
-				}
-			if (cadena[i]<'0' || cadena[i]>'9'){
-				if(cadena[i]=='.' && contadorPuntos==0){
-					contadorPuntos++;
-				}
-				else{
-					retorno=0;
-					break;
-				}
-			}
-		}
-	}
-	return retorno;
-}
-
-int validarRangoFlotante(float numero,float minimo,float maximo){
-	int retorno=0;
-	if (numero>=minimo && numero<=maximo) {
-		retorno=1;
-	}
-	return retorno;
-}
-
 
 int ingresarNombre(char* pNombre,int limite,char* mensaje,char* mensajeError,int reintentos){
 	int retorno=-1;
 	char bufferString[limite];
-	if(pNombre!=NULL && limite>=1 && mensaje!=NULL && mensajeError!=NULL && reintentos>=0){
+	if(pNombre!=NULL && limite>0 && mensaje!=NULL && mensajeError!=NULL && reintentos>=0){
 		do{
 			printf("%s",mensaje);
 			if(!conseguirNombre(bufferString,limite) && strnlen(bufferString,limite)<limite){
@@ -171,26 +113,6 @@ int conseguirNombre(char* cadena,int limite){
 		if(!obtenerCadena(bufferString,limite) && esNombre(bufferString,limite) && strnlen(bufferString,limite)<limite){
 			strncpy(cadena,bufferString,limite);
 			retorno=0;
-		}
-	}
-	return retorno;
-}
-
-int esNombre(char* cadena,int limite){
-	int retorno=-1;
-	int i;
-	if(cadena!=NULL && limite>0){
-		retorno=1;
-		for (i=0;i<limite && cadena[i]!='\0';i++){
-			if(((cadena[i] != ' ') && (cadena[i] != '-') && (cadena[i] != 'ñ') && (cadena[i] != 'Ñ') && (cadena[i] != 'ç') && (cadena[i] != 'Ç') &&
-				(cadena[i] != 'á') && (cadena[i] != 'é') && (cadena[i] != 'í') && (cadena[i] != 'ó') && (cadena[i] != 'ú') &&
-				(cadena[i] != 'Á') && (cadena[i] != 'É') && (cadena[i] != 'Í') && (cadena[i] != 'Ó') && (cadena[i] != 'Ú') &&
-				(cadena[i] != 'ä') && (cadena[i] != 'ë') && (cadena[i] != 'ï') && (cadena[i] != 'ö') && (cadena[i] != 'ü') &&
-				(cadena[i] != 'Ä') && (cadena[i] != 'Ë') && (cadena[i] != 'Ï') && (cadena[i] != 'Ö') && (cadena[i] != 'Ü') &&
-				(cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z')) || (cadena[0] == ' ')){
-				retorno=0;
-				break;
-			}
 		}
 	}
 	return retorno;
@@ -229,30 +151,6 @@ int conseguirDescipcion(char* cadena,int limite){
 	return retorno;
 }
 
-int esDescripcion(char* cadena,int limite){
-	int retorno=-1;
-	int i;
-	if(cadena!=NULL && limite>0){
-		retorno=1;
-		for (i=0;i<limite && cadena[i]!='\0';i++){
-			if((cadena[0] == ' ') || ((cadena[i] != ' ') && (cadena[i] != '.') && (cadena[i] != ',') && (cadena[i] != ';') &&
-				(cadena[i] != ':') && (cadena[i] != '-') && (cadena[i] != 'Ç') && (cadena[i] != 'ç') &&
-				(cadena[i] != '(') && (cadena[i] != ')') && (cadena[i] != '"') && (cadena[i] != '¡') && (cadena[i] != '!') &&
-				(cadena[i] != '¿') && (cadena[i] != '?') && (cadena[i] != '®') && (cadena[i] != '©') && (cadena[i] != '°') &&
-				(cadena[i] != '$') && (cadena[i] != '¢') && (cadena[i] != '&') && (cadena[i] != 'ñ') && (cadena[i] != 'Ñ') &&
-				(cadena[i] != 'á') && (cadena[i] != 'é') && (cadena[i] != 'í') && (cadena[i] != 'ó') && (cadena[i] != 'ú') &&
-				(cadena[i] != 'Á') && (cadena[i] != 'É') && (cadena[i] != 'Í') && (cadena[i] != 'Ó') && (cadena[i] != 'Ú') &&
-				(cadena[i] != 'ä') && (cadena[i] != 'ë') && (cadena[i] != 'ï') && (cadena[i] != 'ö') && (cadena[i] != 'ü') &&
-				(cadena[i] != 'Ä') && (cadena[i] != 'Ë') && (cadena[i] != 'Ï') && (cadena[i] != 'Ö') && (cadena[i] != 'Ü') &&
-				(cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && (cadena[i] < '0' || cadena[i] > '9'))){
-				retorno=0;
-				break;
-			}
-		}
-	}
-	return retorno;
-}
-
 
 int ingresarAlfanumerico(char* pAlfanumerico,int limite,char* mensaje,char* mensajeError,int reintentos){
 	int retorno=-1;
@@ -285,25 +183,6 @@ int conseguirAlfanumerico(char* cadena,int limite){
 	}
 	return retorno;
 }
-
-int esAlfanumerico(char* cadena,int limite){
-	int retorno=-1;
-	int i;
-	if(cadena!=NULL && limite>0){
-		retorno=1;
-		for (i=0;i<limite && cadena[i]!='\0';i++){
-			if((cadena[0] == ' ') || ((cadena[i] != ' ') && (cadena[i] != 'ñ') && (cadena[i] != 'Ñ') && (cadena[i] != 'Ç') && (cadena[i] != 'ç') &&
-				(cadena[i] != 'á') && (cadena[i] != 'é') && (cadena[i] != 'í') && (cadena[i] != 'ó') && (cadena[i] != 'ú') &&
-				(cadena[i] != 'Á') && (cadena[i] != 'É') && (cadena[i] != 'Í') && (cadena[i] != 'Ó') && (cadena[i] != 'Ú') &&
-				(cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && (cadena[i] < '0' || cadena[i] > '9'))){
-				retorno=0;
-				break;
-			}
-		}
-	}
-	return retorno;
-}
-
 
 int pasarInicialesNombreMayusculas(char* nombre,int limite){
 	int retorno=-1;

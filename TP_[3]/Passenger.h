@@ -10,6 +10,8 @@
 #include "Input.h"
 #include "parser.h"
 #include "Validations.h"
+#include "Zprueba.h"
+
 #define REINTENTOS 3
 #define LARGONOMBRE 50
 #define LARGODESCRIPCION 20
@@ -39,7 +41,7 @@ typedef struct
 
 /// @brief - Pide memoria para un nuevo empleado
 /// @return - Retorna un puntero con espacio de memoria de tipo Passenger
-Passenger* Passenger_new();
+Passenger* Computer_new();
 
 /// @brief - Pide memoria para un pasajero nuevo y setea los campos en el espacio de memoria requerido
 /// @param idStr - ID que va a setear
@@ -50,7 +52,7 @@ Passenger* Passenger_new();
 /// @param tipoPasajeroStr - Tipo de pasajero que va a setear
 /// @param estadoVueloStr - Estado de vuelo que va a setear
 /// @return - Retorna el puntero con espacio de memoria de tipo Passenger con los campos ya seteados si salió bien, o puntero a NULL si hubo un error
-Passenger* Passenger_newParametros(char* idStr,char* nombreStr,char* apellidoStr,char* precioStr, char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr);
+Passenger* Computer_newParametros(char* idStr,char* nombreStr,char* apellidoStr,char* precioStr, char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr);
 
 /// @brief - Libera espacio de memoria de un pasajero
 /// @param this - Puntero a pasajero
@@ -93,14 +95,14 @@ int Passenger_getIdTXT(Passenger* this,char id[]);
 /// @param nombre - Puntero al nombre que se va a cargar
 /// @return - Retorna 0 (EXITO) - Si se pudo cargar el nombre en el campo del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al nombre es NULL
-int Passenger_setNombre(Passenger* this,char* nombre);
+int Computer_setDescripcion(Passenger* this,char* nombre);
 
 /// @brief - Obtiene el nombre del empleado
 /// @param this - Puntero a empleado
 /// @param nombre - Puntero al espacio donde se va a guardar el nombre obtenido
 /// @return - Retorna 0 (EXITO) - Si se pudo obtener el nombre del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al nombre es NULL
-int Passenger_getNombre(Passenger* this,char* nombre);
+int Computer_getDescripcion(Passenger* this,char* nombre);
 //***********************************************************************************************
 
 

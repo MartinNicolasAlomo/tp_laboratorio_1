@@ -4,9 +4,12 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include "Computer.h"
+#include "Controller.h"
 #include "Input.h"
-#include "Zprueba.h"
-
+#include "LinkedList.h"
+#include "Parser.h"
+#include "Validations.h"
 
 /// @brief Verifica si la cadena contiene solo numeros
 /// @param cadena cadena de caracteres a ser analizada

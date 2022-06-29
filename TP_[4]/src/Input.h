@@ -5,7 +5,6 @@
 #include <ctype.h>
 #include <string.h>
 #include "Validations.h"
-#include "Zprueba.h"
 
 
 /// @brief Lee desde stdin hasta que encuentre un '\n' o hasta que haya copiado en cadena un maximo de 'longitud-1' caracteres

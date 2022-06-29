@@ -7,6 +7,8 @@ static Node* getNode(LinkedList* this, int nodeIndex);
 static int addNode(LinkedList* this, int nodeIndex,void* pElement);
 
 
+
+
 /** \brief Crea un nuevo LinkedList en memoria de manera dinamica
  *  \param void
  *  \return LinkedList* Retorna (NULL) en el caso de no conseguir espacio en memoria
@@ -225,8 +227,9 @@ int ll_remove(LinkedList* this,int index){
 int ll_clear(LinkedList* this){
     int returnAux = -1;
     int i;
+    int len=ll_len(this);
     if(this!=NULL){
-    	for(i=0;i<ll_len(this);i++){
+    	for(i=0;i<len;i++){
     		if(!ll_remove(this, i)){
     	    	returnAux=0;
     		}
@@ -264,8 +267,9 @@ int ll_indexOf(LinkedList* this, void* pElement){
     int returnAux = -1;
     Node* pNode=NULL;
     int i;
+    int len=ll_len(this);
     if(this!=NULL){
-		for(i=0;i<ll_len(this);i++){
+		for(i=0;i<len;i++){
 			pNode=getNode(this, i);
 			if(pNode!=NULL && pElement==pNode->pElement){
 		       	returnAux=i;
@@ -330,6 +334,7 @@ void* ll_pop(LinkedList* this,int index){
     return returnAux;
 }
 
+
 /** \brief  Determina si la lista contiene o no el elemento pasado como parametro
  * \param this LinkedList* Puntero a la lista
  * \param pElement void* Puntero del elemento a verificar
@@ -341,9 +346,10 @@ int ll_contains(LinkedList* this, void* pElement){
     int returnAux = -1;
     Node* pNode;
     int i;
+    int len=ll_len(this);
     if(this!=NULL){
 		returnAux=0;
-    	for(i=0;i<ll_len(this);i++){
+    	for(i=0;i<len;i++){
 			pNode=getNode(this, i);
 			if(pNode!=NULL && pElement==pNode->pElement){
 			returnAux=1;
@@ -365,9 +371,10 @@ int ll_containsAll(LinkedList* this,LinkedList* this2){
     int returnAux = -1;
     void* pElement=NULL;
     int i;
+    int len=ll_len(this2);
     if(this!=NULL && this2!=NULL){
 		returnAux=1;
-    	for(i=0;i<ll_len(this2);i++){
+    	for(i=0;i<len;i++){
     		pElement=ll_get(this2, i);
         	if(pElement!=NULL && ll_contains(this, pElement)==0){
         		returnAux=0;
@@ -453,3 +460,25 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order){
     }
     return returnAux;
 }
+
+
+int ll_map(LinkedList* this, int (*pFunc)(void*)){	//recorrer toda la lista, cada eleento llamar a pFunc?
+    int returnAux =-1;
+    void* pElement=NULL;
+    int len;
+    int i;
+    if(this!=NULL && pFunc!=NULL){
+    	len=ll_len(this);
+    	for(i=0;i<len;i++){
+    		pElement=ll_get(this, i);
+    		if(pElement!=NULL){
+    			pFunc(pElement);
+    		}
+    	}
+    	returnAux=0;
+    }
+    return returnAux;
+}
+
+
+
