@@ -114,15 +114,15 @@ int controller_addPassenger(LinkedList* pArrayListPassenger){
 	int confirmar;
 
 	if(pArrayListPassenger!=NULL){
-		pPasajero=Computer_new();
+		pPasajero=Passenger_new();
 		if(pPasajero!=NULL && !Passenger_cargarPasajero(&auxiliar)){
 			if(!ingresarEntero(&confirmar, "¿Está seguro/a de quiere agregar este pasajero?\n  1- Si\n  0- No\n\n", MSJ_ERROROPCION, 0, 1, REINTENTOS)){
 				if(confirmar){
 					auxiliar.id=idIncremental();
 					if(auxiliar.id>0 && !Passenger_setId(pPasajero, auxiliar.id) &&
-							!Computer_setDescripcion(pPasajero, auxiliar.nombre) &&
+							!Passenger_setDescripcion(pPasajero, auxiliar.nombre) &&
 							!Passenger_setApellido(pPasajero, auxiliar.apellido) &&
-							!Passenger_setPrecio(pPasajero, auxiliar.precio) &&
+							!Product_setPrecio(pPasajero, auxiliar.precio) &&
 							!Passenger_setCodigoVuelo(pPasajero, auxiliar.codigoVuelo)&&
 							!Passenger_setTipoPasajeroNumerico(pPasajero, auxiliar.tipoPasajero) &&
 							!Passenger_setEstadoVueloNumerico(pPasajero, auxiliar.estadoVuelo) &&
@@ -208,9 +208,9 @@ int controller_editPassenger(LinkedList* pArrayListPassenger){
     		Controller_imprimirElemento(pArrayListPassenger, indice);
     			pPasajero=(Passenger*)ll_get(pArrayListPassenger, indice);
 				if(pPasajero!=NULL &&
-						!Computer_getDescripcion(pPasajero, auxiliar.nombre) &&
+						!Passenger_getDescripcion(pPasajero, auxiliar.nombre) &&
 						!Passenger_getApellido(pPasajero, auxiliar.apellido) &&
-						!Passenger_getPrecio(pPasajero, &auxiliar.precio) &&
+						!Product_getPrecio(pPasajero, &auxiliar.precio) &&
 						!Passenger_getCodigoVuelo(pPasajero, auxiliar.codigoVuelo) &&
 						!Passenger_getTipoPasajeroNumerico(pPasajero, &auxiliar.tipoPasajero) &&
 						!Passenger_getEstadoVueloNumerico(pPasajero, &auxiliar.estadoVuelo)){
@@ -275,9 +275,9 @@ int controller_editPassenger(LinkedList* pArrayListPassenger){
     							if(!flagCambio){
         							if(!ingresarEntero(&confirmar, "¿Está seguro/a de quiere realizar las modificaciones?\n  1- Si\n  0- No\n\n", MSJ_ERROROPCION, 0, 1, REINTENTOS)){
         								if(confirmar==1){
-        									if(!Computer_setDescripcion(pPasajero, auxiliar.nombre) &&
+        									if(!Passenger_setDescripcion(pPasajero, auxiliar.nombre) &&
 													!Passenger_setApellido(pPasajero, auxiliar.apellido) &&
-													!Passenger_setPrecio(pPasajero, auxiliar.precio) &&
+													!Product_setPrecio(pPasajero, auxiliar.precio) &&
 													!Passenger_setCodigoVuelo(pPasajero, auxiliar.codigoVuelo) &&
 													!Passenger_setTipoPasajeroNumerico(pPasajero, auxiliar.tipoPasajero) &&
 													!Passenger_setEstadoVueloNumerico(pPasajero, auxiliar.estadoVuelo)){
@@ -436,9 +436,9 @@ int Controller_imprimirElemento(LinkedList* pArrayListPassenger,int indice){
 		pPasajero=(Passenger*)ll_get(pArrayListPassenger, indice);
 		if(pPasajero!=NULL &&
 			!Passenger_getId(pPasajero, &auxiliar.id) &&
-			!Computer_getDescripcion(pPasajero, auxiliar.nombre) &&
+			!Passenger_getDescripcion(pPasajero, auxiliar.nombre) &&
 			!Passenger_getApellido(pPasajero, auxiliar.apellido) &&
-			!Passenger_getPrecio(pPasajero, &auxiliar.precio) &&
+			!Product_getPrecio(pPasajero, &auxiliar.precio) &&
 			!Passenger_getCodigoVuelo(pPasajero, auxiliar.codigoVuelo) &&
 			!Passenger_getTipoPasajeroNumerico(pPasajero, &auxiliar.tipoPasajero) &&
 			!Passenger_getEstadoVueloNumerico(pPasajero, &auxiliar.estadoVuelo)){
@@ -586,9 +586,9 @@ int controller_saveAsText(char* path , LinkedList* pArrayListPassenger){
 				pPasajero=(Passenger*)ll_get(pArrayListPassenger, i);
 				if(pPasajero!=NULL &&
 					!Passenger_getId(pPasajero, &auxId) &&
-					!Computer_getDescripcion(pPasajero, auxNombre) &&
+					!Passenger_getDescripcion(pPasajero, auxNombre) &&
 					!Passenger_getApellido(pPasajero, auxApellido) &&
-					!Passenger_getPrecio(pPasajero, &auxPrecio) &&
+					!Product_getPrecio(pPasajero, &auxPrecio) &&
 					!Passenger_getCodigoVuelo(pPasajero, auxCodigoVuelo) &&
 					!Passenger_getTipoPasajeroNUM_TXT(pPasajero, auxTipoPasajero) &&
 					!Passenger_getEstadoVueloNUM_TXT(pPasajero, auxEstadoVuelo)){

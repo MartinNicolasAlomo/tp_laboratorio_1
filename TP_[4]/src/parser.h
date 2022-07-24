@@ -17,7 +17,7 @@
  * 						 -1 (ERROR) - Si: La ruta del Archivo no es valida, el puntero a LinkedList es NULL, no funcionó la Función de lectura FSCANF,
  * 										  no se pudo crear al Pasajero o no se pudo agregar el Pasajero a la Lista
  */
-int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayList);
+int parser_PassengerFromText(FILE* pFile, LinkedList* pArrayList);
 
 
 #endif /* PARSER_H_ */

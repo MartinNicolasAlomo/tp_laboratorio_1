@@ -98,14 +98,14 @@ int Computer_getDescripcion(eComputer* this,char* nombre);
 /// @param precio - Precio a cargar
 /// @return - Retorna 0 (EXITO) - Si se pudo cargar el precio en el campo del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el precio no es valido
-int Passenger_setPrecio(eComputer* this,float precio);
+int Product_setPrecio(eComputer* this,float precio);
 
 /// @brief * Obtiene el precio del pasajero
 /// @param this - Puntero a pasajero
 /// @param precio - Puntero al espacio donde se va a guardar el precio obtenido
 /// @return - Retorna 0 (EXITO) - Si se pudo obtener el precio del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al precio es NULL
-int Passenger_getPrecio(eComputer* this,float* precio);
+int Product_getPrecio(eComputer* this,float* precio);
 
 
 /// @brief - Carga el precio en el campo del pasajero (tratado como texto) y valida que el dato sea correcto

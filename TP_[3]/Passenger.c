@@ -1,20 +1,20 @@
 #include "Passenger.h"
 
-Passenger* Computer_new(){
+Passenger* Passenger_new(){
 	Passenger* auxPuntero=NULL;
 	auxPuntero=(Passenger*) malloc(sizeof(Passenger));
 	return auxPuntero;
 }
 
-Passenger* Computer_newParametros(char* idStr,char* nombreStr,char* apellidoStr,char* precioStr, char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr){
+Passenger* Passenger_newParametros(char* idStr,char* nombreStr,char* apellidoStr,char* precioStr, char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr){
 	Passenger* this=NULL;
-	this=Computer_new();
+	this=Passenger_new();
 	if(this!=NULL && idStr!=NULL && nombreStr!=NULL && apellidoStr!=NULL && precioStr!=NULL &&
 		codigoVueloStr!=NULL && tipoPasajeroStr!=NULL && estadoVueloStr!=NULL){
 		if(Passenger_setIdTXT(this, idStr)==-1 ||
-			Computer_setDescripcion(this, nombreStr)==-1 ||
+			Passenger_setDescripcion(this, nombreStr)==-1 ||
 			Passenger_setApellido(this, apellidoStr)==-1 ||
-			Passenger_setPrecioTXT(this, precioStr)==-1 ||
+			Product_setPrecioTXT(this, precioStr)==-1 ||
 			Passenger_setCodigoVuelo(this, codigoVueloStr)==-1 ||
 			Passenger_setTipoPasajeroTXT_NUM(this, tipoPasajeroStr)==-1 ||
 			Passenger_setEstadoVueloTXT_NUM(this, estadoVueloStr)==-1){
@@ -81,7 +81,7 @@ int Passenger_getIdTXT(Passenger* this,char id[]){
 //***********************************************************************************************
 
 
-int Computer_setDescripcion(Passenger* this,char* nombre){
+int Passenger_setDescripcion(Passenger* this,char* nombre){
 	int retorno=-1;
 	if(this!=NULL && nombre!=NULL && esNombre(nombre, LARGONOMBRE) && !pasarInicialesNombreMayusculas(nombre, LARGONOMBRE)){
 		strncpy(this->nombre, nombre, LARGONOMBRE);
@@ -90,7 +90,7 @@ int Computer_setDescripcion(Passenger* this,char* nombre){
 	return retorno;
 }
 
-int Computer_getDescripcion(Passenger* this,char* nombre){
+int Passenger_getDescripcion(Passenger* this,char* nombre){
 	int retorno=-1;
 	if(this!=NULL && nombre!=NULL){
 		strncpy(nombre, this->nombre, LARGONOMBRE);
@@ -121,7 +121,7 @@ int Passenger_getApellido(Passenger* this,char* apellido){
 //***********************************************************************************************
 
 
-int Passenger_setPrecio(Passenger* this,float precio){
+int Product_setPrecio(Passenger* this,float precio){
 	int retorno=-1;
 	if(this!=NULL && precio>0){
 		this->precio=precio;
@@ -130,7 +130,7 @@ int Passenger_setPrecio(Passenger* this,float precio){
 	return retorno;
 }
 
-int Passenger_getPrecio(Passenger* this,float* precio){
+int Product_getPrecio(Passenger* this,float* precio){
 	int retorno=-1;
 	if(this!=NULL && precio>0){
 		*precio=this->precio;
@@ -139,7 +139,7 @@ int Passenger_getPrecio(Passenger* this,float* precio){
 	return retorno;
 }
 
-int Passenger_setPrecioTXT(Passenger* this,char precio[]){
+int Product_setPrecioTXT(Passenger* this,char* precio){
 	int retorno=-1;
 	float auxPrecio;
 	if(this!=NULL && precio>0 && esFlotante(precio, LARGONUMEROTXT)){
@@ -155,7 +155,7 @@ int Passenger_setPrecioTXT(Passenger* this,char precio[]){
 	return retorno;
 }
 
-int Passenger_getPrecioTXT(Passenger* this,char precio[]){
+int Product_getPrecioTXT(Passenger* this,char* precio){
 	int retorno=-1;
 	if(this!=NULL && precio!=NULL){
 		sprintf(precio,"%.2f",this->precio);
@@ -382,7 +382,7 @@ int Passenger_compararPorPrecio(void* primerPasajero,void* segundoPasajero){
 	if(primerPasajero!=NULL && segundoPasajero!=NULL){
 		pasajeroUno = (Passenger*) primerPasajero;
 		pasajeroDos = (Passenger*) segundoPasajero;
-		if(!Passenger_getPrecio(pasajeroUno, &precioUno) && !Passenger_getPrecio(pasajeroDos, &precioDos)){
+		if(!Product_getPrecio(pasajeroUno, &precioUno) && !Product_getPrecio(pasajeroDos, &precioDos)){
 			if(precioUno>precioDos){
 				retorno=1;
 			}
@@ -474,7 +474,7 @@ int Passenger_compararPorNombre(void* primerPasajero,void* segundoPasajero){
 	if(primerPasajero!=NULL && segundoPasajero!=NULL){
 		pasajeroUno = (Passenger*) primerPasajero;
 		pasajeroDos = (Passenger*) segundoPasajero;
-		if(!Computer_getDescripcion(pasajeroUno, nombreUno) && !Computer_getDescripcion(pasajeroDos, nombreDos)){
+		if(!Passenger_getDescripcion(pasajeroUno, nombreUno) && !Passenger_getDescripcion(pasajeroDos, nombreDos)){
 			comparacion = strncmp(nombreUno,nombreDos,LARGONOMBRE);
 			if(comparacion>0){
 				retorno=1;

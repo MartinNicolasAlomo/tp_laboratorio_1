@@ -1,9 +1,8 @@
 #include "Input.h"
-#define REINTENTOS 3
 
 int obtenerCadena(char* cadena,int limite){
 	int retorno=-1;
-	char bufferString[4096];
+	char bufferString[MAX_BUFFERSTR];
 	if(cadena!=NULL && limite>0){
 		fflush(stdin);
 		if(fgets(bufferString,sizeof(bufferString),stdin) != NULL){
@@ -42,7 +41,7 @@ int ingresarEntero(int* pEntero,char* mensaje,char* mensajeError,int minimo,int 
 
 int conseguirEntero(int* pResultado){
 	int retorno=-1;
-	char bufferString[4086];
+	char bufferString[MAX_BUFFERSTR];
 	if(pResultado!=NULL){
 		if(!obtenerCadena(bufferString,sizeof(bufferString)) && esEntero(bufferString,sizeof(bufferString))){
 			*pResultado=atoi(bufferString);
@@ -75,7 +74,7 @@ int ingresarFlotante(float* pFlotante,char* mensaje,char* mensajeError,float min
 
 int conseguirFlotante(float* pResultado){
 	int retorno=-1;
-	char bufferString[4086];		//*****************************************
+	char bufferString[MAX_BUFFERSTR];		//*****************************************
 	if(pResultado!=NULL){
 		if(!obtenerCadena(bufferString,sizeof(bufferString)) && esFlotante(bufferString,sizeof(bufferString))){
 			*pResultado=atof(bufferString);

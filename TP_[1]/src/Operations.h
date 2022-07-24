@@ -6,15 +6,22 @@
 #include <string.h>
 #include "Input.h"
 #include "Validations.h"
-#define LONGMENSAJEMENU 500
-#define LONGMENSAJES 100
-#define INGRESOMINIMO 10
-#define KMMAXIMOS 50000.00
-#define PRECIOMAXIMO 750000.00
-#define BITCOINPRECIO 4800000.00
+#define LARGO_MENSAJES 750
+#define INGRESO_MINIMO 10
+#define KM_MAXIMOS 50000.00
+#define PRECIO_MAXIMO 750000.00
+#define BITCOIN_PRECIO 4800000.00
 #define REINTENTOS 3
 #define DESCUENTO 10
 #define INTERES 25
+#define MSJ_MENU_INGRESO "Seleccione una opcion:\n1. Ingresar Kilómetros: (km = %.2f)\n2. Ingresar Precio de Vuelos: (Aerolíneas = $%.2f, Latam = $%.2f)\n3. Calcular todos los costos:\n4. Informar Resultados\n5. Carga forzada de datos\n6. Salir\n\n"
+#define MSJ_INGRESO_KM "Ingrese los kilometros de vuelo (maximo %.2f km):\n"
+#define MSJ_INGRESO_AEROLINEAS "Ingrese el precio para Aerolineas (maximo $%.2f):\n"
+#define MSJ_INGRESO_LATAM "\nIngrese el precio para LATAM (maximo $%.2f):\n"
+#define MSJ_ERROR_OPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
+#define MSJ_ERROR_KM "\nError! No es un kilometro correcto.\n\n\n"
+#define MSJ_ERROR_PRECIO "\nError! No es un precio correcto.\n\n\n"
+
 
 /// @brief Es el menu interactivo del programa
 /// @return Retorna 0 (EXITO) si se pudo finalizar el menu interactivo, y -1 (ERROR) si hubo un fallo en el programa

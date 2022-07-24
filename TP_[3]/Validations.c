@@ -1,16 +1,15 @@
 #include "Validations.h"
 
-
 int esEntero(char* cadena,int limite){
 	int retorno=-1;
 	int i;
 	if(cadena!=NULL && limite>0){
-		retorno = 1;
+		retorno=1;
 		for (i=0;i<limite && cadena[i]!='\0';i++) {
 			if(i==0 && (cadena[i]=='+' || cadena[i]=='-')){
 				continue;
 			}
-			if (cadena[i]<'0' || cadena[i]>'9'){
+			if(cadena[i]<'0' || cadena[i]>'9'){
 				retorno=0;
 				break;
 			}
@@ -35,10 +34,10 @@ int esFlotante(char* cadena,int limite){
 	if(cadena!=NULL && limite>0){
 		retorno=1;
 		for (i=0;i<limite && cadena[i]!='\0';i++) {
-			if (i==0 && (cadena[0]=='-' || cadena[0]=='+')){
+			if(i==0 && (cadena[0]=='-' || cadena[0]=='+')){
 				continue;
 				}
-			if (cadena[i]<'0' || cadena[i]>'9'){
+			if(cadena[i]<'0' || cadena[i]>'9'){
 				if(cadena[i]=='.' && contadorPuntos==0){
 					contadorPuntos++;
 				}
@@ -67,14 +66,16 @@ int esNombre(char* cadena,int limite){
 	if(cadena!=NULL && limite>0){
 		retorno=1;
 		for (i=0;i<limite && cadena[i]!='\0';i++){
-			if(((cadena[i] != ' ') && (cadena[i] != '-') && (cadena[i] != 'ñ') && (cadena[i] != 'Ñ') && (cadena[i] != 'ç') && (cadena[i] != 'Ç') &&
+			if((i==0 && (cadena[0] == ' ' || cadena[0] == '-' || cadena[0] == '\0')) ||
+				(cadena[i] == ' ' && (cadena[i+1] == ' ' || cadena[i+1] == '-' || cadena[i+1] == '\0')) ||
+				(cadena[i] == '-' && (cadena[i+1] == ' ' || cadena[i+1] == '-' || cadena[i+1] == '\0')) ||
+				((cadena[i] != ' ') && (cadena[i] != '-') &&
+				(cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') &&
+				(cadena[i] != 'ñ') && (cadena[i] != 'Ñ') && (cadena[i] != 'ç') && (cadena[i] != 'Ç') &&
 				(cadena[i] != 'á') && (cadena[i] != 'é') && (cadena[i] != 'í') && (cadena[i] != 'ó') && (cadena[i] != 'ú') &&
 				(cadena[i] != 'Á') && (cadena[i] != 'É') && (cadena[i] != 'Í') && (cadena[i] != 'Ó') && (cadena[i] != 'Ú') &&
 				(cadena[i] != 'ä') && (cadena[i] != 'ë') && (cadena[i] != 'ï') && (cadena[i] != 'ö') && (cadena[i] != 'ü') &&
-				(cadena[i] != 'Ä') && (cadena[i] != 'Ë') && (cadena[i] != 'Ï') && (cadena[i] != 'Ö') && (cadena[i] != 'Ü') &&
-				(cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z')) || (cadena[0] == ' ')){
-				//(nombre[i]==' ' && nombre[i+1]==' ') || (nombre[i]=='-' && nombre[i+1]=='-')
-				//(nombre[i]==' ' && nombre[i+1]=='-') || (nombre[i]=='-' && nombre[i+1]==' ')
+				(cadena[i] != 'Ä') && (cadena[i] != 'Ë') && (cadena[i] != 'Ï') && (cadena[i] != 'Ö') && (cadena[i] != 'Ü'))){
 				retorno=0;
 				break;
 			}
@@ -90,8 +91,12 @@ int esDescripcion(char* cadena,int limite){
 	if(cadena!=NULL && limite>0){
 		retorno=1;
 		for (i=0;i<limite && cadena[i]!='\0';i++){
-			if((cadena[0] == ' ') || ((cadena[i] != ' ') && (cadena[i] != '.') && (cadena[i] != ',') && (cadena[i] != ';') &&
-				(cadena[i] != ':') && (cadena[i] != '-') && (cadena[i] != 'Ç') && (cadena[i] != 'ç') &&
+			if((i==0 && (cadena[0] == ' ' || cadena[0] == '-' || cadena[0] == '.' || cadena[0] == ',' ||
+				cadena[0] == '@' || cadena[0] == '*' || cadena[0] == ';' || cadena[0] == ':' || cadena[0] == '°' || cadena[0] == '\0')) ||
+				(cadena[i] == ' ' && cadena[i+1] == '\0') ||
+				(cadena[i] == '-' && cadena[i+1] == '\0') ||
+				((cadena[i] != ' ') && (cadena[i] != '.') && (cadena[i] != ',') && (cadena[i] != ';') && (cadena[i] != '@') &&
+				(cadena[i] != ':') && (cadena[i] != '-') && (cadena[i] != 'Ç') && (cadena[i] != 'ç') && (cadena[i] != '*') &&
 				(cadena[i] != '(') && (cadena[i] != ')') && (cadena[i] != '"') && (cadena[i] != '¡') && (cadena[i] != '!') &&
 				(cadena[i] != '¿') && (cadena[i] != '?') && (cadena[i] != '®') && (cadena[i] != '©') && (cadena[i] != '°') &&
 				(cadena[i] != '$') && (cadena[i] != '¢') && (cadena[i] != '&') && (cadena[i] != 'ñ') && (cadena[i] != 'Ñ') &&
@@ -115,9 +120,14 @@ int esAlfanumerico(char* cadena,int limite){
 	if(cadena!=NULL && limite>0){
 		retorno=1;
 		for (i=0;i<limite && cadena[i]!='\0';i++){
-			if((cadena[0] == ' ') || ((cadena[i] != ' ') && (cadena[i] != 'ñ') && (cadena[i] != 'Ñ') && (cadena[i] != 'Ç') && (cadena[i] != 'ç') &&
+			if((i==0 && (cadena[0] == ' ' || cadena[0] == '\0')) ||
+				(cadena[i] == ' ' && (cadena[i+1] == ' ' || cadena[i+1] == '\0')) ||
+				((cadena[i] != ' ') &&
+				(cadena[i] != 'ñ') && (cadena[i] != 'Ñ') && (cadena[i] != 'Ç') && (cadena[i] != 'ç') &&
 				(cadena[i] != 'á') && (cadena[i] != 'é') && (cadena[i] != 'í') && (cadena[i] != 'ó') && (cadena[i] != 'ú') &&
 				(cadena[i] != 'Á') && (cadena[i] != 'É') && (cadena[i] != 'Í') && (cadena[i] != 'Ó') && (cadena[i] != 'Ú') &&
+				(cadena[i] != 'ä') && (cadena[i] != 'ë') && (cadena[i] != 'ï') && (cadena[i] != 'ö') && (cadena[i] != 'ü') &&
+				(cadena[i] != 'Ä') && (cadena[i] != 'Ë') && (cadena[i] != 'Ï') && (cadena[i] != 'Ö') && (cadena[i] != 'Ü') &&
 				(cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && (cadena[i] < '0' || cadena[i] > '9'))){
 				retorno=0;
 				break;
@@ -126,4 +136,3 @@ int esAlfanumerico(char* cadena,int limite){
 	}
 	return retorno;
 }
-

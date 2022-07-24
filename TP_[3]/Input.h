@@ -6,6 +6,8 @@
 #include <string.h>
 #include "Validations.h"
 #include "Zprueba.h"
+#define MAX_BUFFERSTR 4096
+//#define REINTENTOS 25
 
 
 /// @brief Lee desde stdin hasta que encuentre un '\n' o hasta que haya copiado en cadena un maximo de 'longitud-1' caracteres
@@ -13,7 +15,6 @@
 /// @param limite Define el tamaño de la cadena
 /// @return Retorna 0 (EXITO) si se obtiene una cadena, -1 (ERROR) si no se consiguio
 int obtenerCadena(char* cadena, int limite);
-
 
 /// @brief Solicita un numero entero al usuario y luego de verificarlo devuelve el resultado
 /// @param pEntero Puntero al espacio de memoria donde se dejara el resultado de la funcion
@@ -30,7 +31,6 @@ int ingresarEntero(int *pEntero, char *mensaje, char *mensajeError, int minimo, 
 /// @return Retorna 0 (EXITO) si se obtiene un entero, y -1 si no se consiguio
 int conseguirEntero(int* pResultado);
 
-
 /// @brief Solicita un numero con decimal al usuario y luego de verificarlo devuelve el resultado
 /// @param pFlotante Puntero al espacio de memoria donde se dejara el resultado de la funcion
 /// @param mensaje Mensaje a ser mostrado
@@ -45,7 +45,6 @@ int ingresarFlotante(float *pFlotante, char *mensaje, char *mensajeError, float 
 /// @param pResultado Puntero al espacio de memoria donde se dejara el resultado de la funcion
 /// @return Retorna 0 (EXITO) si se obtiene un numero flotante, y -1 si no se consiguio
 int conseguirFlotante(float* pResultado);
-
 
 /// @brief Solicita un nombre al usuario y luego de verificarlo devuelve el resultado
 /// @param pNombre Puntero al espacio de memoria donde se dejara el nombre ingresado y verificado
@@ -99,5 +98,6 @@ int conseguirAlfanumerico(char* pResultado,int limiteAlfanumerico);
 /// @param limite Define el tamaño de la cadena
 /// @return Retorna 0 (EXITO) si se pudo modificar el nombre correctamente, y -1 si no se consiguio
 int pasarInicialesNombreMayusculas(char* nombre,int limite);
+
 
 #endif /* INPUT_H_ */

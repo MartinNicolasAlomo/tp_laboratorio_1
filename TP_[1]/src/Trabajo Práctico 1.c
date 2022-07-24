@@ -14,10 +14,10 @@
 int main(void) {
 	setbuf(stdout, NULL);
 	if(!menuOpcionesEmpresas()){
-		puts("Finalizó el programa.");
+		puts("\n\n\n\nFinalizó el programa.");
 	}
 	else{
-		puts("Hubo un fallo en el programa.");
+		puts("\n\n\n\nSe finalizó el programa de manera errónea.");
 	}
 	return EXIT_SUCCESS;
 }

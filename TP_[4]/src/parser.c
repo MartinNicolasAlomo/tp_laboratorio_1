@@ -1,6 +1,6 @@
 #include "parser.h"
 
-int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayList){
+int parser_PassengerFromText(FILE* pFile, LinkedList* pArrayList){
     int retorno=-1;
     eComputer* pComputer=NULL;
     char auxTitulo[100];
@@ -12,8 +12,8 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayList){
 	if(pFile!=NULL && pArrayList!=NULL){
 		fscanf(pFile, "%[^\n]\n", auxTitulo);
 		do{
-			if(fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n", auxId, auxDescripcion, auxPrecio, auxIdTipo)==4){
-				pComputer = Computer_newParametros(auxId, auxDescripcion, auxPrecio, auxIdTipo);
+			if(fscanf(pFile, "%[^,],%[^,],%[^,],%[^\n]\n", auxId, auxDescripcion, auxPrecio, auxIdTipo)==4){
+				pComputer=Computer_newParametros(auxId, auxDescripcion, auxPrecio, auxIdTipo);
 				if(pComputer!=NULL){
 					if(!ll_add(pArrayList, pComputer)){
 						retorno=0;

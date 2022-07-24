@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include "ArrayPassenger.h"
 #include "Input.h"
 
 /// @brief Verifica si la cadena contiene solo números

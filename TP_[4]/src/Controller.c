@@ -1,8 +1,8 @@
 #include "Controller.h"
 
-static const char TXT_IDTIPO[2][LARGODESCRIPCION]={"DESKOP","LAPTOP"};
+static const char TXT_IDTIPO[2][LARGODESCRIPCION]={"DESKOP", "LAPTOP"};
 
-int controller_loadFromText(char* path , LinkedList* pArraList){
+int controller_loadFromText(char* path, LinkedList* pArraList){
 	int retorno=-1;
 	FILE* pArchivo=NULL;
 	if(path!=NULL && pArraList!=NULL){
@@ -64,7 +64,7 @@ int Controller_imprimirElemento(LinkedList* pArrayList,int indice){
 		if(pComputadora!=NULL &&
 			!Passenger_getId(pComputadora, &auxiliar.id) &&
 			!Computer_getDescripcion(pComputadora, auxiliar.descripcion) &&
-			!Passenger_getPrecio(pComputadora, &auxiliar.precio) &&
+			!Product_getPrecio(pComputadora, &auxiliar.precio) &&
 			!Computer_getTipo(pComputadora, &auxiliar.idTipo)){
 			printf("%5d %110s %15.2f %15s\n",auxiliar.id,auxiliar.descripcion,auxiliar.precio,
 															TXT_IDTIPO[auxiliar.idTipo-1]);
@@ -145,7 +145,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayList){
 				if(pComputadora!=NULL &&
 					!Passenger_getId(pComputadora, &auxId) &&
 					!Computer_getDescripcion(pComputadora, auxDescripcion) &&
-					!Passenger_getPrecio(pComputadora, &auxPrecio) &&
+					!Product_getPrecio(pComputadora, &auxPrecio) &&
 					!Computer_getTipo(pComputadora, &auxIdTipo)){
 					fprintf(pArchivo,"%d,%s,%.2f,%d\n",auxId,auxDescripcion,auxPrecio,auxIdTipo);
 				}

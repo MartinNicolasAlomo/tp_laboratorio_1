@@ -35,6 +35,7 @@
 int main(void){
 	setbuf(stdout, NULL);
 	int opcionMenu=0;
+	char nombreArchivoCSV[LARGODESCRIPCION];
 	int devolucion;
 	int flagCarga=1;
 	int flagCambios=1;
@@ -50,22 +51,28 @@ int main(void){
     						puts("Ya se cargaron los datos previamente, no se pueden volver a cargar.\n\n\n");
     					}
     					else{
-    						devolucion = controller_loadFromText("datos_SP.csv",listaComputadoras);
-    						if(devolucion==0){
-    					    	puts("Archivo en modo texto cargado exitosamente.\n\n");
-    							flagCarga=0;
+    						if(!ingresarArchivoCSV(nombreArchivoCSV, LARGODESCRIPCION, "Ingrese nombre archivo CSV\n", "error", REINTENTOS)){
+        						devolucion = controller_loadFromText(nombreArchivoCSV,listaComputadoras);
+        						//"datos_SP.csv"
+        						if(devolucion==0){
+        					    	puts("Archivo en modo texto cargado exitosamente.\n\n");
+        							flagCarga=0;
+        						}
+        						else if(devolucion==-1){
+        							puts("La ruta del Archivo no es valida.\n\n\n");
+        						}
+        						else if(devolucion==-2){
+        							puts("El puntero a LinkedList es NULL.\n\n\n");
+        						}
+        						else if(devolucion==-3){
+        							puts("No se pudo abrir el Archivo.\n\n\n");
+        						}
+        						else {
+        							puts("No se pudieron parsear los Datos del Archivo.\n\n\n");
+        						}
     						}
-    						else if(devolucion==-1){
-    							puts("La ruta del Archivo no es valida.\n\n\n");
-    						}
-    						else if(devolucion==-2){
-    							puts("El puntero a LinkedList es NULL.\n\n\n");
-    						}
-    						else if(devolucion==-3){
-    							puts("No se pudo abrir el Archivo.\n\n\n");
-    						}
-    						else {
-    							puts("No se pudieron parsear los Datos del Archivo.\n\n\n");
+    						else{
+    							puts("Nombre de archivo no valido.\n\n\n");
     						}
     					}
     					break;
