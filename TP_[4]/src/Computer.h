@@ -11,12 +11,12 @@
 #include "Parser.h"
 #include "Validations.h"
 
-#define LARGONUMEROTXT 10
-#define LARGODESCRIPCION 150
+#define LARGO_NUMERO_TXT 10
+#define LARGO_DESCRIPCION 150
 #define REINTENTOS 3
 typedef struct{
 	int id;
-	char descripcion[LARGODESCRIPCION];
+	char descripcion[LARGO_DESCRIPCION];
 	float precio;
 	int idTipo;
 }eComputer;

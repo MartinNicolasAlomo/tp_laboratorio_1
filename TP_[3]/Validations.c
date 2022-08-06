@@ -1,6 +1,6 @@
 #include "Validations.h"
 
-int esEntero(char* cadena,int limite){
+int esEntero(char* cadena, int limite){
 	int retorno=-1;
 	int i;
 	if(cadena!=NULL && limite>0){
@@ -18,7 +18,7 @@ int esEntero(char* cadena,int limite){
 	return retorno;
 }
 
-int validarRangoEntero(int numero,int minimo,int maximo){
+int validarRangoEntero(int numero, int minimo, int maximo){
 	int retorno=0;
 	if (numero>=minimo && numero<=maximo) {
 		retorno=1;
@@ -26,8 +26,7 @@ int validarRangoEntero(int numero,int minimo,int maximo){
 	return retorno;
 }
 
-
-int esFlotante(char* cadena,int limite){
+int esFlotante(char* cadena, int limite){
 	int retorno=-1;
 	int i;
 	int contadorPuntos=0;
@@ -51,7 +50,7 @@ int esFlotante(char* cadena,int limite){
 	return retorno;
 }
 
-int validarRangoFlotante(float numero,float minimo,float maximo){
+int validarRangoFlotante(float numero, float minimo, float maximo){
 	int retorno=0;
 	if (numero>=minimo && numero<=maximo) {
 		retorno=1;
@@ -59,8 +58,7 @@ int validarRangoFlotante(float numero,float minimo,float maximo){
 	return retorno;
 }
 
-
-int esNombre(char* cadena,int limite){
+int esNombre(char* cadena, int limite){
 	int retorno=-1;
 	int i;
 	if(cadena!=NULL && limite>0){
@@ -84,8 +82,7 @@ int esNombre(char* cadena,int limite){
 	return retorno;
 }
 
-
-int esDescripcion(char* cadena,int limite){
+int esDescripcion(char* cadena, int limite){
 	int retorno=-1;
 	int i;
 	if(cadena!=NULL && limite>0){
@@ -110,11 +107,16 @@ int esDescripcion(char* cadena,int limite){
 			}
 		}
 	}
+	if(retorno==-1){
+		puts("Se recibieron mal los parametros - fn: esDescripcion");
+	}
+	else if(retorno==0){
+		puts("No es una descripción valida\n");
+	}
 	return retorno;
 }
 
-
-int esAlfanumerico(char* cadena,int limite){
+int esAlfanumerico(char* cadena, int limite){
 	int retorno=-1;
 	int i;
 	if(cadena!=NULL && limite>0){
@@ -132,6 +134,17 @@ int esAlfanumerico(char* cadena,int limite){
 				retorno=0;
 				break;
 			}
+		}
+	}
+	return retorno;
+}
+
+int esAnioBisiesto(int anio){
+	int retorno=-1;
+	if(anio!=0){
+		retorno=0;
+		if(anio%400==0 || (anio%4==0 && anio%100!=0)){
+			retorno=1;
 		}
 	}
 	return retorno;

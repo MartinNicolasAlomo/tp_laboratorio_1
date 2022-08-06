@@ -3,6 +3,7 @@
 int parser_PassengerFromText(FILE* pFile,LinkedList* pArrayListPassenger){
     int retorno=-1;
     Passenger* pPasajero=NULL;
+    int numeroPasajero=0;
     char auxTitulo[100];
     char auxId[100];
 	char auxNombre[100];
@@ -15,22 +16,18 @@ int parser_PassengerFromText(FILE* pFile,LinkedList* pArrayListPassenger){
 	if(pFile!=NULL && pArrayListPassenger!=NULL){
 		fscanf(pFile, "%[^\n]\n", auxTitulo);
 		do{
-			if(fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n", auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo)==7){
+			numeroPasajero++;
+			if(fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n", auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo)==7){
 				pPasajero=Passenger_newParametros(auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo);
-				if(pPasajero!=NULL){
-					if(!ll_add(pArrayListPassenger, pPasajero)){
-						retorno=0;
-					}
-					else{
-						puts("No se pudo agregar al Pasajero a la Lista, falló la Función ll_add.\n");
-					}
+				if(pPasajero!=NULL && !ll_add(pArrayListPassenger, pPasajero)){
+					retorno=0;
 				}
 				else{
-					puts("No se creó el Pasajero, falló la Función Passenger_newParametros.\n");
+					printf("No se pudo agregar pasajero n° %d de la lista.", numeroPasajero);
 				}
 			}
 			else{
-				puts("No funcionó la Función de lectura FSCANF.\n");
+				printf("No se pudo leer el elemento n° %d de la lista.\n", numeroPasajero);
 				break;
 			}
 		}while(!feof(pFile));
@@ -40,26 +37,25 @@ int parser_PassengerFromText(FILE* pFile,LinkedList* pArrayListPassenger){
 //***********************************************************************************************************************************
 
 
-int parser_PassengerFromBinary(FILE* pFile,LinkedList* pArrayListPassenger){
+int parser_PassengerFromBinary(FILE* pFile, LinkedList* pArrayListPassenger){
 	int retorno=-1;
 	Passenger* pPasajero=NULL;
+    int numeroPasajero=0;
 
 	if(pFile!=NULL && pArrayListPassenger!=NULL){
 		do{
+			numeroPasajero++;
 			pPasajero=Passenger_new();
-			if(pPasajero!=NULL && fread(pPasajero,sizeof(Passenger),1,pFile)){
-				if(!ll_add(pArrayListPassenger, pPasajero)){
-					retorno=0;
-				}
-				else{
-					puts("No se pudo agregar al Pasajero a la Lista, falló la Función ll_add.\n");
-					Passenger_delete(pPasajero);
-					break;
-					retorno=-3;
-				}
+			if(pPasajero!=NULL && fread(pPasajero, sizeof(Passenger), 1, pFile) && !ll_add(pArrayListPassenger, pPasajero)){
+				retorno=0;
 			}
 			else if(pPasajero==NULL){
-				puts("No se creó el Pasajero, falló la Función Passenger_newParametros.\n");
+				printf("*No se creó el pasajero n° %d de la lista, no hay espacio en memoria suficiente.\n", numeroPasajero);
+			}
+			else{
+				puts("*No se pudo agregar pasajero n° %d de la lista");
+				Passenger_delete(pPasajero);
+				break;
 			}
 		}while(!feof(pFile));
 	}

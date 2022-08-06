@@ -51,7 +51,7 @@ int main(){
 
     if(listaPasajeros!=NULL){
         do{
-        	if(!ingresarEntero(&opcionMenu, MSJ_MENUPRINCIPAL, MSJ_ERROROPCION, 1, 10, REINTENTOS)){
+        	if(!ingresarEntero(&opcionMenu, MSJ_MENU_PRINCIPAL, MSJ_ERROR_OPCION, 1, 10, REINTENTOS)){
     			switch(opcionMenu){
     				case 1:
     					if(!flagCarga){
@@ -356,7 +356,7 @@ int main(){
     						break;
     					}
     					else{
-    						if(!ingresarEntero(&opcionGuardar, "\n\nHay cambios sin guardar ¿Desea guardar los cambios?\n1- Si, 0- No\n\n", MSJ_ERROROPCION, 0, 1, REINTENTOS)){
+    						if(!ingresarEntero(&opcionGuardar, "\n\nHay cambios sin guardar ¿Desea guardar los cambios?\n1- Si, 0- No\n\n", MSJ_ERROR_OPCION, 0, 1, REINTENTOS)){
     							if(opcionGuardar){
 									devolucion = controller_saveAsText(ARCHIVO_CSV, listaPasajeros);
 									if(devolucion==0){

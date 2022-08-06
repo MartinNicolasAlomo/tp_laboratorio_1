@@ -10,27 +10,34 @@
 #include "Input.h"
 #include "parser.h"
 #include "Validations.h"
-#include "Zprueba.h"
 
 #define REINTENTOS 25
-#define LARGONOMBRE 50
-#define LARGODESCRIPCION 20
-#define LARGOID 8
-#define LARGONUMEROTXT 11
-#define LARGOCODIGO 10
-#define MSJ_MENUPRINCIPAL "1. Cargar los datos de los pasajeros desde el archivo data.csv (modo texto).\n2. Cargar los datos de los pasajeros desde el archivo data.csv (modo binario).\n3. Alta de pasajero.\n4. Modificar datos de pasajero.\n5. Baja de pasajero\n6. Listar pasajeros.\n7. Ordenar pasajeros.\n8. Guardar los datos de los pasajeros en el archivo data.csv (modo texto).\n9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).\n10. Salir\n\n"
-#define MSJ_ERROROPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
-#define MSJ_MENUMODIFICAR "¿Qué desea modificar?\n  1-Nombre\n  2-Apellido\n  3-Precio\n  4-Codigo de vuelo\n  5-Tipo de pasajero\n  6-Estado de vuelo\n  7-Finalizar cambios\n\n"
-#define MSJ_MENUORDENAR "¿Cómo desea ordenarlos?\n  1- Por ID\n  2- Por Nombre\n  3- Por Apellido\n  4- Por Precio\n  5- Por Codigo de Vuelo\n  6- Por Tipo de Pasajero\n  7- Por Estado de Vuelo\n  8- Volver al Menú Principal\n\n"
+#define LARGO_NOMBRE 50
+#define LARGO_DESCRIPCION 20
+#define LARGO_ID 8
+#define LARGO_NUMERO_TXT 11
+#define LARGO_CODIGO 10
+#define MSJ_MENU_PRINCIPAL "1. Cargar los datos de los pasajeros desde el archivo data.csv (modo texto).\n2. Cargar los datos de los pasajeros desde el archivo data.csv (modo binario).\n3. Alta de pasajero.\n4. Modificar datos de pasajero.\n5. Baja de pasajero\n6. Listar pasajeros.\n7. Ordenar pasajeros.\n8. Guardar los datos de los pasajeros en el archivo data.csv (modo texto).\n9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).\n10. Salir\n\n"
+#define MSJ_ERROR_OPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
+#define MSJ_MENU_MODIFICAR "¿Qué desea modificar?\n  1-Nombre\n  2-Apellido\n  3-Precio\n  4-Codigo de vuelo\n  5-Tipo de pasajero\n  6-Estado de vuelo\n  7-Finalizar cambios\n\n"
+#define MSJ_MENU_ORDENAR "¿Cómo desea ordenarlos?\n  1- Por ID\n  2- Por Nombre\n  3- Por Apellido\n  4- Por Precio\n  5- Por Codigo de Vuelo\n  6- Por Tipo de Pasajero\n  7- Por Estado de Vuelo\n  8- Volver al Menú Principal\n\n"
+#define MSJ_CONFIRMAR_AGREGADO "¿Está seguro/a de quiere agregar este pasajero?\n  1- Si\n  0- No\n\n"
+
+#define MSJ_ID_MODIFICAR "Ingrese el ID del pasajero que desea modificar:\n\n"
+#define MSJ_CONFIRMAR_MODIFICACION "¿Está seguro/a de quiere realizar las modificaciones?\n  1- Si\n  0- No\n\n"
+#define MSJ_ORDEN "¿En qué orden quiere ordenarlos?\n  1- Ascendente\n  0- Descendente\n\n"
+#define MSJ_
+#define MSJ_
+#define MSJ_
 
 
 typedef struct
 {
 	int id;
-	char nombre[LARGONOMBRE];
-	char apellido[LARGONOMBRE];
+	char nombre[LARGO_NOMBRE];
+	char apellido[LARGO_NOMBRE];
 	float precio;
-	char codigoVuelo[LARGOCODIGO];
+	char codigoVuelo[LARGO_CODIGO];
 	int tipoPasajero;
 	int estadoVuelo;
 }Passenger;

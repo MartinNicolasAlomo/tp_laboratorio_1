@@ -65,7 +65,7 @@ int Passenger_getId(eComputer* this, int* id){
 int Computer_setIdTXT(eComputer* this, char* id){
 	int retorno=-1;
 	int auxId;
-	if(this!=NULL && id!=NULL && esEntero(id, LARGONUMEROTXT)){
+	if(this!=NULL && id!=NULL && esEntero(id, LARGO_NUMERO_TXT)){
 		auxId=atoi(id);
 		if(auxId>=0){
 			this->id=auxId;
@@ -91,8 +91,8 @@ int Computer_getIdTXT(eComputer* this,char* id){
 
 int Computer_setDescripcion(eComputer* this, char* descripcion){
 	int retorno=-1;
-	if(this!=NULL && descripcion!=NULL && esDescripcion(descripcion, LARGODESCRIPCION)){
-		strncpy(this->descripcion, descripcion, LARGODESCRIPCION);
+	if(this!=NULL && descripcion!=NULL && esDescripcion(descripcion, LARGO_DESCRIPCION)){
+		strncpy(this->descripcion, descripcion, LARGO_DESCRIPCION);
 		retorno=0;
 	}
 	return retorno;
@@ -101,7 +101,7 @@ int Computer_setDescripcion(eComputer* this, char* descripcion){
 int Computer_getDescripcion(eComputer* this, char* descripcion){
 	int retorno=-1;
 	if(this!=NULL && descripcion!=NULL){
-		strncpy(descripcion, this->descripcion, LARGODESCRIPCION);
+		strncpy(descripcion, this->descripcion, LARGO_DESCRIPCION);
 		retorno=0;
 	}
 	return retorno;
@@ -129,7 +129,7 @@ int Product_getPrecio(eComputer* this, float* precio){
 int Computer_setPrecioTXT(eComputer* this, char* precio){
 	int retorno=-1;
 	float auxPrecio;
-	if(this!=NULL && precio>0 && esFlotante(precio, LARGONUMEROTXT)){
+	if(this!=NULL && precio>0 && esFlotante(precio, LARGO_NUMERO_TXT)){
 		auxPrecio=atof(precio);
 		if(auxPrecio>=0){
 			this->precio=auxPrecio;
@@ -173,7 +173,7 @@ int Computer_getTipo(eComputer* this, int* tipo){
 int Computer_setTipo_TXT(eComputer* this, char* tipo){
 	int retorno=-1;
 	int auxIdTipo;
-	if(this!=NULL && tipo!=NULL && esEntero(tipo, LARGONUMEROTXT)){
+	if(this!=NULL && tipo!=NULL && esEntero(tipo, LARGO_NUMERO_TXT)){
 		auxIdTipo=atoi(tipo);
 		this->idTipo=auxIdTipo;
 		retorno=0;

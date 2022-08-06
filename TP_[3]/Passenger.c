@@ -6,29 +6,30 @@ Passenger* Passenger_new(){
 	return auxPuntero;
 }
 
-Passenger* Passenger_newParametros(char* idStr,char* nombreStr,char* apellidoStr,char* precioStr, char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr){
+Passenger* Passenger_newParametros(int numeroPasajero, char* idStr, char* nombreStr, char* apellidoStr, char* precioStr,
+									char* codigoVueloStr, char* tipoPasajeroStr,char* estadoVueloStr){
 	Passenger* this=NULL;
 	this=Passenger_new();
 	if(this!=NULL && idStr!=NULL && nombreStr!=NULL && apellidoStr!=NULL && precioStr!=NULL &&
 		codigoVueloStr!=NULL && tipoPasajeroStr!=NULL && estadoVueloStr!=NULL){
+
 		if(Passenger_setIdTXT(this, idStr)==-1 ||
-			Passenger_setDescripcion(this, nombreStr)==-1 ||
-			Passenger_setApellido(this, apellidoStr)==-1 ||
-			Product_setPrecioTXT(this, precioStr)==-1 ||
-			Passenger_setCodigoVuelo(this, codigoVueloStr)==-1 ||
-			Passenger_setTipoPasajeroTXT_NUM(this, tipoPasajeroStr)==-1 ||
-			Passenger_setEstadoVueloTXT_NUM(this, estadoVueloStr)==-1){
-			printf("El Pasajero que se eliminó fue: %d  -  %s, %s",this->id,this->nombre,this->apellido);
-			puts("Fallaron los Setters.\n");
+				Passenger_setDescripcion(this, nombreStr)==-1 ||
+				Passenger_setApellido(this, apellidoStr)==-1 ||
+				Product_setPrecioTXT(this, precioStr)==-1 ||
+				Passenger_setCodigoVuelo(this, codigoVueloStr)==-1 ||
+				Passenger_setTipoPasajeroTXT_NUM(this, tipoPasajeroStr)==-1 ||
+				Passenger_setEstadoVueloTXT_NUM(this, estadoVueloStr)==-1) {
+			printf("*No se pudieron setear los datos del pasajero n° %d de la lista.\n", numeroPasajero);
 			Passenger_delete(this);
 			this=NULL;
 		}
 	}
-	else if(idStr==NULL || nombreStr==NULL || apellidoStr==NULL || precioStr==NULL || codigoVueloStr==NULL || tipoPasajeroStr==NULL || estadoVueloStr==NULL){
-		puts("Parametros en Passanger_newParametros estan mal.\n");
-	}
 	else if(this==NULL){
-		puts("No se pudo crear nuevo pasajero con Passanger_new.\n");
+		printf("*No se creó el pasajero n° %d de la lista, no hay espacio en memoria suficiente.\n", numeroPasajero);
+	}
+	else{
+		printf("*Se recibieron mal los parametros del pasajero n° %d de la lista.\n", numeroPasajero);
 	}
 	return this;
 }
@@ -40,7 +41,31 @@ void Passenger_delete(Passenger* this){
 }
 //***********************************************************************************************
 
-int Passenger_setId(Passenger* this,int id){
+
+
+/*int Passenger_setEverything(Passenger* this, Passenger auxiliar){
+	int retorno=-1;
+	if(this!=NULL &&
+			!Passenger_setDescripcion(this, auxiliar.nombre) &&
+			!Passenger_setApellido(this, auxiliar.apellido) &&
+			!Product_setPrecio(this, auxiliar.precio) &&
+			!Passenger_setCodigoVuelo(this, auxiliar.codigoVuelo) &&
+			!Passenger_setTipoPasajeroNumerico(this, auxiliar.tipoPasajero) &&
+			!Passenger_setEstadoVueloNumerico(this, auxiliar.estadoVuelo)){
+		retorno=0;
+	}
+	return retorno;
+}*/
+
+
+
+
+
+
+
+
+
+int Passenger_setId(Passenger* this, int id){
 	int retorno=-1;
 	if(this!=NULL && id>0){
 		this->id=id;
@@ -49,7 +74,7 @@ int Passenger_setId(Passenger* this,int id){
 	return retorno;
 }
 
-int Passenger_getId(Passenger* this,int* id){
+int Passenger_getId(Passenger* this, int* id){
 	int retorno=-1;
 	if(this!=NULL && id!=NULL){
 		*id=this->id;
@@ -58,22 +83,22 @@ int Passenger_getId(Passenger* this,int* id){
 	return retorno;
 }
 
-int Passenger_setIdTXT(Passenger* this,char id[]){
+int Passenger_setIdTXT(Passenger* this, char* id){
 	int retorno=-1;
-	if(this!=NULL && id!=NULL && esEntero(id, LARGONUMEROTXT)){
+	if(this!=NULL && id!=NULL && esEntero(id, LARGO_NUMERO_TXT)){
 		this->id=atoi(id);
 		retorno=0;
 	}
 	else{
-		puts("Recibió mal los parametros en SET PRECIO (TEXTO).\n");
+		puts("Recibió mal el numero de ID.\n");
 	}
 	return retorno;
 }
 
-int Passenger_getIdTXT(Passenger* this,char id[]){
+int Passenger_getIdTXT(Passenger* this, char* id){
 	int retorno=-1;
 	if(this!=NULL && id!=NULL){
-		sprintf(id,"%d",this->id);
+		sprintf(id, "%d", this->id);
 		retorno=0;
 	}
 	return retorno;
@@ -81,19 +106,19 @@ int Passenger_getIdTXT(Passenger* this,char id[]){
 //***********************************************************************************************
 
 
-int Passenger_setDescripcion(Passenger* this,char* nombre){
+int Passenger_setDescripcion(Passenger* this, char* nombre){
 	int retorno=-1;
-	if(this!=NULL && nombre!=NULL && esNombre(nombre, LARGONOMBRE) && !pasarInicialesNombreMayusculas(nombre, LARGONOMBRE)){
-		strncpy(this->nombre, nombre, LARGONOMBRE);
+	if(this!=NULL && nombre!=NULL && esNombre(nombre, LARGO_NOMBRE) && !pasarInicialesMayusculas(nombre, LARGO_NOMBRE)){
+		strncpy(this->nombre, nombre, LARGO_NOMBRE);
 		retorno=0;
 	}
 	return retorno;
 }
 
-int Passenger_getDescripcion(Passenger* this,char* nombre){
+int Passenger_getDescripcion(Passenger* this, char* nombre){
 	int retorno=-1;
 	if(this!=NULL && nombre!=NULL){
-		strncpy(nombre, this->nombre, LARGONOMBRE);
+		strncpy(nombre, this->nombre, LARGO_NOMBRE);
 		retorno=0;
 	}
 	return retorno;
@@ -101,19 +126,19 @@ int Passenger_getDescripcion(Passenger* this,char* nombre){
 //***********************************************************************************************
 
 
-int Passenger_setApellido(Passenger* this,char* apellido){
+int Passenger_setApellido(Passenger* this, char* apellido){
 	int retorno=-1;
-	if(this!=NULL && apellido!=NULL && esNombre(apellido, LARGONOMBRE) && !pasarInicialesNombreMayusculas(apellido, LARGONOMBRE)){
-		strncpy(this->apellido, apellido, LARGONOMBRE);
+	if(this!=NULL && apellido!=NULL && esNombre(apellido, LARGO_NOMBRE) && !pasarInicialesMayusculas(apellido, LARGO_NOMBRE)){
+		strncpy(this->apellido, apellido, LARGO_NOMBRE);
 		retorno=0;
 	}
 	return retorno;
 }
 
-int Passenger_getApellido(Passenger* this,char* apellido){
+int Passenger_getApellido(Passenger* this, char* apellido){
 	int retorno=-1;
 	if(this!=NULL && apellido!=NULL){
-		strncpy(apellido, this->apellido, LARGONOMBRE);
+		strncpy(apellido, this->apellido, LARGO_NOMBRE);
 		retorno=0;
 	}
 	return retorno;
@@ -121,7 +146,7 @@ int Passenger_getApellido(Passenger* this,char* apellido){
 //***********************************************************************************************
 
 
-int Product_setPrecio(Passenger* this,float precio){
+int Product_setPrecio(Passenger* this, float precio){
 	int retorno=-1;
 	if(this!=NULL && precio>0){
 		this->precio=precio;
@@ -130,7 +155,7 @@ int Product_setPrecio(Passenger* this,float precio){
 	return retorno;
 }
 
-int Product_getPrecio(Passenger* this,float* precio){
+int Product_getPrecio(Passenger* this, float* precio){
 	int retorno=-1;
 	if(this!=NULL && precio>0){
 		*precio=this->precio;
@@ -139,10 +164,10 @@ int Product_getPrecio(Passenger* this,float* precio){
 	return retorno;
 }
 
-int Product_setPrecioTXT(Passenger* this,char* precio){
+int Product_setPrecioTXT(Passenger* this, char* precio){
 	int retorno=-1;
 	float auxPrecio;
-	if(this!=NULL && precio>0 && esFlotante(precio, LARGONUMEROTXT)){
+	if(this!=NULL && precio>0 && esFlotante(precio, LARGO_NUMERO_TXT)){
 		auxPrecio=atof(precio);
 		if(auxPrecio>=0){
 			this->precio=auxPrecio;
@@ -150,15 +175,15 @@ int Product_setPrecioTXT(Passenger* this,char* precio){
 		}
 	}
 	else{
-		puts("Recibió mal los parametros en SET PRECIO (TEXTO).\n");
+		puts("Recibió mal el precio.\n");
 	}
 	return retorno;
 }
 
-int Product_getPrecioTXT(Passenger* this,char* precio){
+int Product_getPrecioTXT(Passenger* this, char* precio){
 	int retorno=-1;
 	if(this!=NULL && precio!=NULL){
-		sprintf(precio,"%.2f",this->precio);
+		sprintf(precio, "%.2f", this->precio);
 		retorno=0;
 	}
 	return retorno;
@@ -166,20 +191,20 @@ int Product_getPrecioTXT(Passenger* this,char* precio){
 //***********************************************************************************************
 
 
-int Passenger_setCodigoVuelo(Passenger* this,char* codigoVuelo){
+int Passenger_setCodigoVuelo(Passenger* this, char* codigoVuelo){
 	int retorno=-1;
-	if(this!=NULL && codigoVuelo!=NULL && esAlfanumerico(codigoVuelo, LARGOCODIGO)){
+	if(this!=NULL && codigoVuelo!=NULL && esAlfanumerico(codigoVuelo, LARGO_CODIGO)){
 		strupr(codigoVuelo);
-		strncpy(this->codigoVuelo, codigoVuelo, LARGOCODIGO);
+		strncpy(this->codigoVuelo, codigoVuelo, LARGO_CODIGO);
 		retorno=0;
 	}
 	return retorno;
 }
 
-int Passenger_getCodigoVuelo(Passenger* this,char* codigoVuelo){
+int Passenger_getCodigoVuelo(Passenger* this, char* codigoVuelo){
 	int retorno=-1;
 	if(this!=NULL && codigoVuelo!=NULL){
-		strncpy(codigoVuelo, this->codigoVuelo, LARGOCODIGO);
+		strncpy(codigoVuelo, this->codigoVuelo, LARGO_CODIGO);
 		retorno=0;
 	}
 	return retorno;
@@ -187,51 +212,51 @@ int Passenger_getCodigoVuelo(Passenger* this,char* codigoVuelo){
 //***********************************************************************************************
 
 
-int Passenger_setTipoPasajeroTXT_NUM(Passenger* this,char* tipoPasajero){
+int Passenger_setTipoPasajeroTXT_NUM(Passenger* this, char* tipoPasajero){
 	int retorno=-1;
-	if(this!=NULL && tipoPasajero!=NULL && esNombre(tipoPasajero, LARGODESCRIPCION)){
-		if(strncmp(tipoPasajero,"EconomyClass",LARGODESCRIPCION)==0){
+	if(this!=NULL && tipoPasajero!=NULL && esDescripcion(tipoPasajero, LARGO_DESCRIPCION)){
+		if(strncmp(tipoPasajero, "EconomyClass", LARGO_DESCRIPCION)==0){
 			this->tipoPasajero=1;
 			retorno=0;
 		}
-		else if(strncmp(tipoPasajero,"ExecutiveClass",LARGODESCRIPCION)==0){
+		else if(strncmp(tipoPasajero, "ExecutiveClass", LARGO_DESCRIPCION)==0){
 			this->tipoPasajero=2;
 			retorno=0;
 		}
-		else if(strncmp(tipoPasajero,"FirstClass",LARGODESCRIPCION)==0){
+		else if(strncmp(tipoPasajero, "FirstClass", LARGO_DESCRIPCION)==0){
 			this->tipoPasajero=3;
 			retorno=0;
 		}
 	}
 	else{
-		puts("Recibió mal los parametros en SET Tipo Pasajero (TEXTO).\n");
+		puts("Recibió mal el Tipo Pasajero (TEXTO).\n");
 	}
 	return retorno;
 }
 
-int Passenger_getTipoPasajeroNUM_TXT(Passenger* this,char* tipoPasajero){
+int Passenger_getTipoPasajeroNUM_TXT(Passenger* this, char* tipoPasajero){
 	int retorno=-1;
-	if(this!=NULL && tipoPasajero!=NULL && esNombre(tipoPasajero, LARGODESCRIPCION)){
+	if(this!=NULL && tipoPasajero!=NULL && esDescripcion(tipoPasajero, LARGO_DESCRIPCION)){
 		if(this->tipoPasajero==1){
-			strncpy(tipoPasajero, "EconomyClass", LARGODESCRIPCION);
+			strncpy(tipoPasajero, "EconomyClass", LARGO_DESCRIPCION);
 			retorno=0;
 		}
 		else if(this->tipoPasajero==2){
-			strncpy(tipoPasajero, "ExecutiveClass", LARGODESCRIPCION);
+			strncpy(tipoPasajero, "ExecutiveClass", LARGO_DESCRIPCION);
 			retorno=0;
 		}
 		else if(this->tipoPasajero==3){
-			strncpy(tipoPasajero, "FirstClass", LARGODESCRIPCION);
+			strncpy(tipoPasajero, "FirstClass", LARGO_DESCRIPCION);
 			retorno=0;
 		}
 	}
 	else{
-		puts("Recibió mal los parametros en SET PRECIO (TEXTO).\n");
+		puts("Recibió mal tipos pasajeros (TEXTO).\n");
 	}
 	return retorno;
 }
 
-int Passenger_setTipoPasajeroNumerico(Passenger* this,int tipoPasajero){
+int Passenger_setTipoPasajeroNumerico(Passenger* this, int tipoPasajero){
 	int retorno=-1;
 	if(this!=NULL && tipoPasajero>0 && tipoPasajero<4){
 		this->tipoPasajero=tipoPasajero;
@@ -240,7 +265,7 @@ int Passenger_setTipoPasajeroNumerico(Passenger* this,int tipoPasajero){
 	return retorno;
 }
 
-int Passenger_getTipoPasajeroNumerico(Passenger* this,int* tipoPasajero){
+int Passenger_getTipoPasajeroNumerico(Passenger* this, int* tipoPasajero){
 	int retorno=-1;
 	if(this!=NULL && tipoPasajero!=NULL){
 		*tipoPasajero=this->tipoPasajero;
@@ -251,22 +276,22 @@ int Passenger_getTipoPasajeroNumerico(Passenger* this,int* tipoPasajero){
 //***********************************************************************************************
 
 
-int Passenger_setEstadoVueloTXT_NUM(Passenger* this,char* estadoVuelo){
+int Passenger_setEstadoVueloTXT_NUM(Passenger* this, char* estadoVuelo){
 	int retorno=-1;
-	if(this!=NULL && estadoVuelo!=NULL && esNombre(estadoVuelo, LARGODESCRIPCION)){
-		if(strncmp(estadoVuelo,"En Horario",LARGODESCRIPCION)==0){
+	if(this!=NULL && estadoVuelo!=NULL && esDescripcion(estadoVuelo, LARGO_DESCRIPCION)){
+		if(strncmp(estadoVuelo, "En Horario", LARGO_DESCRIPCION)==0){
 			this->estadoVuelo=1;
 			retorno=0;
 		}
-		else if(strncmp(estadoVuelo,"En Vuelo",LARGODESCRIPCION)==0){
+		else if(strncmp(estadoVuelo, "En Vuelo", LARGO_DESCRIPCION)==0){
 			this->estadoVuelo=2;
 			retorno=0;
 		}
-		else if(strncmp(estadoVuelo,"Demorado",LARGODESCRIPCION)==0){
+		else if(strncmp(estadoVuelo, "Demorado", LARGO_DESCRIPCION)==0){
 			this->estadoVuelo=3;
 			retorno=0;
 		}
-		else if(strncmp(estadoVuelo,"Aterrizado",LARGODESCRIPCION)==0){
+		else if(strncmp(estadoVuelo, "Aterrizado", LARGO_DESCRIPCION)==0){
 			this->estadoVuelo=4;
 			retorno=0;
 		}
@@ -277,33 +302,33 @@ int Passenger_setEstadoVueloTXT_NUM(Passenger* this,char* estadoVuelo){
 	return retorno;
 }
 
-int Passenger_getEstadoVueloNUM_TXT(Passenger* this,char* estadoVuelo){
+int Passenger_getEstadoVueloNUM_TXT(Passenger* this, char* estadoVuelo){
 	int retorno=-1;
-	if(this!=NULL && estadoVuelo!=NULL && esNombre(estadoVuelo, LARGODESCRIPCION)){
+	if(this!=NULL && estadoVuelo!=NULL && esNombre(estadoVuelo, LARGO_DESCRIPCION)){
 		if(this->estadoVuelo==1){
-			strncpy(estadoVuelo, "En Horario", LARGODESCRIPCION);
+			strncpy(estadoVuelo, "En Horario", LARGO_DESCRIPCION);
 			retorno=0;
 		}
 		else if(this->estadoVuelo==2){
-			strncpy(estadoVuelo, "En Vuelo", LARGODESCRIPCION);
+			strncpy(estadoVuelo, "En Vuelo", LARGO_DESCRIPCION);
 			retorno=0;
 		}
 		else if(this->estadoVuelo==3){
-			strncpy(estadoVuelo, "Demorado", LARGODESCRIPCION);
+			strncpy(estadoVuelo, "Demorado", LARGO_DESCRIPCION);
 			retorno=0;
 		}
 		else if(this->estadoVuelo==4){
-			strncpy(estadoVuelo, "Aterrizado", LARGODESCRIPCION);
+			strncpy(estadoVuelo, "Aterrizado", LARGO_DESCRIPCION);
 			retorno=0;
 		}
 	}
 	else{
-		puts("Recibió mal los parametros en SET PRECIO (TEXTO).\n");
+		puts("Recibió mal el estado de vuelo (TEXTO).\n");
 	}
 	return retorno;
 }
 
-int Passenger_setEstadoVueloNumerico(Passenger* this,int estadoVuelo){
+int Passenger_setEstadoVueloNumerico(Passenger* this, int estadoVuelo){
 	int retorno=-1;
 	if(this!=NULL && estadoVuelo>0 && estadoVuelo<5){
 		this->estadoVuelo=estadoVuelo;
@@ -312,7 +337,7 @@ int Passenger_setEstadoVueloNumerico(Passenger* this,int estadoVuelo){
 	return retorno;
 }
 
-int Passenger_getEstadoVueloNumerico(Passenger* this,int* estadoVuelo){
+int Passenger_getEstadoVueloNumerico(Passenger* this, int* estadoVuelo){
 	int retorno=-1;
 	if(this!=NULL && estadoVuelo!=NULL){
 		*estadoVuelo=this->estadoVuelo;
@@ -328,10 +353,10 @@ int Passenger_cargarPasajero(Passenger* this){
 	Passenger auxPasajero;
 
 	if(this!=NULL){
-		if(!ingresarNombre(auxPasajero.nombre, LARGONOMBRE, "Ingrese el nombre:\n", "Error. No es un nombre correcto, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
-			!ingresarNombre(auxPasajero.apellido, LARGONOMBRE, "Ingrese el apellido:\n", "Error. No es un apellido correcto, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
+		if(!ingresarNombre(auxPasajero.nombre, LARGO_NOMBRE, "Ingrese el nombre:\n", "Error. No es un nombre correcto, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
+			!ingresarNombre(auxPasajero.apellido, LARGO_NOMBRE, "Ingrese el apellido:\n", "Error. No es un apellido correcto, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
 			!ingresarFlotante(&auxPasajero.precio, "Ingrese el precio del vuelo:\n", "Error. No es un precio correcto, reinténtelo de nuevo.\n\n\n", 0.1, 500000, REINTENTOS) &&
-			!ingresarAlfanumerico(auxPasajero.codigoVuelo, LARGOCODIGO, "Ingrese el código del pasaje:\n", "Error. No es un código válido, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
+			!ingresarAlfanumerico(auxPasajero.codigoVuelo, LARGO_CODIGO, "Ingrese el código del pasaje:\n", "Error. No es un código válido, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
 			!ingresarEntero(&auxPasajero.tipoPasajero, "Ingrese el tipo de pasajero: (1- EconomyClass, 2- ExecutiveClass o 3- FirstClass)\n", "Error. No es un tipo válido, reinténtelo de nuevo.\n\n\n", 1, 3, REINTENTOS) &&
 			!ingresarEntero(&auxPasajero.estadoVuelo, "Indique el estado de su vuelo: (1- En Horario, 2- En Vuelo, 3- Demorado o 4- Aterrizado)\n", "Error. No es un estado válido, reinténtelo de nuevo.\n\n\n", 1, 4, REINTENTOS)){
 			retorno=0;
@@ -344,7 +369,7 @@ int Passenger_cargarPasajero(Passenger* this){
 	return retorno;
 }
 
-int Passenger_compararPorId(void* primerPasajero,void* segundoPasajero){
+int Passenger_compararPorId(void* primerPasajero, void* segundoPasajero){
 	int retorno=-2;
 	Passenger* pasajeroUno;
 	Passenger* pasajeroDos;
@@ -373,7 +398,7 @@ int Passenger_compararPorId(void* primerPasajero,void* segundoPasajero){
 	return retorno;
 }
 
-int Passenger_compararPorPrecio(void* primerPasajero,void* segundoPasajero){
+int Passenger_compararPorPrecio(void* primerPasajero, void* segundoPasajero){
 	int retorno=-2;
 	Passenger* pasajeroUno;
 	Passenger* pasajeroDos;
@@ -402,18 +427,18 @@ int Passenger_compararPorPrecio(void* primerPasajero,void* segundoPasajero){
 	return retorno;
 }
 
-int Passenger_compararPorApellido(void* primerPasajero,void* segundoPasajero){
+int Passenger_compararPorApellido(void* primerPasajero, void* segundoPasajero){
 	int retorno=-2;
 	Passenger* pasajeroUno;
 	Passenger* pasajeroDos;
-	char apellidoUno[LARGONOMBRE];
-	char apellidoDos[LARGONOMBRE];
+	char apellidoUno[LARGO_NOMBRE];
+	char apellidoDos[LARGO_NOMBRE];
 	int comparacion;
 	if(primerPasajero!=NULL && segundoPasajero!=NULL){
 		pasajeroUno = (Passenger*) primerPasajero;
 		pasajeroDos = (Passenger*) segundoPasajero;
 		if(!Passenger_getApellido(pasajeroUno, apellidoUno) && !Passenger_getApellido(pasajeroDos, apellidoDos)){
-			comparacion = strncmp(apellidoUno,apellidoDos,LARGONOMBRE);
+			comparacion = strncmp(apellidoUno, apellidoDos, LARGO_NOMBRE);
 			if(comparacion>0){
 				retorno=1;
 			}
@@ -433,18 +458,18 @@ int Passenger_compararPorApellido(void* primerPasajero,void* segundoPasajero){
 	return retorno;
 }
 
-int Passenger_compararPorCodigoVuelo(void* primerPasajero,void* segundoPasajero){
+int Passenger_compararPorCodigoVuelo(void* primerPasajero, void* segundoPasajero){
 	int retorno=-2;
 	Passenger* pasajeroUno;
 	Passenger* pasajeroDos;
-	char codigoVueloUno[LARGONOMBRE];
-	char codigoVueloDos[LARGONOMBRE];
+	char codigoVueloUno[LARGO_NOMBRE];
+	char codigoVueloDos[LARGO_NOMBRE];
 	int comparacion;
 	if(primerPasajero!=NULL && segundoPasajero!=NULL){
 		pasajeroUno = (Passenger*) primerPasajero;
 		pasajeroDos = (Passenger*) segundoPasajero;
 		if(!Passenger_getCodigoVuelo(pasajeroUno, codigoVueloUno) && !Passenger_getCodigoVuelo(pasajeroDos, codigoVueloDos)){
-			comparacion = strncmp(codigoVueloUno,codigoVueloDos,LARGONOMBRE);
+			comparacion = strncmp(codigoVueloUno, codigoVueloDos, LARGO_NOMBRE);
 			if(comparacion>0){
 				retorno=1;
 			}
@@ -464,18 +489,18 @@ int Passenger_compararPorCodigoVuelo(void* primerPasajero,void* segundoPasajero)
 	return retorno;
 }
 
-int Passenger_compararPorNombre(void* primerPasajero,void* segundoPasajero){
+int Passenger_compararPorNombre(void* primerPasajero, void* segundoPasajero){
 	int retorno=-2;
 	Passenger* pasajeroUno;
 	Passenger* pasajeroDos;
-	char nombreUno[LARGONOMBRE];
-	char nombreDos[LARGONOMBRE];
+	char nombreUno[LARGO_NOMBRE];
+	char nombreDos[LARGO_NOMBRE];
 	int comparacion;
 	if(primerPasajero!=NULL && segundoPasajero!=NULL){
 		pasajeroUno = (Passenger*) primerPasajero;
 		pasajeroDos = (Passenger*) segundoPasajero;
 		if(!Passenger_getDescripcion(pasajeroUno, nombreUno) && !Passenger_getDescripcion(pasajeroDos, nombreDos)){
-			comparacion = strncmp(nombreUno,nombreDos,LARGONOMBRE);
+			comparacion = strncmp(nombreUno, nombreDos, LARGO_NOMBRE);
 			if(comparacion>0){
 				retorno=1;
 			}
@@ -496,7 +521,7 @@ int Passenger_compararPorNombre(void* primerPasajero,void* segundoPasajero){
 }
 
 
-int Passenger_compararPorTipoPasajero(void* primerPasajero,void* segundoPasajero){
+int Passenger_compararPorTipoPasajero(void* primerPasajero, void* segundoPasajero){
 	int retorno=-2;
 	Passenger* pasajeroUno;
 	Passenger* pasajeroDos;

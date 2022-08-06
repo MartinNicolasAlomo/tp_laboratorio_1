@@ -1,6 +1,6 @@
 #include "Controller.h"
 
-static const char TXT_IDTIPO[2][LARGODESCRIPCION]={"DESKOP", "LAPTOP"};
+static const char TXT_IDTIPO[2][LARGO_DESCRIPCION]={"DESKOP", "LAPTOP"};
 
 int controller_loadFromText(char* path, LinkedList* pArraList){
 	int retorno=-1;
@@ -131,7 +131,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayList){
 	int i;
     int largo;
 	int auxId;
-	char auxDescripcion[LARGODESCRIPCION];
+	char auxDescripcion[LARGO_DESCRIPCION];
 	float auxPrecio;
 	int auxIdTipo;
 

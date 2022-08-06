@@ -16,8 +16,8 @@
  * \param pFile FILE* - Puntero al archivo a cargar
  * \param pArrayListPassenger LinkedList* - Puntero al vector de pasajeros
  * \return int - Retorna 0 (EXITO) - Si se pudieron parsear los datos desde el archivo correctamente
- * 						 -1 (ERROR) - Si: La ruta del Archivo no es valida, el puntero a LinkedList es NULL, no funcionó la Función de lectura FSCANF,
- * 										  no se pudo crear al Pasajero o no se pudo agregar el Pasajero a la Lista
+ * 						 -1 (ERROR) - Si: La ruta del Archivo no es valida, el puntero a LinkedList es NULL, no pudieron leer los datos del pasajero,
+ * 										  o no se pudo crear al Pasajero o no se pudo agregar el Pasajero a la Lista
  */
 int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger);
 
@@ -26,8 +26,8 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger);
  * \param pFile FILE* - Puntero al archivo a cargar
  * \param pArrayListPassenger LinkedList* - Puntero al vector de pasajeros
 * \return int - Retorna 0 (EXITO) - Si se pudieron parsear los datos desde el archivo correctamente
- * 						 -1 (ERROR) - Si: La ruta del Archivo no es valida, el puntero a LinkedList es NULL, no funcionó la Función de lectura FREAD,
- * 										  no se pudo crear al Pasajero o no se pudo agregar el Pasajero a la Lista
+ * 						 -1 (ERROR) - Si: La ruta del Archivo no es valida, el puntero a LinkedList es NULL, no pudieron leer los datos del pasajero,
+ * 										  o no se pudo crear o agregar el Pasajero a la Lista
  */
 int parser_PassengerFromBinary(FILE* pFile , LinkedList* pArrayListPassenger);
 

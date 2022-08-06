@@ -9,7 +9,7 @@
 #include "Input.h"
 #include "parser.h"
 #include "Validations.h"
-#include "Zprueba.h"
+#define ARCHIVO_ID "id.txt"
 
 
 /** \brief - Carga los datos de los pasajeros desde el archivo data.csv (modo texto).
@@ -153,5 +153,6 @@ int Controller_cargarUltimoId();
  * 						-1 (ERROR) - Falló la lectura del archivo
  */
 int Controller_guardarUltimoId();
+
 
 #endif /* CONTROLLER_H_ */

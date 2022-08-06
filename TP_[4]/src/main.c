@@ -28,14 +28,14 @@
 #include "Validations.h"
 #include "../testing/inc/main_test.h"
 #include "../inc/LinkedList.h"
-#define MSJ_MENUPRINCIPAL "1. Cargar los datos desde el archivo data.csv (modo texto).\n2. Ordernar lista por idTipo.\n3. Imprimir lista.\n4. Funcion map.\n5. Generar archivo de salida\n6. Salir\n\n"
-#define MSJ_ERROROPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
+#define MSJ_MENU_PRINCIPAL "1. Cargar los datos desde el archivo data.csv (modo texto).\n2. Ordernar lista por idTipo.\n3. Imprimir lista.\n4. Funcion map.\n5. Generar archivo de salida\n6. Salir\n\n"
+#define MSJ_ERROR_OPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
 
 
 int main(void){
 	setbuf(stdout, NULL);
 	int opcionMenu=0;
-	char nombreArchivoCSV[LARGODESCRIPCION];
+	char nombreArchivoCSV[LARGO_DESCRIPCION];
 	int devolucion;
 	int flagCarga=1;
 	int flagCambios=1;
@@ -44,14 +44,14 @@ int main(void){
 
     if(listaComputadoras!=NULL){
         do{
-        	if(!ingresarEntero(&opcionMenu, MSJ_MENUPRINCIPAL, MSJ_ERROROPCION, 1, 6, REINTENTOS)){
+        	if(!ingresarEntero(&opcionMenu, MSJ_MENU_PRINCIPAL, MSJ_ERROR_OPCION, 1, 6, REINTENTOS)){
     			switch(opcionMenu){
     				case 1:
     					if(!flagCarga){
     						puts("Ya se cargaron los datos previamente, no se pueden volver a cargar.\n\n\n");
     					}
     					else{
-    						if(!ingresarArchivoCSV(nombreArchivoCSV, LARGODESCRIPCION, "Ingrese nombre archivo CSV\n", "error", REINTENTOS)){
+    						if(!ingresarArchivoCSV(nombreArchivoCSV, LARGO_DESCRIPCION, "Ingrese nombre archivo CSV\n", "error", REINTENTOS)){
         						devolucion = controller_loadFromText(nombreArchivoCSV,listaComputadoras);
         						//"datos_SP.csv"
         						if(devolucion==0){
