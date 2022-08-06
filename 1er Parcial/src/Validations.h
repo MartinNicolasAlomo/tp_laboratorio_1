@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include "Reports.h"
+#include "Listings.h"
 #include "Album.h"
 #include "Input.h"
 
@@ -44,12 +46,22 @@ int validarRangoFlotante(float numero, float minimo, float maximo, char* mensaje
 /// @return Retorna 1 (VERDADERO) si la cadena es un nombre válido, 0 (FALSO) si no lo es, y -1 (ERROR) si hubo un error
 int esNombre(char* cadena, int limite, char* mensajeFallo);
 
+/// @brief Verifica si el carácter ingresado es un carácter válido para un nombre
+/// @param caracter Carácter a ser analizado
+/// @return Retorna 1 (VERDADERO) si el carácter ingresado es válido para un nombre, 0 (FALSO) si no lo es
+int esCaracterValidoNombre(char caracter);
+
 /// @brief Verifica si la cadena contiene letras, números y otros caracteres específicos
 /// @param cadena Cadena de caracteres a ser analizada
 /// @param limite Define el tamaño de la cadena
 /// @param mensajeFallo Puntero al espacio de memoria donde, en caso de haber un error, se guardará la descripción del error
 /// @return Retorna 1 (VERDADERO) si la cadena es una descripción válida, 0 (FALSO) si no lo es, y -1 (ERROR) en hubo un error
 int esDescripcion(char* cadena, int limite, char* mensajeFallo);
+
+/// @brief Verifica si el carácter ingresado es un carácter válido para una descripción
+/// @param caracter Carácter a ser analizado
+/// @return Retorna 1 (VERDADERO) si el carácter ingresado es válido para una descripción, 0 (FALSO) si no lo es
+int esCaracterValidoDescripcion(char caracter);
 
 /// @brief Verifica si la cadena contiene letras, números o espacios en blanco
 /// @param cadena Cadena de caracteres a ser analizada
@@ -58,10 +70,17 @@ int esDescripcion(char* cadena, int limite, char* mensajeFallo);
 /// @return Retorna 1 (VERDADERO) si la cadena es un alfanumérico válido, 0 (FALSO) si no lo es, y -1 (ERROR) si hubo un error
 int esAlfanumerico(char* cadena, int limite, char* mensajeFallo);
 
+/// @brief Verifica si el carácter ingresado es un carácter válido para un alfanumérico
+/// @param caracter Carácter a ser analizado
+/// @return Retorna 1 (VERDADERO) si el carácter ingresado es válido para un alfanumérico, 0 (FALSO) si no lo es
+int esCaracterValidoAlfanumerico(char caracter);
+
 /// @brief Verifica si el año ingresado es bisiesto
 /// @param anio Es el año a ser analizado
 /// @return Retorna 1 (VERDADERO) si el año es bisiesto, 0 (FALSO) si no lo es, y -1 (ERROR) si hubo un error
 int esAnioBisiesto(int anio);
+
+
 
 
 

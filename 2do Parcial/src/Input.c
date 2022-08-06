@@ -18,53 +18,19 @@ int obtenerCadena(char* cadena, int limite){
 	return retorno;
 }
 
-int obtenerCadenaVersion2(char* cadena, int limite, char* mensajeFallo){
-	int retorno=-1;
-	char bufferString[MAX_BUFFER_STR];
-	if(cadena!=NULL && limite>0){
-		fflush(stdin);
-		if(fgets(bufferString, sizeof(bufferString), stdin) != NULL){
-			if(		(bufferString[0] == '\n' && bufferString[1] == '\n') ||
-					(bufferString[0] == '\n' && bufferString[1] == '\0') ||
-					(bufferString[0] == '\0' && bufferString[1] == '\n') ||
-					(bufferString[0] == '\0' && bufferString[1] == '\0')  ){
-				retorno=-1;
-				bufferString[0] = ' ';
-			}
-			if(bufferString[strnlen(bufferString, sizeof(bufferString))-1] == '\n'){
-				bufferString[strnlen(bufferString, sizeof(bufferString))-1] = '\0';
-			}
-			if(strnlen(bufferString, sizeof(bufferString)) <= limite){
-				strncpy(cadena, bufferString, limite);
-				retorno=0;
-			}
-			else{
-				strncpy(mensajeFallo, "Se excedió el limite de caracteres permitidos\n", limite);
-			}
-		}
-	}
-	return retorno;
-}
-
-
-
-
-
-
 int ingresarEntero(int* pEntero, char* mensaje, char* mensajeError, int minimo, int maximo, int reintentos) {
 	int retorno=-1;
 	int bufferInt;
-	char mensajeFallo[LARGO_MENSAJE];
 	if(pEntero!=NULL && mensaje!=NULL && mensajeError!=NULL && minimo<=maximo && reintentos>=0){
 		do{
-			printf("\n%s\n", mensaje);
-			if(!conseguirEntero(&bufferInt, mensajeFallo) && validarRangoEntero(bufferInt, minimo, maximo, mensajeFallo)){
+			printf("%s", mensaje);
+			if(!conseguirEntero(&bufferInt) && validarRangoEntero(bufferInt, minimo, maximo)){
 				*pEntero=bufferInt;
 				retorno=0;
 				break;
 			}
 			else{
-				printf("¡Error! %s %s\n\n", mensajeError, mensajeFallo);
+				printf("%s", mensajeError);
 				reintentos--;
 			}
 		}while(reintentos>=0);
@@ -72,13 +38,11 @@ int ingresarEntero(int* pEntero, char* mensaje, char* mensajeError, int minimo, 
 	return retorno;
 }
 
-int conseguirEntero(int* pEntero, char* mensajeFallo){
+int conseguirEntero(int* pEntero){
 	int retorno=-1;
 	char bufferString[MAX_BUFFER_STR];
 	if(pEntero!=NULL){
-		if(		!obtenerCadenaVersion2(bufferString, sizeof(bufferString), mensajeFallo)
-				//!obtenerCadena(bufferString, sizeof(bufferString))
-				&& esEntero(bufferString, sizeof(bufferString), mensajeFallo)){
+		if(!obtenerCadena(bufferString, sizeof(bufferString)) && esEntero(bufferString, sizeof(bufferString))){
 			*pEntero=atoi(bufferString);
 			retorno=0;
 		}
@@ -89,17 +53,16 @@ int conseguirEntero(int* pEntero, char* mensajeFallo){
 int ingresarFlotante(float* pFlotante, char* mensaje, char* mensajeError, float minimo, float maximo, int reintentos) {
 	int retorno=-1;
 	float bufferFloat;
-	char mensajeFallo[LARGO_MENSAJE];
 	if(pFlotante!=NULL && mensaje!=NULL && mensajeError!=NULL && minimo<=maximo && reintentos>=0){
 		do{
-			printf("\n%s\n", mensaje);
-			if(!conseguirFlotante(&bufferFloat, mensajeFallo) && validarRangoFlotante(bufferFloat, minimo, maximo, mensajeFallo)){
+			printf("%s", mensaje);
+			if(!conseguirFlotante(&bufferFloat) && validarRangoFlotante(bufferFloat, minimo, maximo)){
 				*pFlotante=bufferFloat;
 				retorno=0;
 				break;
 			}
 			else{
-				printf("¡Error! %s %s\n\n", mensajeError, mensajeFallo);
+				printf("%s", mensajeError);
 				reintentos--;
 			}
 		}while(reintentos>=0);
@@ -107,13 +70,11 @@ int ingresarFlotante(float* pFlotante, char* mensaje, char* mensajeError, float 
 	return retorno;
 }
 
-int conseguirFlotante(float* pFlotante, char* mensajeFallo){
+int conseguirFlotante(float* pFlotante){
 	int retorno=-1;
 	char bufferString[MAX_BUFFER_STR];
 	if(pFlotante!=NULL){
-		if(		!obtenerCadenaVersion2(bufferString, sizeof(bufferString), mensajeFallo)
-				//!obtenerCadena(bufferString, sizeof(bufferString))
-				&& esFlotante(bufferString, sizeof(bufferString), mensajeFallo)){
+		if(!obtenerCadena(bufferString, sizeof(bufferString)) && esFlotante(bufferString, sizeof(bufferString))){
 			*pFlotante=atof(bufferString);
 			retorno=0;
 		}
@@ -124,17 +85,16 @@ int conseguirFlotante(float* pFlotante, char* mensajeFallo){
 int ingresarNombre(char* pNombre, int limite, char* mensaje, char* mensajeError, int reintentos){
 	int retorno=-1;
 	char bufferString[limite];
-	char mensajeFallo[LARGO_MENSAJE];
 	if(pNombre!=NULL && limite>0 && mensaje!=NULL && mensajeError!=NULL && reintentos>=0){
 		do{
-			printf("\n%s\n", mensaje);
-			if(!conseguirNombre(bufferString, limite, mensajeFallo) && !pasarInicialesMayusculas(bufferString, limite)){
+			printf("%s", mensaje);
+			if(!conseguirNombre(bufferString, limite) && !pasarInicialesMayusculas(bufferString, limite)){
 				strncpy(pNombre, bufferString, limite);
 				retorno=0;
 				break;
 			}
 			else{
-				printf("¡Error! %s %s\n\n", mensajeError, mensajeFallo);
+				printf("%s", mensajeError);
 				reintentos--;
 			}
 		}while(reintentos>=0);
@@ -142,13 +102,11 @@ int ingresarNombre(char* pNombre, int limite, char* mensaje, char* mensajeError,
 	return retorno;
 }
 
-int conseguirNombre(char* pNombre, int limite, char* mensajeFallo){
+int conseguirNombre(char* pNombre, int limite){
 	int retorno=-1;
 	char bufferString[limite];
 	if(pNombre!=NULL && limite>0){
-		if(		!obtenerCadenaVersion2(bufferString, limite, mensajeFallo)
-				//!obtenerCadena(bufferString, limite)
-				&& esNombre(bufferString, limite, mensajeFallo) && strnlen(bufferString, limite)<limite){
+		if(!obtenerCadena(bufferString, limite) && esNombre(bufferString, limite) && strnlen(bufferString, limite)<limite){
 			strncpy(pNombre, bufferString, limite);
 			retorno=0;
 		}
@@ -159,34 +117,28 @@ int conseguirNombre(char* pNombre, int limite, char* mensajeFallo){
 int ingresarDescripcion(char* pDescripcion, int limite, char* mensaje, char* mensajeError, int reintentos){
 	int retorno=-1;
 	char bufferString[limite];
-	char mensajeFallo[LARGO_MENSAJE];
 	if(pDescripcion!=NULL && limite>0 && mensaje!=NULL && mensajeError!=NULL && reintentos>=0){
 		do{
-			printf("\n%s\n", mensaje);
-			if(!conseguirDescipcion(bufferString, limite, mensajeFallo)){
+			printf("%s", mensaje);
+			if(!conseguirDescipcion(bufferString, limite)){
 				strncpy(pDescripcion, bufferString, limite);
 				retorno=0;
 				break;
 			}
 			else{
-				printf("¡Error! %s %s\n\n", mensajeError, mensajeFallo);
+				printf("%s", mensajeError);
 				reintentos--;
-			}
-			if(reintentos<0){
-				break;
 			}
 		}while(reintentos>=0);
 	}
 	return retorno;
 }
 
-int conseguirDescipcion(char* pDescripcion, int limite, char* mensajeFallo){
+int conseguirDescipcion(char* pDescripcion, int limite){
 	int retorno=-1;
 	char bufferString[limite];
 	if(pDescripcion!=NULL && limite>0){
-		if( 	!obtenerCadenaVersion2(bufferString, limite, mensajeFallo)
-				//!obtenerCadena(bufferString, limite)
-				&& esDescripcion(bufferString, limite, mensajeFallo)){
+		if(!obtenerCadena(bufferString, limite) && esDescripcion(bufferString, limite) && strnlen(bufferString, limite)<limite){
 			strncpy(pDescripcion, bufferString, limite);
 			retorno=0;
 		}
@@ -197,17 +149,16 @@ int conseguirDescipcion(char* pDescripcion, int limite, char* mensajeFallo){
 int ingresarAlfanumerico(char* pAlfanumerico, int limite, char* mensaje, char* mensajeError, int reintentos){
 	int retorno=-1;
 	char bufferString[limite];
-	char mensajeFallo[LARGO_MENSAJE];
 	if(pAlfanumerico!=NULL && limite>0 && mensaje!=NULL && mensajeError!=NULL && reintentos>=0){
 		do{
-			printf("\n%s\n", mensaje);
-			if(!conseguirAlfanumerico(bufferString, limite, mensajeFallo)){
+			printf("%s", mensaje);
+			if(!conseguirAlfanumerico(bufferString, limite)){
 				strncpy(pAlfanumerico, bufferString, limite);
 				retorno=0;
 				break;
 			}
 			else{
-				printf("¡Error! %s %s\n\n", mensajeError, mensajeFallo);
+				printf("%s", mensajeError);
 				reintentos--;
 			}
 		}while(reintentos>=0);
@@ -215,13 +166,11 @@ int ingresarAlfanumerico(char* pAlfanumerico, int limite, char* mensaje, char* m
 	return retorno;
 }
 
-int conseguirAlfanumerico(char* pAlfanumerico, int limite, char* mensajeFallo){
+int conseguirAlfanumerico(char* pAlfanumerico, int limite){
 	int retorno=-1;
 	char bufferString[limite];
 	if(pAlfanumerico!=NULL && limite>0){
-		if(		!obtenerCadenaVersion2(bufferString, limite, mensajeFallo)
-				//!obtenerCadena(bufferString, limite)
-				&& esAlfanumerico(bufferString, limite, mensajeFallo) && strnlen(bufferString, limite)<limite){
+		if(!obtenerCadena(bufferString, limite) && esAlfanumerico(bufferString, limite) && strnlen(bufferString, limite)<limite){
 			strncpy(pAlfanumerico, bufferString, limite);
 			retorno=0;
 		}
@@ -245,3 +194,49 @@ int pasarInicialesMayusculas(char* nombre, int limite){
 	}
 	return retorno;
 }
+
+
+
+int ingresarArchivo(char* pArchivo, int limite, char* mensaje, char* mensajeError, int reintentos){
+	int retorno=-1;
+	char bufferString[limite];
+	if(pArchivo!=NULL && limite>0 && mensaje!=NULL && mensajeError!=NULL && reintentos>=0){
+		do{
+			printf("%s", mensaje);
+			if(!conseguirArchivo(bufferString, limite)){
+				strncpy(pArchivo, bufferString, limite);
+				retorno=0;
+				break;
+			}
+			else{
+				printf("%s", mensajeError);
+				reintentos--;
+			}
+		}while(reintentos>=0);
+	}
+	return retorno;
+}
+
+int conseguirArchivo(char* pArchivo, int limite){
+	int retorno=-1;
+	char bufferString[limite];
+	if(pArchivo!=NULL && limite>0){
+		if(!obtenerCadena(bufferString, limite) && esArchivo(bufferString, limite) && strnlen(bufferString, limite)<limite){
+			strncpy(pArchivo, bufferString, limite);
+			retorno=0;
+		}
+	}
+	return retorno;
+}
+
+int ingresarArchivoCSV(char* pArchivoCSV, int limite, char* mensaje, char* mensajeError, int reintentos){
+	int retorno=-1;
+	if(pArchivoCSV!=NULL && limite>0 && mensaje!=NULL && mensajeError!=NULL && reintentos>=0){
+		if(!ingresarArchivo(pArchivoCSV, limite, mensaje, mensajeError, reintentos) &&
+				esArchivoCSV(pArchivoCSV, limite)){
+			retorno=0;
+		}
+	}
+	return retorno;
+}
+

@@ -11,6 +11,8 @@
 #include "Album.h"
 #include "Input.h"
 #include "Validations.h"
+#include "Listings.h"
+#include "Reports.h"
 
 int main(void){
 	setbuf(stdout, NULL);
