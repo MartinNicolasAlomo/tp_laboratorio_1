@@ -7,28 +7,40 @@
 #include <string.h>
 #include "LinkedList.h"
 #include "Controller.h"
-#include "Input.h"
+#include "Passenger.h"
 #include "parser.h"
+#include "Input.h"
 #include "Validations.h"
 
 #define REINTENTOS 25
-#define LARGO_NOMBRE 50
-#define LARGO_DESCRIPCION 20
-#define LARGO_ID 8
+#define LARGO_MENSAJE 101
+#define LARGO_NOMBRE 51
+#define LARGO_DESCRIPCION 21
+#define LARGO_ID 16
 #define LARGO_NUMERO_TXT 11
-#define LARGO_CODIGO 10
-#define MSJ_MENU_PRINCIPAL "1. Cargar los datos de los pasajeros desde el archivo data.csv (modo texto).\n2. Cargar los datos de los pasajeros desde el archivo data.csv (modo binario).\n3. Alta de pasajero.\n4. Modificar datos de pasajero.\n5. Baja de pasajero\n6. Listar pasajeros.\n7. Ordenar pasajeros.\n8. Guardar los datos de los pasajeros en el archivo data.csv (modo texto).\n9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).\n10. Salir\n\n"
-#define MSJ_ERROR_OPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
-#define MSJ_MENU_MODIFICAR "¿Qué desea modificar?\n  1-Nombre\n  2-Apellido\n  3-Precio\n  4-Codigo de vuelo\n  5-Tipo de pasajero\n  6-Estado de vuelo\n  7-Finalizar cambios\n\n"
-#define MSJ_MENU_ORDENAR "¿Cómo desea ordenarlos?\n  1- Por ID\n  2- Por Nombre\n  3- Por Apellido\n  4- Por Precio\n  5- Por Codigo de Vuelo\n  6- Por Tipo de Pasajero\n  7- Por Estado de Vuelo\n  8- Volver al Menú Principal\n\n"
-#define MSJ_CONFIRMAR_AGREGADO "¿Está seguro/a de quiere agregar este pasajero?\n  1- Si\n  0- No\n\n"
+#define LARGO_CODIGO 11
 
-#define MSJ_ID_MODIFICAR "Ingrese el ID del pasajero que desea modificar:\n\n"
-#define MSJ_CONFIRMAR_MODIFICACION "¿Está seguro/a de quiere realizar las modificaciones?\n  1- Si\n  0- No\n\n"
+
+#define MSJ_MENU_PRINCIPAL "Selecciones una opción:\n  1. Cargar los datos de los pasajeros desde el archivo data.csv (modo texto).\n  2. Cargar los datos de los pasajeros desde el archivo data.csv (modo binario).\n  3. Alta de pasajero.\n  4. Modificar datos de pasajero.\n  5. Baja de pasajero\n  6. Listar pasajeros.\n  7. Ordenar pasajeros.\n  8. Guardar los datos de los pasajeros en el archivo data.csv (modo texto).\n  9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).\n  10. Salir\n\n"
+#define MSJ_MENU_MODIFICAR "¿Qué desea modificar?\n  1- Nombre\n  2- Apellido\n  3- Precio\n  4- Codigo de vuelo\n  5- Tipo de pasajero\n  6- Estado de vuelo\n  7- Finalizar cambios\n\n"
+#define MSJ_MENU_ELIMINAR "¿Que desea eliminar?\n  1- Un pasajero\n  2- La lista completa\n\n"
+#define MSJ_MENU_ORDENAR "¿Cómo desea ordenarlos?\n  1- Por ID\n  2- Por Nombre\n  3- Por Apellido\n  4- Por Precio\n  5- Por Codigo de Vuelo\n  6- Por Tipo de Pasajero\n  7- Por Estado de Vuelo\n  8- Volver al Menú Principal\n\n"
+
+#define MSJ_ERROR_OPCION "No es una opción válida, reinténtelo de nuevo."
+
+#define MSJ_ID_MODIFICAR "Ingrese el ID del pasajero que desea modificar:"
+#define MSJ_ID_ELIMINAR "Ingrese el ID del pasajero que desea eliminar:"
 #define MSJ_ORDEN "¿En qué orden quiere ordenarlos?\n  1- Ascendente\n  0- Descendente\n\n"
-#define MSJ_
-#define MSJ_
-#define MSJ_
+
+#define MSJ_CONFIRMAR_AGREGADO "¿Está seguro/a de quiere agregar este pasajero?\n  1- Si\n  0- No\n\n"
+#define MSJ_CONFIRMAR_MODIFICACION "¿Está seguro/a de quiere realizar las modificaciones?\n  1- Si\n  0- No\n\n"
+#define MSJ_CONFIRMAR_ELIMINADO_PASAJERO "¿Está seguro/a de quiere eliminar este pasajero?\n  1- Si\n  0- No\n\n"
+#define MSJ_CONFIRMAR_ELIMINADO_LISTA "¿Está seguro/a de quiere eliminar la lista?\n  1- Si\n  0- No\n\n"
+
+
+
+//#define MSJ_
+//#define MSJ_
 
 
 typedef struct
@@ -42,6 +54,8 @@ typedef struct
 	int estadoVuelo;
 }Passenger;
 
+
+//***********************************************************************************************
 
 //***********************************************************************************************
 
@@ -59,7 +73,7 @@ Passenger* Passenger_new();
 /// @param tipoPasajeroStr - Tipo de pasajero que va a setear
 /// @param estadoVueloStr - Estado de vuelo que va a setear
 /// @return - Retorna el puntero con espacio de memoria de tipo Passenger con los campos ya seteados si salió bien, o puntero a NULL si hubo un error
-Passenger* Passenger_newParametros(char* idStr,char* nombreStr,char* apellidoStr,char* precioStr, char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr);
+Passenger* Passenger_newParametros(int numeroPasajero,char* idStr,char* nombreStr,char* apellidoStr,char* precioStr, char* codigoVueloStr,char* tipoPasajeroStr,char* estadoVueloStr);
 
 /// @brief - Libera espacio de memoria de un pasajero
 /// @param this - Puntero a pasajero
@@ -102,7 +116,7 @@ int Passenger_getIdTXT(Passenger* this,char id[]);
 /// @param nombre - Puntero al nombre que se va a cargar
 /// @return - Retorna 0 (EXITO) - Si se pudo cargar el nombre en el campo del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al nombre es NULL
-int Passenger_setDescripcion(Passenger* this,char* nombre);
+int Passenger_setNombre(Passenger* this,char* nombre);
 
 /// @brief - Obtiene el nombre del empleado
 /// @param this - Puntero a empleado

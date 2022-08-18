@@ -13,15 +13,11 @@
 /// @brief Lee desde stdin hasta que encuentre un '\n' o hasta que haya copiado en cadena un maximo de 'longitud-1' caracteres
 /// @param cadena Puntero al espacio de memoria donde se guardará la cadena de caracteres ingresada
 /// @param limite Define el tamaño de la cadena
-/// @return Retorna 0 (EXITO) si se obtuvo una cadena de caracteres, -1 (ERROR) si no se consiguió
-int obtenerCadena(char* cadena, int limite);
-
-/// @brief Lee desde stdin hasta que encuentre un '\n' o hasta que haya copiado en cadena un maximo de 'longitud-1' caracteres
-/// @param cadena Puntero al espacio de memoria donde se guardará la cadena de caracteres ingresada
-/// @param limite Define el tamaño de la cadena
 /// @param mensajeFallo Puntero al espacio de memoria donde, en caso de haber un error, se guardará la descripción del error
 /// @return Retorna 0 (EXITO) si se obtuvo una cadena de caracteres, -1 (ERROR) si no se consiguió
-int obtenerCadenaVersion2(char* cadena, int limite, char* mensajeFallo);
+int obtenerCadena(char* cadena, int limite, char* mensajeFallo);
+
+int obtenerCadenaVersion89764321(char* cadena, int limite, char* mensajeFallo);
 
 /// @brief Solicita un número entero al usuario, y luego de verificarlo, devuelve el resultado
 /// @param pEntero Puntero al espacio de memoria donde se guardará el número entero ingresado

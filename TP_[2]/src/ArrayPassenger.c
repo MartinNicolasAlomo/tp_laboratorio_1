@@ -14,17 +14,17 @@ static int pasaj_generarId(void){
 int pasaj_menuPrincipal(void){
 	int retorno=-1;
 	ePasajero aPasajeros[CANT_PASAJEROS];
-	eEstadoVuelo aEstadosVuelos[CANT_ESTADOS_VUELOS]={{1,"En Horario"},{2,"En Vuelo"},{3,"Demorado"},{4,"Aterrizado"}};
+	eVuelo aVuelos[CANT_VUELOS]={{1,"ARG 09 BA","En Horario"},{2,"JPN 18 TK","En Vuelo"},{3,"USA 72 WA","Demorado"},
+									{4,"ITA 63 RM","Aterrizado"},{5,"FRA 54 PR","En Horario"},{6,"BRA 71 BS","Aterrizado"}};
 	eTipoPasajero aTiposPasajeros[CANT_TIPOS_PASAJEROS]={{1,"Economico"},{2,"Premium"},{3,"Ejecutivo"},{4,"Primera Clase"}};
+
 	int opcion=0;
 	int indiceNuevo;
-	int indiceBuscado;
-	float precioPrevio;
 	int totalPasajeros=0;
 	float totalPrecios=0;
 
 	if(!pasaj_inicializarLista(aPasajeros, CANT_PASAJEROS)){
-		puts("Se inicializó el programa exitosamente.\n\n");
+		puts("Se inicializó el programa correctamente.\n\n");
 	}
 	else{
 		puts("Falló la inicialización del programa.\n\n\n");
@@ -33,11 +33,7 @@ int pasaj_menuPrincipal(void){
 		if(!ingresarEntero(&opcion, MSJ_MENU_PRINCIPAL, MSJ_ERROR_OPCION, 1, 6, REINTENTOS)){
 			switch(opcion){
 			case 1:
-				if(!pasaj_agregarPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo)){
-					printf("Se cargaron los datos del nuevo pasajero. ID n°: %d.\n\n", aPasajeros[indiceNuevo].id);
-					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].price;
-					totalPasajeros++;
-					pasaj_imprimirLista(aPasajeros, CANT_PASAJEROS, aEstadosVuelos, CANT_ESTADOS_VUELOS, aTiposPasajeros, CANT_TIPOS_PASAJEROS);
+				if(!pasaj_agregarPasajero(aPasajeros, CANT_PASAJEROS, aVuelos, CANT_VUELOS, aTiposPasajeros, CANT_TIPOS_PASAJEROS, &totalPrecios, &totalPasajeros)){
 				}
 				break;
 			case 2:
@@ -45,11 +41,7 @@ int pasaj_menuPrincipal(void){
 					puts("No hay pasajeros para mostrar.\n\n\n");
 				}
 				else{
-					if(!pasaj_modificarPasajero(aPasajeros, CANT_PASAJEROS, &indiceBuscado, &precioPrevio)){
-						printf("Se modificaron los datos del pasajero con el ID: %d.\n\n", aPasajeros[indiceBuscado].id);
-						totalPrecios=totalPrecios-precioPrevio;
-						totalPrecios=totalPrecios+aPasajeros[indiceBuscado].price;
-						pasaj_imprimirLista(aPasajeros, CANT_PASAJEROS, aEstadosVuelos, CANT_ESTADOS_VUELOS, aTiposPasajeros, CANT_TIPOS_PASAJEROS);
+					if(!pasaj_modificarPasajero(aPasajeros, CANT_PASAJEROS, aVuelos, CANT_VUELOS, aTiposPasajeros, CANT_TIPOS_PASAJEROS, &totalPrecios)){
 					}
 				}
 				break;
@@ -58,11 +50,7 @@ int pasaj_menuPrincipal(void){
 					puts("No hay pasajeros para mostrar.\n\n\n");
 				}
 				else{
-					if(!pasaj_eliminarPasajero(aPasajeros, CANT_PASAJEROS, &indiceBuscado)){
-						printf("Se eliminaron los datos del pasajero con el ID: %d.\n\n", aPasajeros[indiceBuscado].id);
-						totalPrecios=totalPrecios-aPasajeros[indiceBuscado].price;
-						totalPasajeros--;
-						pasaj_imprimirLista(aPasajeros, CANT_PASAJEROS, aEstadosVuelos, CANT_ESTADOS_VUELOS, aTiposPasajeros, CANT_TIPOS_PASAJEROS);
+					if(!pasaj_eliminarPasajero(aPasajeros, CANT_PASAJEROS, aVuelos, CANT_VUELOS, aTiposPasajeros, CANT_TIPOS_PASAJEROS, &totalPrecios, &totalPasajeros)){
 					}
 				}
 				break;
@@ -71,7 +59,7 @@ int pasaj_menuPrincipal(void){
 					puts("No hay pasajeros para mostrar.\n\n\n");
 				}
 				else{
-					if(!pasaj_menuInformes(aPasajeros, CANT_PASAJEROS, aEstadosVuelos, CANT_ESTADOS_VUELOS, aTiposPasajeros, CANT_TIPOS_PASAJEROS, totalPrecios, totalPasajeros)){
+					if(!pasaj_menuInformes(aPasajeros, CANT_PASAJEROS, aVuelos, CANT_VUELOS, aTiposPasajeros, CANT_TIPOS_PASAJEROS, totalPrecios, totalPasajeros)){
 						puts("Informe finalizado.\n\n\n");
 					}
 					else{
@@ -80,36 +68,36 @@ int pasaj_menuPrincipal(void){
 				}
 				break;
 			case 5:
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Camila", "Lolo", 9000, "ARG09BA", 1, 3)){
-					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].price;
+				if(!pasaj_altaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Camila", "Lolo", 9000, 1, 1)){
+					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].precio;
 					totalPasajeros++;
 				}
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Matías", "Lolo", 60, "ITA18RM", 4, 2)){
-					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].price;
+				if(!pasaj_altaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Matías", "Lolo", 60, 2, 4)){
+					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].precio;
 					totalPasajeros++;
 				}
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Gonzalo", "Cece", 9000, "ARG09BA", 2, 4)){
-					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].price;
+				if(!pasaj_altaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Gonzalo", "Cece", 9000, 1, 2)){
+					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].precio;
 					totalPasajeros++;
 				}
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Daiana", "Vivi", 60, "ARG09BA", 4, 1)){
-					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].price;
+				if(!pasaj_altaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Daiana", "Vivi", 60, 1, 4)){
+					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].precio;
 					totalPasajeros++;
 				}
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Ruben", "Lolo", 60, "ITA18RM", 3, 1)){
-					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].price;
+				if(!pasaj_altaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Ruben", "Lolo", 60, 2, 3)){
+					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].precio;
 					totalPasajeros++;
 				}
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Agostina", "Cece", 60, "ITA18RM", 1, 1)){
-					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].price;
+				if(!pasaj_altaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Agostina", "Cece", 60, 2, 1)){
+					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].precio;
 					totalPasajeros++;
 				}
-				if(!pasaj_cargaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Zoe", "Nene", 9000, "JAP27TK", 1, 3)){
-					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].price;
+				if(!pasaj_altaForzadaPasajero(aPasajeros, CANT_PASAJEROS, &indiceNuevo, "Zoe", "Nene", 9000, 3, 1)){
+					totalPrecios=totalPrecios+aPasajeros[indiceNuevo].precio;
 					totalPasajeros++;
 				}
 				puts("Se hardcodearon los pasajeros.\n");
-				pasaj_imprimirLista(aPasajeros, CANT_PASAJEROS, aEstadosVuelos, CANT_ESTADOS_VUELOS, aTiposPasajeros, CANT_TIPOS_PASAJEROS);
+				pasaj_imprimirLista(aPasajeros, CANT_PASAJEROS, aVuelos, CANT_VUELOS, aTiposPasajeros, CANT_TIPOS_PASAJEROS);
 				break;
 			case 6:
 				puts("Usted finalizó la operación.\n\n");
@@ -124,29 +112,10 @@ int pasaj_menuPrincipal(void){
 	return retorno;
 }
 
-int pasaj_cargaForzadaPasajero(ePasajero* aPasajeros, int limite, int* indiceNuevo, char* name, char* lastName, float price,
-									char* flyCode, int typePassenger, int statusFlight){
-	int retorno=-1;
-	ePasajero auxiliar;
-	int indiceLibre;
-	if(aPasajeros!=NULL && limite>0 && name!=NULL && lastName!=NULL && price>0 && flyCode!=NULL){
-		indiceLibre=pasaj_buscarIndiceVacio(aPasajeros, CANT_PASAJEROS);
-		if(indiceLibre>=0){
-			auxiliar.id=pasaj_generarId();
-			strncpy(auxiliar.name,name,LARGO_NOMBRE);
-			strncpy(auxiliar.lastName,lastName,LARGO_NOMBRE);
-			strncpy(auxiliar.flyCode,flyCode,LARGO_CODIGO);
-			auxiliar.price=price;
-			auxiliar.idTipoPasajero=typePassenger;
-			auxiliar.idEstadoVuelo=statusFlight;
-			auxiliar.isEmpty=FALSE;
-			aPasajeros[indiceLibre]=auxiliar;
-			*indiceNuevo=indiceLibre;
-			retorno=0;
-		}
-	}
-	return retorno;
-}
+
+
+
+
 
 int pasaj_inicializarLista(ePasajero* aPasajeros, int limite){
 	int retorno=-1;
@@ -179,7 +148,7 @@ int pasaj_buscarPasajeroPorId(ePasajero* aPasajeros, int limite, int id){
 	int i;
 	if(aPasajeros!=NULL && limite>0 && id>0){
 		for(i=0;i<limite;i++){
-			if(aPasajeros[i].id==id){
+			if(aPasajeros[i].idPasajero==id){
 				retorno=i;
 				break;
 			}
@@ -188,37 +157,72 @@ int pasaj_buscarPasajeroPorId(ePasajero* aPasajeros, int limite, int id){
 	return retorno;
 }
 
-int pasaj_agregarPasajero(ePasajero* aPasajeros, int limite, int* indiceNuevo){
+
+
+
+int pasaj_altaForzadaPasajero(ePasajero* aPasajeros, int limite, int* indiceNuevo, char* nombre, char* apellido, float precio,
+									int idVuelo, int idTipoPasajero){
 	int retorno=-1;
 	ePasajero auxiliar;
 	int indiceLibre;
-	int confirmar;
-	if(aPasajeros!=NULL && limite>0 && indiceNuevo!=NULL){
-		indiceLibre=pasaj_buscarIndiceVacio(aPasajeros, limite);
-		if(indiceLibre>=0 && !pasaj_cargarDatosPasajero(&auxiliar) &&
-				!ingresarEntero(&confirmar, MSJ_CONFIRMAR_AGREGADO, MSJ_ERROR_OPCION, 0, 1, REINTENTOS) && confirmar){
-			auxiliar.id=pasaj_generarId();
+	if(aPasajeros!=NULL && limite>0 && nombre!=NULL && apellido!=NULL && precio>0 && idVuelo>0 && idTipoPasajero>0){
+		indiceLibre=pasaj_buscarIndiceVacio(aPasajeros, CANT_PASAJEROS);
+		if(indiceLibre>=0){
+			auxiliar.idPasajero=pasaj_generarId();
+			strncpy(auxiliar.nombre,nombre,LARGO_NOMBRE);
+			strncpy(auxiliar.apellido,apellido,LARGO_NOMBRE);
+			auxiliar.idVuelo=idVuelo;
+			auxiliar.precio=precio;
+			auxiliar.idTipoPasajero=idTipoPasajero;
 			auxiliar.isEmpty=FALSE;
 			aPasajeros[indiceLibre]=auxiliar;
 			*indiceNuevo=indiceLibre;
-			puts("Confirmado.\n");
 			retorno=0;
 		}
 	}
 	return retorno;
 }
 
-int pasaj_cargarDatosPasajero(ePasajero* pElemento){
+int pasaj_agregarPasajero(ePasajero* aPasajeros, int limPasajeros, eVuelo* aVuelos, int limVuelos,
+								eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, float* totalPrecios, int* totalPasajeros){
 	int retorno=-1;
 	ePasajero auxiliar;
-	if(pElemento!=NULL){
-		if(!ingresarNombre(auxiliar.name, LARGO_NOMBRE, "Ingrese el nombre:\n", "Error. No es un nombre, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
-			!ingresarNombre(auxiliar.lastName, LARGO_NOMBRE, "\nIngrese el apellido:\n", "Error. No es un apellido, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
-			!ingresarFlotante(&auxiliar.price, "\nIngrese el precio del vuelo:\n", "Error. No es un precio válido, reinténtelo de nuevo.\n\n\n", 0.1, 500000, REINTENTOS) &&
-			!ingresarAlfanumerico(auxiliar.flyCode, LARGO_CODIGO, "\nIngrese el codigo de pasaje:\n", "Error. No es un tipo válido, reinténtelo de nuevo.\n\n\n", REINTENTOS) &&
-			!ingresarEntero(&auxiliar.idTipoPasajero, "\nIngrese el tipo de pasajero: (1 Económico, 2 Premium, 3 Ejecutivo o 4 Primera Clase)\n", "Error. No es un tipo válido, reinténtelo de nuevo.\n\n\n", 1, 4, REINTENTOS) &&
-			!ingresarEntero(&auxiliar.idEstadoVuelo, "\nIndique el estado de su vuelo: (1 Activo, 2 Demorado, 3 Reprogramado o 4 Cancelado)\n", "Error. No es un estado válido, reinténtelo de nuevo.\n\n\n", 1, 4, REINTENTOS)){
-			strupr(auxiliar.flyCode);
+	int indiceLibre;
+	int confirmar;
+	if(aPasajeros!=NULL && limPasajeros>0){
+		indiceLibre=pasaj_buscarIndiceVacio(aPasajeros, limPasajeros);
+		if(indiceLibre>=0 && !pasaj_cargarDatosPasajero(&auxiliar, aPasajeros, limPasajeros, aVuelos, limVuelos, aTiposPasajeros, limTiposPasajeros) &&
+				!pasaj_vistaPrevia(&auxiliar, "Vista previa pasajero agregado:", aVuelos, limVuelos, aTiposPasajeros, limTiposPasajeros) &&
+				!ingresarEntero(&confirmar, MSJ_CONFIRMAR_AGREGADO, MSJ_ERROR_OPCION, 0, 1, REINTENTOS) && confirmar){
+			puts("Confirmado.\n");
+			auxiliar.idPasajero=pasaj_generarId();
+			auxiliar.isEmpty=FALSE;
+			aPasajeros[indiceLibre]=auxiliar;
+			*totalPrecios=*totalPrecios+aPasajeros[indiceLibre].precio;
+			(*totalPasajeros)++;
+			pasaj_imprimirLista(aPasajeros, limPasajeros, aVuelos, limVuelos, aTiposPasajeros, limTiposPasajeros);
+			printf("Se cargaron los datos del nuevo pasajero. ID n°: %d.\n\n", aPasajeros[indiceLibre].idPasajero);
+			retorno=0;
+		}
+	}
+	return retorno;
+}
+
+int pasaj_cargarDatosPasajero(ePasajero* pElemento, ePasajero* aPasajeros, int limPasajeros,
+								eVuelo* aVuelos, int limVuelos, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros){
+	int retorno=-1;
+	ePasajero auxiliar;
+	if(pElemento!=NULL && aPasajeros!=NULL && limPasajeros>0 && aVuelos!=NULL && limVuelos>0 && aTiposPasajeros!=NULL && limTiposPasajeros>0){
+		if(!ingresarNombre(auxiliar.nombre, LARGO_NOMBRE, "Ingrese el nombre:", "No es un nombre válido.", REINTENTOS) &&
+			!pasarInicialesMayusculas(auxiliar.nombre, LARGO_NOMBRE) &&
+			!ingresarNombre(auxiliar.apellido, LARGO_NOMBRE, "Ingrese el apellido:", "No es un apellido válido.", REINTENTOS) &&
+			!pasarInicialesMayusculas(auxiliar.apellido, LARGO_NOMBRE) &&
+			!ingresarFlotante(&auxiliar.precio, "Ingrese el precio del vuelo:", "No es un precio válido.", 0.1, 500000, REINTENTOS) &&
+			!vuelo_imprimirListaVuelos(aVuelos, limVuelos) &&
+			!ingresarEntero(&auxiliar.idVuelo, "Indique el id del vuelo:", "No es un id de vuelo válido.", 1, 6, REINTENTOS) &&
+			!tipoPasajero_imprimirListaTiposPasajeros(aTiposPasajeros, limTiposPasajeros) &&
+			!ingresarEntero(&auxiliar.idTipoPasajero, "Ingrese el id del tipo de pasajero:", "No es un id de tipo de pasajero válido.", 1, 4, REINTENTOS)
+		){
 			*pElemento=auxiliar;
 			retorno=0;
 		}
@@ -226,23 +230,29 @@ int pasaj_cargarDatosPasajero(ePasajero* pElemento){
 	return retorno;
 }
 
-int pasaj_modificarPasajero(ePasajero* aPasajeros, int limite, int* indiceBuscado, float* precioPrevio){
+
+int pasaj_modificarPasajero(ePasajero* aPasajeros, int limPasajeros, eVuelo* aVuelos, int limVuelos,
+								eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, float* totalPrecios){
 	int retorno=-1;
 	ePasajero auxiliar;
 	int codigoModificar;
 	int indiceCodigo;
 	int flagCambio;
 	int confirmar;
-	if(aPasajeros!=NULL && limite>0 && indiceBuscado!=NULL && precioPrevio!=NULL &&
+	if(aPasajeros!=NULL && limPasajeros>0 &&
 			!ingresarEntero(&codigoModificar, MSJ_ID_MODIFICAR, MSJ_ERROR_ID, 0, idIncremental, REINTENTOS)){
 		indiceCodigo=pasaj_buscarPasajeroPorId(aPasajeros, CANT_PASAJEROS, codigoModificar);
-		if(indiceCodigo>=0 && aPasajeros[indiceCodigo].isEmpty==FALSE){
-			*indiceBuscado=indiceCodigo;
-			*precioPrevio=aPasajeros[indiceCodigo].price;
+		if(indiceCodigo>=0 && aPasajeros[indiceCodigo].isEmpty==FALSE &&
+				!pasaj_vistaPrevia(&aPasajeros[indiceCodigo], "Se encontro este pasajero:", aVuelos, limVuelos, aTiposPasajeros, limTiposPasajeros)){
+			*totalPrecios=*totalPrecios-aPasajeros[indiceCodigo].precio;
 			auxiliar=aPasajeros[indiceCodigo];
-			if(!pasaj_menuModificar(&auxiliar, &flagCambio) && !flagCambio &&
+			if(!pasaj_menuModificar(&auxiliar, &flagCambio, aVuelos, limVuelos, aTiposPasajeros, limTiposPasajeros) && !flagCambio &&
+					!pasaj_vistaPrevia(&auxiliar, "Vista previa cambios hechos", aVuelos, limVuelos, aTiposPasajeros, limTiposPasajeros) &&
 					!ingresarEntero(&confirmar, MSJ_CONFIRMAR_MODIFICACION, MSJ_ERROR_OPCION, 0, 1, REINTENTOS) && confirmar){
 				aPasajeros[indiceCodigo]=auxiliar;
+				*totalPrecios=*totalPrecios+aPasajeros[indiceCodigo].precio;
+				pasaj_imprimirLista(aPasajeros, limPasajeros, aVuelos, limVuelos, aTiposPasajeros, limTiposPasajeros);
+				printf("Se modificaron los datos del pasajero con el ID: %d.\n\n", aPasajeros[indiceCodigo].idPasajero);
 				retorno=0;
 			}
 		}
@@ -250,18 +260,19 @@ int pasaj_modificarPasajero(ePasajero* aPasajeros, int limite, int* indiceBuscad
 	return retorno;
 }
 
-int pasaj_menuModificar(ePasajero* pElemento, int* cambios){
+int pasaj_menuModificar(ePasajero* unAlbum, int* cambios, eVuelo* aVuelos, int limVuelos, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros){
 	int retorno=-1;
 	ePasajero auxiliar;
 	int opcion;
 	int flagCambios;
-	if(pElemento!=NULL && cambios!=NULL){
-		auxiliar=*pElemento;
+	if(unAlbum!=NULL && cambios!=NULL){
+		auxiliar=*unAlbum;
 		do{
 			if(!ingresarEntero(&opcion, MSJ_MENU_MODIFICAR, MSJ_ERROR_OPCION, 1, 6, REINTENTOS)){
 				switch(opcion){
 				case 1:
-					if(!ingresarNombre(auxiliar.name, LARGO_NOMBRE, "Nuevo nombre:\n", "Error\n\n\n", REINTENTOS)){
+					if(!ingresarNombre(auxiliar.nombre, LARGO_NOMBRE, "Nuevo nombre:", "No es un nombre válido:", REINTENTOS)
+							&& !pasarInicialesMayusculas(auxiliar.nombre, LARGO_NOMBRE)){
 						puts("Nombre ingresado correctamente.\n\n");
 						flagCambios=0;
 					}
@@ -270,7 +281,8 @@ int pasaj_menuModificar(ePasajero* pElemento, int* cambios){
 					}
 					break;
 				case 2:
-					if(!ingresarNombre(auxiliar.lastName, LARGO_NOMBRE, "Nuevo apellido:\n", "Error\n\n\n", REINTENTOS)){
+					if(!ingresarNombre(auxiliar.apellido, LARGO_NOMBRE, "Nuevo apellido:", "No es un apellido válido:", REINTENTOS)
+							&& !pasarInicialesMayusculas(auxiliar.apellido, LARGO_NOMBRE)){
 						puts("Apellido ingresado correctamente.\n\n");
 						flagCambios=0;
 					}
@@ -279,7 +291,7 @@ int pasaj_menuModificar(ePasajero* pElemento, int* cambios){
 					}
 					break;
 				case 3:
-					if(!ingresarFlotante(&auxiliar.price, "Nuevo precio:\n", "Error\n\n\n", 0.1, 500000, REINTENTOS)){
+					if(!ingresarFlotante(&auxiliar.precio, "Nuevo precio:", "No es un apellido válido:", 0.1, 500000, REINTENTOS)){
 						puts("Precio ingresado correctamente.\n\n");
 						flagCambios=0;
 					}
@@ -288,28 +300,28 @@ int pasaj_menuModificar(ePasajero* pElemento, int* cambios){
 					}
 					break;
 				case 4:
-					//if(!ingresarEntero(&auxiliar.typePassenger, "Nuevo tipo de pasajero:\n  1- Económico\n  2- Premium\n  3- Ejecutivo\n  4- Primera Clase\n", "Error\n\n\n", 1, 4, REINTENTOS)){
-					if(!ingresarEntero(&auxiliar.idTipoPasajero, "Nuevo tipo de pasajero:\n  1- Económico\n  2- Premium\n  3- Ejecutivo\n  4- Primera Clase\n", "Error\n\n\n", 1, 4, REINTENTOS)){
-					puts("Tipo de pasajero ingresado correctamente.\n\n");
+					if(!vuelo_imprimirListaVuelos(aVuelos, limVuelos)
+							&& !ingresarEntero(&auxiliar.idVuelo, "Nuevo id de vuelo:", "No es un id de vuelo válido:", 1, 6, REINTENTOS)){
+					puts("Id de vuelo ingresado correctamente.\n\n");
 						flagCambios=0;
 					}
 					else{
-						puts("No se ingresó un tipo de pasajero válido.\n\n");
+						puts("No se ingresó un id de vuelo válido.\n\n");
 					}
 					break;
 				case 5:
-					if(!ingresarAlfanumerico(auxiliar.flyCode, LARGO_CODIGO, "Nuevo codigo de vuelo:\n", "Error\n\n\n", REINTENTOS)){
-						strupr(auxiliar.flyCode);
-						puts("Código de vuelo ingresado correctamente.\n\n");
+					if(!tipoPasajero_imprimirListaTiposPasajeros(aTiposPasajeros, limTiposPasajeros)
+							&& !ingresarEntero(&auxiliar.idTipoPasajero, "Nuevo id de tipo de pasajero:", "No es un id de tipo de pasajero válido:", 1, 4, REINTENTOS)){
+					puts("Id de tipo de pasajero ingresado correctamente.\n\n");
 						flagCambios=0;
 					}
 					else{
-						puts("No se ingresó un código de vuelo válido.\n\n");
+						puts("No se ingresó un id de tipo de pasajero válido.\n\n");
 					}
 					break;
 				case 6:
 					*cambios=flagCambios;
-					*pElemento=auxiliar;
+					*unAlbum=auxiliar;
 					retorno=0;
 					break;
 				}
@@ -322,59 +334,46 @@ int pasaj_menuModificar(ePasajero* pElemento, int* cambios){
 	return retorno;
 }
 
-int pasaj_eliminarPasajero(ePasajero* aPasajeros, int limite, int* indiceBuscado){
+
+int pasaj_eliminarPasajero(ePasajero* aPasajeros, int limPasajeros, eVuelo* aVuelos, int limVuelos,
+								eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, float* totalPrecios, int* totalPasajeros){
 	int retorno=-1;
 	int idEliminar;
 	int indiceCodigo;
 	int confirmar;
-	if(aPasajeros!=NULL && limite>0 && indiceBuscado!=NULL && !ingresarEntero(&idEliminar, MSJ_ID_ELIMINAR, MSJ_ERROR_ID, 1, idIncremental, REINTENTOS)){
+	if(aPasajeros!=NULL && limPasajeros>0 && !ingresarEntero(&idEliminar, MSJ_ID_ELIMINAR, MSJ_ERROR_ID, 1, idIncremental, REINTENTOS)){
 		indiceCodigo=pasaj_buscarPasajeroPorId(aPasajeros, CANT_PASAJEROS, idEliminar);
 		if(indiceCodigo>=0 && aPasajeros[indiceCodigo].isEmpty==FALSE &&
+				!pasaj_vistaPrevia(&aPasajeros[indiceCodigo], "Se encontró este pasajero:", aVuelos, limVuelos, aTiposPasajeros, limTiposPasajeros) &&
 				!ingresarEntero(&confirmar, MSJ_CONFIRMAR_ELIMINADO, MSJ_OPCIONORDEN, 0, 1, REINTENTOS) && confirmar){
-			aPasajeros[indiceCodigo].isEmpty=TRUE;
-			*indiceBuscado=indiceCodigo;
 			puts("Confirmado.\n");
+			aPasajeros[indiceCodigo].isEmpty=TRUE;
+			*totalPrecios=*totalPrecios-aPasajeros[indiceCodigo].precio;
+			(*totalPasajeros)--;
+			pasaj_imprimirLista(aPasajeros, limPasajeros, aVuelos, limVuelos, aTiposPasajeros, limTiposPasajeros);
+			printf("Se eliminaron los datos del pasajero con el ID: %d.\n\n", aPasajeros[indiceCodigo].idPasajero);
 			retorno=0;
 		}
 	}
 	return retorno;
 }
 
-int pasaj_coincidirPasajeroConTipoPasajero(ePasajero unPasajero, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, eTipoPasajero* auxiliar){
+
+int pasaj_imprimirAlbumIndividual(ePasajero* unPasajero, eVuelo* unVuelo, eTipoPasajero* unTipoPasajero){
 	int retorno=-1;
-	int i;
-	if(1){
-		for(i=0;i<limTiposPasajeros;i++){
-			if(aTiposPasajeros[i].id==unPasajero.idTipoPasajero){
-				*auxiliar=aTiposPasajeros[i];
-				retorno=0;
-				break;
-			}
-		}
+	if(unPasajero!=NULL && unPasajero->isEmpty==FALSE && unVuelo!=NULL && unTipoPasajero!=NULL){
+		retorno=0;
+		printf("|%11d|%26s|%26s|%16.2f|%21s|%21s|%21s|\n",
+				unPasajero->idPasajero, unPasajero->nombre, unPasajero->apellido, unPasajero->precio,
+				unVuelo->codigoVuelo, unVuelo->estadoVuelo, unTipoPasajero->descripcion);
 	}
 	return retorno;
 }
 
-int pasaj_coincidirPasajeroConEstadoVuelo(ePasajero unPasajero, eEstadoVuelo* aEstadosVuelos, int limEstadosVuelos, eEstadoVuelo* auxiliar){
+int pasaj_imprimirLista(ePasajero* aPasajeros, int limPasajeros, eVuelo* aVuelos, int limVuelos, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros){
 	int retorno=-1;
 	int i;
-	if(1){
-		for(i=0;i<limEstadosVuelos;i++){
-			if(aEstadosVuelos[i].id==unPasajero.idTipoPasajero){
-				*auxiliar=aEstadosVuelos[i];
-				retorno=0;
-				break;
-			}
-		}
-	}
-	return retorno;
-}
-
-int pasaj_imprimirLista(ePasajero* aPasajeros, int limPasajeros, eEstadoVuelo* aEstadosVuelos, int limEstadosVuelos,
-							eTipoPasajero* aTiposPasajeros, int limTiposPasajeros){
-	int retorno=-1;
-	int i;
-	eEstadoVuelo auxEstadoVuelo;
+	eVuelo auxVuelo;
 	eTipoPasajero auxTipoPasajeros;
 	if(aPasajeros!=NULL && limPasajeros>0){
 		retorno=0;
@@ -382,9 +381,9 @@ int pasaj_imprimirLista(ePasajero* aPasajeros, int limPasajeros, eEstadoVuelo* a
 				"Id:", "Nombre:", "Apellido:", "Precio:", "Codigo de Vuelo:", "Estado de Vuelo:", "Tipo de Pasajero:");
 		for(i=0;i<limPasajeros;i++){
 			if(aPasajeros[i].isEmpty==FALSE &&
-					!pasaj_coincidirPasajeroConTipoPasajero(aPasajeros[i], aTiposPasajeros, limTiposPasajeros, &auxTipoPasajeros) &&
-					!pasaj_coincidirPasajeroConEstadoVuelo(aPasajeros[i], aEstadosVuelos, limEstadosVuelos, &auxEstadoVuelo)){
-				pasaj_imprimirElemento(&aPasajeros[i], &auxEstadoVuelo, &auxTipoPasajeros);
+					!pasaj_coincidirPasajeroConVuelo(&aPasajeros[i], aVuelos, limVuelos, &auxVuelo) &&
+					!pasaj_coincidirPasajeroConTipoPasajero(&aPasajeros[i], aTiposPasajeros, limTiposPasajeros, &auxTipoPasajeros)){
+				pasaj_imprimirAlbumIndividual(&aPasajeros[i], &auxVuelo, &auxTipoPasajeros);
 			}
 		}
 		puts("\n\n");
@@ -392,16 +391,22 @@ int pasaj_imprimirLista(ePasajero* aPasajeros, int limPasajeros, eEstadoVuelo* a
 	return retorno;
 }
 
-int pasaj_imprimirElemento(ePasajero* pasajero, eEstadoVuelo* estadoVuelo, eTipoPasajero* tipoPasajero){
+int pasaj_vistaPrevia(ePasajero* unPasajero, char* mensajePrevio, eVuelo* aVuelos, int limVuelos, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros){
 	int retorno=-1;
-	if(pasajero!=NULL && pasajero->isEmpty==FALSE && estadoVuelo!=NULL && tipoPasajero!=NULL){
+	eVuelo auxVuelo;
+	eTipoPasajero auxTipoPasajero;
+	if(unPasajero!=NULL &&
+			!pasaj_coincidirPasajeroConVuelo(unPasajero, aVuelos, limVuelos, &auxVuelo) &&
+			!pasaj_coincidirPasajeroConTipoPasajero(unPasajero, aTiposPasajeros, limTiposPasajeros, &auxTipoPasajero)){
+		printf("\n\n%s\n\n|%-11s|%-26s|%-26s|%-16s|%-21s|%-21s|%-21s|\n",
+				mensajePrevio, "Id:", "Nombre:", "Apellido:", "Precio:", "Codigo de Vuelo:", "Estado de Vuelo:", "Tipo de Pasajero:");
+		pasaj_imprimirAlbumIndividual(unPasajero, &auxVuelo, &auxTipoPasajero);
 		retorno=0;
-		printf("|%11d|%26s|%26s|%16.2f|%21s|%21s|%21s|\n",
-				pasajero->id, pasajero->name, pasajero->lastName, pasajero->price,
-				pasajero->flyCode, estadoVuelo->descripcion, tipoPasajero->descripcion);
 	}
 	return retorno;
 }
+
+
 
 int pasaj_ordenarPorApellidoYTipoPasajero(ePasajero* aPasajeros, int limite, int orden){
 	int retorno=-1;
@@ -419,7 +424,7 @@ int pasaj_ordenarPorApellidoYTipoPasajero(ePasajero* aPasajeros, int limite, int
 					if(aPasajeros[i].isEmpty || aPasajeros[i+1].isEmpty){
 						continue;
 					}
-					auxComparacion = strncmp(aPasajeros[i].lastName,aPasajeros[i+1].lastName,LARGO_NOMBRE);
+					auxComparacion = strncmp(aPasajeros[i].apellido,aPasajeros[i+1].apellido,LARGO_NOMBRE);
 					if(auxComparacion>0 || (auxComparacion==0 && aPasajeros[i].idTipoPasajero > aPasajeros[i+1].idTipoPasajero)){
 						flagSwap=TRUE;
 						buffer = aPasajeros[i];
@@ -437,7 +442,7 @@ int pasaj_ordenarPorApellidoYTipoPasajero(ePasajero* aPasajeros, int limite, int
 					if(aPasajeros[i].isEmpty || aPasajeros[i+1].isEmpty){
 						continue;
 					}
-					auxComparacion = strncmp(aPasajeros[i].lastName,aPasajeros[i+1].lastName,LARGO_NOMBRE);
+					auxComparacion = strncmp(aPasajeros[i].apellido,aPasajeros[i+1].apellido,LARGO_NOMBRE);
 					if(auxComparacion<0 || (auxComparacion==0 && aPasajeros[i].idTipoPasajero < aPasajeros[i+1].idTipoPasajero)){
 						flagSwap=TRUE;
 						buffer = aPasajeros[i];
@@ -453,15 +458,48 @@ int pasaj_ordenarPorApellidoYTipoPasajero(ePasajero* aPasajeros, int limite, int
 	return retorno;
 }
 
-int pasaj_ordenarPorCodigoVueloYEstadoVuelo(ePasajero* aPasajeros, int limite, int orden){
+
+int pasaj_coincidirPasajeroConVuelo(ePasajero* unPasajero, eVuelo* aVuelos, int limVuelos, eVuelo* auxVuelo){
+	int retorno=-1;
+	int i;
+	if(1){
+		for(i=0;i<limVuelos;i++){
+			if(aVuelos[i].idVuelo==unPasajero->idTipoPasajero){
+				*auxVuelo=aVuelos[i];
+				retorno=0;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
+int pasaj_coincidirPasajeroConTipoPasajero(ePasajero* unPasajero, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, eTipoPasajero* auxTipoPasajero){
+	int retorno=-1;
+	int i;
+	if(1){
+		for(i=0;i<limTiposPasajeros;i++){
+			if(aTiposPasajeros[i].idTipoPasajero==unPasajero->idTipoPasajero){
+				*auxTipoPasajero=aTiposPasajeros[i];
+				retorno=0;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
+
+
+/*int pasaj_ordenarPorCodigoVueloYEstadoVuelo(ePasajero* aPasajeros, int limPasajeros, eVuelo* aVuelos, int limVuelos, int orden){
 	int retorno=-1;
 	int flagSwap;
 	int i;
 	ePasajero buffer;
 	int auxiliarComparacion;
 	int nuevoLimite;
-	if(aPasajeros!=NULL && limite>0){
-		nuevoLimite=limite-1;
+	if(aPasajeros!=NULL && limPasajeros>0){
+		nuevoLimite=limPasajeros-1;
 		if(orden){
 			do{
 				flagSwap=FALSE;
@@ -469,8 +507,9 @@ int pasaj_ordenarPorCodigoVueloYEstadoVuelo(ePasajero* aPasajeros, int limite, i
 					if(aPasajeros[i].isEmpty || aPasajeros[i+1].isEmpty){
 						continue;
 					}
-					auxiliarComparacion = strncmp(aPasajeros[i].flyCode,aPasajeros[i+1].flyCode,LARGO_CODIGO);
-					if(auxiliarComparacion>0 || (auxiliarComparacion==0 && aPasajeros[i].idEstadoVuelo > aPasajeros[i+1].idEstadoVuelo)){
+					pasaj_coincidirPasajeroConVuelo(&buffer, aVuelos, limVuelos, auxVuelo)
+					auxiliarComparacion = strncmp(aPasajeros[i].codigoVuelo,aPasajeros[i+1].codigoVuelo,LARGO_CODIGO);
+					if(auxiliarComparacion>0 || (auxiliarComparacion==0 && aPasajeros[i].idVuelo > aPasajeros[i+1].idVuelo)){
 						flagSwap=TRUE;
 						buffer = aPasajeros[i];
 						aPasajeros[i] = aPasajeros[i+1];
@@ -487,8 +526,8 @@ int pasaj_ordenarPorCodigoVueloYEstadoVuelo(ePasajero* aPasajeros, int limite, i
 					if(aPasajeros[i].isEmpty || aPasajeros[i+1].isEmpty){
 						continue;
 					}
-					auxiliarComparacion = strncmp(aPasajeros[i].flyCode,aPasajeros[i+1].flyCode,LARGO_CODIGO);
-					if(auxiliarComparacion<0 || (auxiliarComparacion==0 && aPasajeros[i].idEstadoVuelo < aPasajeros[i+1].idEstadoVuelo)){
+					auxiliarComparacion = strncmp(aPasajeros[i].codigoVuelo,aPasajeros[i+1].codigoVuelo,LARGO_CODIGO);
+					if(auxiliarComparacion<0 || (auxiliarComparacion==0 && aPasajeros[i].idVuelo < aPasajeros[i+1].idVuelo)){
 						flagSwap=TRUE;
 						buffer = aPasajeros[i];
 						aPasajeros[i] = aPasajeros[i+1];
@@ -502,9 +541,10 @@ int pasaj_ordenarPorCodigoVueloYEstadoVuelo(ePasajero* aPasajeros, int limite, i
 	}
 	return retorno;
 }
+*/
 
-int pasaj_menuInformes(ePasajero* aPasajeros, int limPasajeros, eEstadoVuelo* aEstadosVuelos, int limEstadosVuelos,
-						eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, float totalPrecios, int totalPasajeros){
+int pasaj_menuInformes(ePasajero* aPasajeros, int limPasajeros, eVuelo* aVuelos, int limVuelos,
+							eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, float totalPrecios, int totalPasajeros){
 	int retorno=-1;
 	int tipoInforme;
 	int orden;
@@ -514,33 +554,22 @@ int pasaj_menuInformes(ePasajero* aPasajeros, int limPasajeros, eEstadoVuelo* aE
 		if(!ingresarEntero(&tipoInforme, MSJ_MENU_INFORME, MSJ_ERROR_OPCION, 1, 3, REINTENTOS)){
 			switch(tipoInforme){
 			case 1:
-				if(!ingresarEntero(&orden, MSJ_OPCIONORDEN, MSJ_ERROR_OPCION, 0, 1, REINTENTOS)){
-					if(!pasaj_ordenarPorApellidoYTipoPasajero(aPasajeros, limPasajeros, orden)){
-						pasaj_imprimirLista(aPasajeros, limPasajeros, aEstadosVuelos, limEstadosVuelos, aTiposPasajeros, limTiposPasajeros);
+				if(!ingresarEntero(&orden, MSJ_OPCIONORDEN, MSJ_ERROR_OPCION, 0, 1, REINTENTOS) &&
+						!pasaj_ordenarPorApellidoYTipoPasajero(aPasajeros, limPasajeros, orden) &&
+						!pasaj_imprimirLista(aPasajeros, limPasajeros, aVuelos, limVuelos, aTiposPasajeros, limTiposPasajeros)){
 						retorno=0;
-					}
-					else{
-						puts("No se pudo ordenar la lista.\n\n\n");
-					}
-				}
-				else{
-					puts("No se pudo ingresar el orden deseado.\n\n\n");
 				}
 				break;
 			case 2:
-				if(!pasaj_calcularPrecioPromedio(&precioPromedio, totalPrecios, totalPasajeros)){
-					printf("El total de los precios es: %.2f\n",totalPrecios);
-					printf("El promedio de los precios es: %.2f\n",precioPromedio);
-					if(!pasaj_calcularSuperanPrecioPromedio(aPasajeros, limPasajeros, &totalSuperanPromedio, precioPromedio)){
+				if(!pasaj_calcularPrecioPromedio(&precioPromedio, totalPrecios, totalPasajeros) &&
+						!pasaj_calcularSuperanPrecioPromedio(aPasajeros, limPasajeros, &totalSuperanPromedio, precioPromedio)){
+						printf("El total de los precios es: %.2f\n",totalPrecios);
+						printf("El promedio de los precios es: %.2f\n",precioPromedio);
 						printf("La cantidad de pasajeros que supera el precio promedio es: %d\n\n",totalSuperanPromedio);
 						retorno=0;
-					}
-					else{
-						puts("No se pudo calcular lo solicitado");
-					}
 				}
 				break;
-			case 3:
+			/*case 3:
 				if(!ingresarEntero(&orden, MSJ_OPCIONORDEN, MSJ_ERROR_OPCION, 0, 1, REINTENTOS)){
 					if(!pasaj_ordenarPorCodigoVueloYEstadoVuelo(aPasajeros, limPasajeros, orden)){
 						pasaj_imprimirLista(aPasajeros, limPasajeros, aEstadosVuelos, limEstadosVuelos, aTiposPasajeros, limTiposPasajeros);
@@ -553,8 +582,7 @@ int pasaj_menuInformes(ePasajero* aPasajeros, int limPasajeros, eEstadoVuelo* aE
 				else{
 					puts("No se pudo ingresar el orden deseado.\n\n\n");
 				}
-				break;
-
+				break;*/
 			}
 		}
 		else{
@@ -563,6 +591,7 @@ int pasaj_menuInformes(ePasajero* aPasajeros, int limPasajeros, eEstadoVuelo* aE
 	}
 	return retorno;
 }
+
 
 int pasaj_calcularPrecioPromedio(float* pResultado, float totalPrecios, int totalPasajeros){
 	int retorno=-1;
@@ -581,7 +610,7 @@ int pasaj_calcularSuperanPrecioPromedio(ePasajero* aPasajeros, int limite, int* 
 	int contadorMayorPromedio=0;
 	if(aPasajeros!=NULL && limite>0 && pResultado!=NULL && precioPromedio>0){
 		for(i=0;i<limite;i++){
-			if(aPasajeros[i].isEmpty==FALSE && aPasajeros[i].price>precioPromedio){
+			if(aPasajeros[i].isEmpty==FALSE && aPasajeros[i].precio>precioPromedio){
 				contadorMayorPromedio++;
 			}
 		}
@@ -590,3 +619,33 @@ int pasaj_calcularSuperanPrecioPromedio(ePasajero* aPasajeros, int limite, int* 
 	}
 	return retorno;
 }
+
+
+
+
+int vuelo_imprimirListaVuelos(eVuelo* aVuelos, int limVuelos){
+	int retorno=-1;
+	int i;
+	if(aVuelos!=NULL && limVuelos>0){
+		printf("\n\nListado de Vuelos:\n|%-16s|%-21s|%-21s|\n", "Id Vuelo:", "Código de Vuelo:", "Estado de Vuelo:");
+		retorno=0;
+		for(i=0;i<limVuelos;i++){
+			printf("|%16d|%21s|%21s|\n", aVuelos[i].idVuelo, aVuelos[i].codigoVuelo, aVuelos[i].estadoVuelo);
+		}
+	}
+	return retorno;
+}
+
+int tipoPasajero_imprimirListaTiposPasajeros(eTipoPasajero* aTiposPasajeros, int limTiposPasajeros){
+	int retorno=-1;
+	int i;
+	if(aTiposPasajeros!=NULL && limTiposPasajeros>0){
+		printf("\n\nListado de Tipos de Pasajeros:\n|%-16s|%-21s|\n", "Id Vuelo:", "Tipos de Pasajeros:");
+		retorno=0;
+		for(i=0;i<limTiposPasajeros;i++){
+			printf("|%16d|%21s|\n", aTiposPasajeros[i].idTipoPasajero, aTiposPasajeros[i].descripcion);
+		}
+	}
+	return retorno;
+}
+

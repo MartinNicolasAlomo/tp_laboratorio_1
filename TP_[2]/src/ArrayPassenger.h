@@ -7,50 +7,52 @@
 #include <string.h>
 #include "Input.h"
 #include "Validations.h"
-#define CANT_PASAJEROS 2000
-#define CANT_TIPOS_PASAJEROS 4
-#define CANT_ESTADOS_VUELOS 4
+
 #define REINTENTOS 3
-#define LARGO_TEXTO 16
 #define TRUE 1
 #define FALSE 0
+#define CANT_TIPOS_PASAJEROS 4
+#define CANT_VUELOS 6
+#define CANT_PASAJEROS 2000
+#define LARGO_MENSAJE_LARGO 256
 #define LARGO_NOMBRE 51
-#define LARGO_CODIGO 10
+#define LARGO_TEXTO 16
+#define LARGO_CODIGO 11
+
 #define MSJ_MENU_PRINCIPAL "Seleccione una opción.\n1. Dar de alta un pasajero.\n2. Modificar un pasajero.\n3. Dar de baja un pasajero.\n4. Informar.\n5. Carga forzada.\n6. Salir.\n\n"
-#define MSJ_ERROR_OPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
 #define MSJ_MENU_MODIFICAR "¿Qué desea modificar?\n  1- Nombre.\n  2- Apellido.\n  3- Precio.\n  4- Tipo de pasajero.\n  5- Codigo de vuelo.\n  6- Finalizar cambios.\n\n"
 #define MSJ_MENU_INFORME "¿Qué desea informar?\n  1- Listado de los pasajeros ordenados alfabéticamente por Apellido y Tipo de pasajero.\n  2- Total y promedio de los precios de los pasajes, y cuántos pasajeros superan el precio promedio.\n  3- Listado de los pasajeros por Código de vuelo y estados de vuelos ‘ACTIVO’.\n\n"
+#define MSJ_OPCIONORDEN "¿En qué orden quiere ordenarlos?\n  1- Ascendente\n  0- Descendente\n\n"
+#define MSJ_ERROR_OPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
+#define MSJ_ERROR_ID "No es un ID válido, reinténtelo de nuevo.\n\n\n"
 #define MSJ_ID_MODIFICAR "Ingrese el ID que desea modificar:\n\n"
 #define MSJ_ID_ELIMINAR "Ingrese el ID que desea eliminar:\n\n"
-#define MSJ_ERROR_ID "No es un ID válido, reinténtelo de nuevo.\n\n\n"
-#define MSJ_OPCIONORDEN "¿En qué orden quiere ordenarlos?\n  1- Ascendente\n  0- Descendente\n\n"
 #define MSJ_CONFIRMAR_AGREGADO "¿Está seguro/a de quiere agregar este pasajero?\n  1- Si\n  0- No\n\n"
 #define MSJ_CONFIRMAR_MODIFICACION "¿Está seguro/a de quiere realizar las modificaciones?\n  1- Si\n  0- No\n\n"
 #define MSJ_CONFIRMAR_ELIMINADO "¿Está seguro/a de quiere eliminar este pasajero?\n  1- Si\n  0- No\n\n"
 
+
 typedef struct{
-	int id;
-	char name[LARGO_NOMBRE];
-	char lastName[LARGO_NOMBRE];
-	float price;
-	char flyCode[LARGO_CODIGO];
-	//int typePassenger;	//***
-	//int statusFlight;	//***
-	int idEstadoVuelo;
+	int idPasajero;
+	char nombre[LARGO_NOMBRE];
+	char apellido[LARGO_NOMBRE];
+	float precio;
+	int idVuelo;
 	int idTipoPasajero;
 
 	int isEmpty;
 }ePasajero;
 
 typedef struct{
-	int id;
+	int idTipoPasajero;
 	char descripcion[LARGO_TEXTO];
 }eTipoPasajero;
 
 typedef struct{
-	int id;
-	char descripcion[LARGO_TEXTO];
-}eEstadoVuelo;
+	int idVuelo;
+	char codigoVuelo[LARGO_CODIGO];
+	char estadoVuelo[LARGO_TEXTO];
+}eVuelo;
 
 
 /// @brief Es el menu principal de la entidad Passenger, se usa un ABM
@@ -76,7 +78,8 @@ int pasaj_inicializarLista(ePasajero* list, int len);
 * \param flycode[] char Code of the flight
 * \return int Return (-1) if Error [Invalid length or NULL pointer or without free space] - (0) if Ok
 */
-int pasaj_agregarPasajero(ePasajero* aPasajeros, int limite, int* indiceNuevo);
+int pasaj_agregarPasajero(ePasajero* aPasajeros, int limPasajeros, eVuelo* aVuelos, int limVuelos,
+								eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, float* totalPrecios, int* totalPasajeros);
 
 /** \brief find a Passenger by Id en returns the index position in array.*
 * \param list Passenger* Pointer to array of passenger
@@ -92,7 +95,8 @@ int pasaj_buscarPasajeroPorId(ePasajero* list, int len,int id);
 * \param id int ID of the passenger to be removed
 * \return int Return (-1) if Error [Invalid length or NULL pointer or if can't find a passenger] - (0) if Ok
 */
-int pasaj_eliminarPasajero(ePasajero* aPasajeros, int limite, int* indiceBuscado);
+int pasaj_eliminarPasajero(ePasajero* aPasajeros, int limPasajeros, eVuelo* aVuelos, int limVuelos,
+								eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, float* totalPrecios, int* totalPasajeros);
 
 /** \brief Sort the elements in the array of passengers, the argument order indicate UP or DOWN order
 * \param list Passenger* Pointer to array of passenger
@@ -107,8 +111,7 @@ int pasaj_ordenarPorApellidoYTipoPasajero(ePasajero* list, int len, int order);
 * \param length int Array length
 * \return return int Return (-1) if Error [Invalid length or NULL pointer] - (0) if Ok
 */
-int pasaj_imprimirLista(ePasajero* aPasajeros, int limPasajeros, eEstadoVuelo* aEstadosVuelos, int limEstadosVuelos,
-							eTipoPasajero* aTiposPasajeros, int limTiposPasajeros);
+int pasaj_imprimirLista(ePasajero* aPasajeros, int limPasajeros, eVuelo* aVuelos, int limVuelos, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros);
 
 /** \brief Sort the elements in the array of passengers, the argument order indicate UP or DOWN order
 * \param list Passenger* Pointer to array of passenger
@@ -130,20 +133,32 @@ int pasaj_buscarIndiceVacio(ePasajero vector[],int limite);
 /// @param limite Define el tamaño del vector
 /// @param id Es el id que se le asignara al nuevo pasajero ingresado
 /// @return  Retorna 0 (EXITO) si se logro cargar y agregar el nuevo pasajero, -1 (ERROR) si no se consiguio ninguno
-int pasaj_cargarDatosPasajero(ePasajero* pElemento);
+
+int pasaj_cargarDatosPasajero(ePasajero* pElemento, ePasajero* aPasajeros, int limPasajeros,
+								eVuelo* aVuelos, int limVuelos, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros);
+
+
+int pasaj_vistaPrevia(ePasajero* unPasajero, char* mensajePrevio, eVuelo* aVuelos, int limVuelos, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros);
+int vuelo_imprimirListaVuelos(eVuelo* aVuelos, int limVuelos);
+
+int tipoPasajero_imprimirListaTiposPasajeros(eTipoPasajero* aTiposPasajeros, int limTiposPasajeros);
+
+
 /// @brief Es el menu de opciones para modificar los datos de un pasajero a eleccion
 /// @param vector Es el vector en el que se guardaran los nuevos datos modificados
 /// @param limite Define el tamaño del vector
 /// @param id Es el id con el cual se identificara el pasajero a modificar
 /// @return Retorna 0 (EXITO) si se logro modificar el pasajero, -1 (ERROR) si no se consiguio
-int pasaj_modificarPasajero(ePasajero* aPasajeros, int limite, int* indiceBuscado, float* precioPrevio);
+int pasaj_modificarPasajero(ePasajero* aPasajeros, int limPasajeros, eVuelo* aVuelos, int limVuelos,
+								eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, float* totalPrecios);
 
-int pasaj_menuModificar(ePasajero* pElemento, int* cambios);
+
+int pasaj_menuModificar(ePasajero* pElemento, int* cambios, eVuelo* aVuelos, int limVuelos, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros);
 
 /// @brief Imprime un solo elemento del vector
 /// @param pElemento Es el elemento a imprimir
 /// @return Retorna 0 (EXITO) si se logro imprimir el elemento, -1 (ERROR) si no se consiguio
-int pasaj_imprimirElemento(ePasajero* pasajero, eEstadoVuelo* estadoVuelo, eTipoPasajero* tipoPasajero);
+int pasaj_imprimirAlbumIndividual(ePasajero* pasajero, eVuelo* estadoVuelo, eTipoPasajero* tipoPasajero);
 
 /// @brief Es el menu de opciones de informes
 /// @param vector Es el vector de donde se obtendran los datos a informar
@@ -155,7 +170,7 @@ int pasaj_imprimirElemento(ePasajero* pasajero, eEstadoVuelo* estadoVuelo, eTipo
 /// @param cantidadTotal Es el total de pasajeros ingresados hasta el momento
 /// @return Retorna 0 (EXITO) si se logro informar los solicitado, -1 (ERROR) si no se consiguio
 
-int pasaj_menuInformes(ePasajero* aPasajeros, int limPasajeros, eEstadoVuelo* aEstadosVuelos, int limEstadosVuelos,
+int pasaj_menuInformes(ePasajero* aPasajeros, int limPasajeros, eVuelo* aEstadosVuelos, int limEstadosVuelos,
 						eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, float precioTotal, int cantidadTotal);
 
 /// @brief Calcula el precio promedio de los importes ingresados totales
@@ -186,7 +201,18 @@ int pasaj_calcularSuperanPrecioPromedio(ePasajero vector[],int limite,int* pResu
 /// @param statusFlight Es el estado del vuelo del pasajero (activo, demorado, reprogramado o cancelado)
 /// @return Retorna 0 (EXITO) si se logro añadir el pasajero hardcodeado, -1 (ERROR) si no se consiguio
 
-int pasaj_cargaForzadaPasajero(ePasajero* aPasajeros, int limite, int* indiceNuevo, char* name, char* lastName, float price,
-									char* flyCode, int typePassenger, int statusFlight);
+int pasaj_altaForzadaPasajero(ePasajero* aPasajeros, int limite, int* indiceNuevo, char* name, char* lastName, float price,
+									int flyCode, int typePassenger);
+
+
+
+int pasaj_coincidirPasajeroConTipoPasajero(ePasajero* unPasajero, eTipoPasajero* aTiposPasajeros, int limTiposPasajeros, eTipoPasajero* auxTipoPasajero);
+
+int pasaj_coincidirPasajeroConVuelo(ePasajero* unPasajero, eVuelo* aVuelos, int limVuelos, eVuelo* auxVuelo);
+
+
+
+
+
 
 #endif /* ARRAYPASSENGER_H_ */

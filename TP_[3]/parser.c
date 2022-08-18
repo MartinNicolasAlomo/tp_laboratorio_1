@@ -18,7 +18,7 @@ int parser_PassengerFromText(FILE* pFile,LinkedList* pArrayListPassenger){
 		do{
 			numeroPasajero++;
 			if(fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n", auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo)==7){
-				pPasajero=Passenger_newParametros(auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo);
+				pPasajero=Passenger_newParametros(numeroPasajero, auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo);
 				if(pPasajero!=NULL && !ll_add(pArrayListPassenger, pPasajero)){
 					retorno=0;
 				}

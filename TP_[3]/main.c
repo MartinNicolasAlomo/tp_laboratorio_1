@@ -8,7 +8,6 @@
 #include "Input.h"
 #include "parser.h"
 #include "Validations.h"
-#include "Zprueba.h"
 
 #define ARCHIVO_CSV "data.csv"
 #define ARCHIVO_BIN "data.bin"
@@ -27,6 +26,7 @@
      9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).
     10. Salir
 *****************************************************/
+
 
 int main(){
 	setbuf(stdout, NULL);
@@ -406,4 +406,3 @@ int main(){
     }
     return 0;
 }
-

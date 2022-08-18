@@ -20,12 +20,8 @@ int album_menuPrincipal(void){
 	eTipoAlbum aTiposAlbumes[CANT_TIPOS_ALBUMES]={{1,"Vinilo"},{2,"Cinta"},{3,"CD"}};
 	int i;
 	int opcion=0;
-	int indiceNuevo;
-	int indiceBuscado;
-	float importePrevio;
 	float totalImportes=0;
 	int totalAlbumes=0;
-
 	if(!album_inicializarLista(aAlbumes, CANT_ALBUMES)){
 		puts("Se inicializó el programa correctamente.\n\n");
 	}
@@ -51,19 +47,12 @@ int album_menuPrincipal(void){
 		}
 		totalAlbumes=totalAlbumes+12;
 	}
-
 	do{
 		if(!ingresarEntero(&opcion, MSJ_MENU_PRINCIPAL, MSJ_ERROR_OPCION, 1, 6, REINTENTOS)){
 			switch(opcion){
 			case 1:
-				if(!album_agregarAlbum(aAlbumes, CANT_ALBUMES, &indiceNuevo, aArtistas, CANT_ARTISTAS, aGeneros, CANT_GENEROS,
-							aTiposArtistas, CANT_TIPOS_ARTISTAS, aTiposAlbumes, CANT_TIPOS_ALBUMES) ){
-					totalImportes=totalImportes+aAlbumes[indiceNuevo].importe;
-					totalAlbumes++;
-					album_ordenarPorCodigo(aAlbumes, CANT_ALBUMES);
-					album_imprimirListaAlbumes(aAlbumes, CANT_ALBUMES, aArtistas, CANT_ARTISTAS, aGeneros, CANT_GENEROS,
-													aTiposArtistas, CANT_TIPOS_ARTISTAS, aTiposAlbumes, CANT_TIPOS_ALBUMES);
-					printf("\nSe agregó el nuevo álbum al final de la lista. Código N°: %d.\n\n\n\n", aAlbumes[indiceNuevo].codigo);
+				if(!album_agregarAlbum(aAlbumes, CANT_ALBUMES, aArtistas, CANT_ARTISTAS, aGeneros, CANT_GENEROS,
+							aTiposArtistas, CANT_TIPOS_ARTISTAS, aTiposAlbumes, CANT_TIPOS_ALBUMES, &totalImportes, &totalAlbumes)){
 				}
 				break;
 			case 2:
@@ -71,13 +60,8 @@ int album_menuPrincipal(void){
 					puts("No hay álbumes en el sistema.\n\n\n");
 				}
 				else{
-					if(!album_modificarAlbum(aAlbumes, CANT_ALBUMES, &indiceBuscado, &importePrevio, aArtistas, CANT_ARTISTAS, aGeneros, CANT_GENEROS,
-								aTiposArtistas, CANT_TIPOS_ARTISTAS, aTiposAlbumes, CANT_TIPOS_ALBUMES)	){
-						totalImportes=totalImportes-importePrevio;
-						totalImportes=totalImportes+aAlbumes[indiceBuscado].importe;
-						album_imprimirListaAlbumes(aAlbumes, CANT_ALBUMES, aArtistas, CANT_ARTISTAS, aGeneros, CANT_GENEROS,
-														aTiposArtistas, CANT_TIPOS_ARTISTAS, aTiposAlbumes, CANT_TIPOS_ALBUMES);
-						printf("\nSe modificaron los datos del álbum con el código: %d.\n\n\n\n", aAlbumes[indiceBuscado].codigo);
+					if(!album_modificarAlbum(aAlbumes, CANT_ALBUMES, aArtistas, CANT_ARTISTAS, aGeneros, CANT_GENEROS,
+								aTiposArtistas, CANT_TIPOS_ARTISTAS, aTiposAlbumes, CANT_TIPOS_ALBUMES, &totalImportes)){
 					}
 				}
 				break;
@@ -86,13 +70,8 @@ int album_menuPrincipal(void){
 					puts("No hay álbumes en el sistema.\n\n\n");
 				}
 				else{
-					if(!album_eliminarAlbum(aAlbumes, CANT_ALBUMES, &indiceBuscado, aArtistas, CANT_ARTISTAS, aGeneros, CANT_GENEROS,
-							aTiposArtistas, CANT_TIPOS_ARTISTAS, aTiposAlbumes, CANT_TIPOS_ALBUMES) ){
-						totalImportes=totalImportes-aAlbumes[indiceBuscado].importe;
-						totalAlbumes--;
-						album_imprimirListaAlbumes(aAlbumes, CANT_ALBUMES, aArtistas, CANT_ARTISTAS, aGeneros, CANT_GENEROS,
-														aTiposArtistas, CANT_TIPOS_ARTISTAS, aTiposAlbumes, CANT_TIPOS_ALBUMES);
-						printf("\nSe eliminaron los datos del álbum con el código: %d.\n\n\n\n", aAlbumes[indiceBuscado].codigo);
+					if(!album_eliminarAlbum(aAlbumes, CANT_ALBUMES, aArtistas, CANT_ARTISTAS, aGeneros, CANT_GENEROS,
+							aTiposArtistas, CANT_TIPOS_ARTISTAS, aTiposAlbumes, CANT_TIPOS_ALBUMES, &totalImportes, &totalAlbumes)){
 					}
 				}
 				break;
@@ -179,7 +158,7 @@ int album_agregarAlbumForzado(eAlbum* aAlbumes, int limAlbumes, int indiceLibre,
 	eAlbum auxiliar;
 	if(aAlbumes!=NULL && limAlbumes>0 && codigo>0 && titulo!=NULL && importe>0){
 		auxiliar.codigo=codigo;
-		strncpy(auxiliar.titulo,titulo,LARGO_TEXTO);
+		strncpy(auxiliar.titulo,titulo,LARGO_DESCRIPCION);
 		auxiliar.fechaPublicacion.dia=dia;
 		auxiliar.fechaPublicacion.mes=mes;
 		auxiliar.fechaPublicacion.anio=anio;
@@ -195,26 +174,32 @@ int album_agregarAlbumForzado(eAlbum* aAlbumes, int limAlbumes, int indiceLibre,
 	return retorno;
 }
 
-int album_agregarAlbum(eAlbum* aAlbumes, int limAlbumes, int* indiceNuevo, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
-							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes){
+int album_agregarAlbum(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, float* totalImportes, int* totalAlbumes){
 	int retorno=-1;
 	eAlbum auxiliar;
 	int indiceLibre;
 	int confirmar;
-	if(aAlbumes!=NULL && limAlbumes>0 && indiceNuevo!=NULL && aArtistas!=NULL && limArtistas>0 &&
-			aGeneros!=NULL && limGeneros>0 && aTiposArtistas!=NULL && limTiposArtistas>0 && aTiposAlbumes!=NULL && limTiposAlbumes>0){
+	if(aAlbumes!=NULL && limAlbumes>0 && aArtistas!=NULL && limArtistas>0
+			&& aGeneros!=NULL && limGeneros>0 && aTiposArtistas!=NULL && limTiposArtistas>0 && aTiposAlbumes!=NULL && limTiposAlbumes>0){
 		indiceLibre=album_buscarIndiceVacio(aAlbumes, limAlbumes);
-		if(indiceLibre>=0 &&
-				!album_cargarDatos(&auxiliar, aAlbumes, limAlbumes, aArtistas, limArtistas,
-						aGeneros, limGeneros, aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes) &&
-				!album_vistaPrevia(&auxiliar, MSJ_VISTA_NUEVO, aArtistas, limArtistas, aGeneros, limGeneros,
-						aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes) &&
-				!ingresarEntero(&confirmar, MSJ_CONFIRMAR_AGREGADO, MSJ_ERROR_OPCION, 0, 1, REINTENTOS) &&	confirmar ){
+		if(indiceLibre>=0
+				&& !album_cargarDatos(&auxiliar, aAlbumes, limAlbumes, aArtistas, limArtistas, aGeneros, limGeneros,
+						aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes)
+				&& !album_vistaPrevia(&auxiliar, MSJ_VISTA_NUEVO, aArtistas, limArtistas, aGeneros, limGeneros,
+						aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes)
+				&& !ingresarEntero(&confirmar, MSJ_CONFIRMAR_AGREGADO, MSJ_ERROR_OPCION, 0, 1, REINTENTOS) && confirmar){
+			puts("Confirmado.\n");
 			auxiliar.codigo=album_generarCodigo();
 			auxiliar.isEmpty=FALSE;
 			aAlbumes[indiceLibre]=auxiliar;
-			*indiceNuevo=indiceLibre;
-			puts("Confirmado.\n");
+			*totalImportes=*totalImportes+aAlbumes[indiceLibre].importe;
+			(*totalAlbumes)++;
+			album_ordenarPorCodigo(aAlbumes, limAlbumes);
+			album_imprimirListaAlbumes(aAlbumes, limAlbumes, aArtistas, limArtistas, aGeneros, limGeneros,
+					aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes);
+
+			printf("\nSe agregó el nuevo álbum al final de la lista. Código N°: %d.\n\n\n\n", aAlbumes[indiceLibre].codigo);
 			retorno=0;
 		}
 		else if(indiceLibre<0){
@@ -224,7 +209,6 @@ int album_agregarAlbum(eAlbum* aAlbumes, int limAlbumes, int* indiceNuevo, eArti
 			puts("Hubo un error en la carga.\n\n\n");
 		}
 	}
-
 	return retorno;
 }
 
@@ -232,10 +216,11 @@ int album_cargarDatos(eAlbum* pElemento, eAlbum* aAlbumes, int limAlbumes, eArti
 							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes){
 	int retorno=-1;
 	eAlbum auxiliar;
-	char mensajeYaExistente[LARGO_MENSAJE];
+	//char mensajeYaExistente[LARGO_MENSAJE_CORTO];
 	if(pElemento!=NULL && aAlbumes!=NULL && limAlbumes>0 && aArtistas!=NULL && limArtistas>0 && aGeneros!=NULL && limGeneros>0 &&
 			aTiposArtistas!=NULL && limTiposArtistas>0 && aTiposAlbumes!=NULL && limTiposAlbumes>0 &&
-		!album_cargarTitulo(&auxiliar, LARGO_TEXTO, aAlbumes, limAlbumes, "Ingrese el título:", "No es un título válido.", mensajeYaExistente, REINTENTOS) &&
+		!ingresarDescripcion(auxiliar.titulo, LARGO_DESCRIPCION, "Ingrese el título:", "No es un título válido.", REINTENTOS) &&
+		//!album_cargarTitulo(&auxiliar, LARGO_DESCRIPCION, aAlbumes, limAlbumes, "Ingrese el título:", "No es un título válido.", mensajeYaExistente, REINTENTOS) &&
 		!album_cargarFecha(&auxiliar, MSJ_INGRESO_ANIO, ANIO_MIN, ANIO_ACTUAL) &&
 		!ingresarFlotante(&auxiliar.importe, "Ingrese el importe del álbum:", "No es un importe válido.", IMPORTE_MIN, IMPORTE_MAX, REINTENTOS) &&
 		!artista_imprimirListaArtistas(aArtistas, limArtistas) &&
@@ -249,9 +234,9 @@ int album_cargarDatos(eAlbum* pElemento, eAlbum* aAlbumes, int limAlbumes, eArti
 		retorno=0;
 		*pElemento=auxiliar;
 	}
-	else{
+	//else{
 		//printf("%s", mensajeYaExistente);
-	}
+	//}
 	return retorno;
 }
 
@@ -287,8 +272,6 @@ int album_cargarTitulo(eAlbum* auxiliar, int largoTitulo, eAlbum* aAlbumes, int 
 	return retorno;
 }
 
-
-
 int album_esAlbumExistente(eAlbum* aAlbumes, int limAlbumes, char* titulo, char* mensajeYaExistente){
 	int retorno=-1;
 	int error;
@@ -296,7 +279,7 @@ int album_esAlbumExistente(eAlbum* aAlbumes, int limAlbumes, char* titulo, char*
 	if(aAlbumes!=NULL && limAlbumes>0 && titulo!=NULL){
 		retorno=0;
 		for(i=0;i<limAlbumes;i++){
-			if(aAlbumes[i].isEmpty==FALSE && strncmp(aAlbumes[i].titulo, titulo, LARGO_TEXTO)==0){
+			if(aAlbumes[i].isEmpty==FALSE && strncmp(aAlbumes[i].titulo, titulo, LARGO_DESCRIPCION)==0){
 				retorno=1;
 				error=-1;
 				break;
@@ -304,22 +287,22 @@ int album_esAlbumExistente(eAlbum* aAlbumes, int limAlbumes, char* titulo, char*
 		}
 	}
 	if(error==-1){
-		strncpy(mensajeYaExistente, "Ya existe un álbum con este título.\n\n\n", LARGO_MENSAJE);
+		strncpy(mensajeYaExistente, "Ya existe un álbum con este título.\n\n\n", LARGO_MENSAJE_CORTO);
 	}
 	return retorno;
 }
 
 int album_cargarFecha(eAlbum* auxiliar, char* mensaje, int anioMinimo, int anioMaximo){
 	int retorno=-1;
-	char mensajeAnio[LARGO_TEXTO];
-	char mensajeMesAnterior[LARGO_TEXTO];
+	char mensajeAnio[LARGO_MENSAJE_CORTO];
+	char mensajeMesAnterior[LARGO_MENSAJE_CORTO];
 	int anio;
 	int mes;
 	int dia;
 	int esBisiesto;
 	if(auxiliar!=NULL && mensaje!=NULL){
 		snprintf(mensajeAnio, sizeof(mensajeAnio), mensaje,anioMinimo, anioMaximo);
-		snprintf(mensajeMesAnterior, sizeof(mensajeMesAnterior), MSJ_INGRESO_MESANTERIOR, MES_ANTERIOR);
+		snprintf(mensajeMesAnterior, sizeof(mensajeMesAnterior), MSJ_INGRESO_MES_ANTERIOR, MES_ANTERIOR);
 
 		if(!ingresarEntero(&anio, mensajeAnio, MSJ_ERROR_OPCION, anioMinimo, anioMaximo, REINTENTOS) && anio!=0){
 			esBisiesto=esAnioBisiesto(anio);
@@ -332,8 +315,9 @@ int album_cargarFecha(eAlbum* auxiliar, char* mensaje, int anioMinimo, int anioM
 					printf("*El año %d es un año Normal, tuvo 365 dias, febrero tuvo 28 dias.\n\n", anio);
 				}
 				if(!ingresarEntero(&mes, mensajeMesAnterior, MSJ_ERROR_OPCION, 1, MES_ANTERIOR, REINTENTOS) &&
-						((mes==2 && esBisiesto && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 29, ya que fue un año bisiesto)", MSJ_ERROR_OPCION, 1, 29, REINTENTOS)) ||
-						(mes==2 && !esBisiesto && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 28, fue un año normal)", MSJ_ERROR_OPCION, 1, 28, REINTENTOS)) ||
+						((mes==2 &&
+						((esBisiesto && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 29, fue un año bisiesto)", MSJ_ERROR_OPCION, 1, 29, REINTENTOS)) ||
+					    (!esBisiesto && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 28, fue un año normal)", MSJ_ERROR_OPCION, 1, 28, REINTENTOS)))) ||
 						((mes==1 || mes==3 || mes==5 || mes==7 || mes==8 || mes==10 || mes==12) && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 31)", MSJ_ERROR_OPCION, 1, 31, REINTENTOS)) ||
 						((mes==4 || mes==6 || mes==9 || mes==11) && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 30)", MSJ_ERROR_OPCION, 1, 30, REINTENTOS))
 				)){
@@ -351,8 +335,9 @@ int album_cargarFecha(eAlbum* auxiliar, char* mensaje, int anioMinimo, int anioM
 					printf("*El año %d fue un año Normal, tuvo 365 dias, febrero tuvo 28 dias.\n\n", anio);
 				}
 				if(!ingresarEntero(&mes, "Ingrese el mes: (del 1 al 12)", MSJ_ERROR_OPCION, 1, 12, REINTENTOS) &&
-						((mes==2 && esBisiesto && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 29, ya que fue un año bisiesto)", MSJ_ERROR_OPCION, 1, 29, REINTENTOS)) ||
-						(mes==2 && !esBisiesto && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 28, fue un año normal)", MSJ_ERROR_OPCION, 1, 28, REINTENTOS)) ||
+						((mes==2 &&
+						((esBisiesto && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 29, fue un año bisiesto)", MSJ_ERROR_OPCION, 1, 29, REINTENTOS)) ||
+						(!esBisiesto && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 28, fue un año normal)", MSJ_ERROR_OPCION, 1, 28, REINTENTOS)))) ||
 						((mes==1 || mes==3 || mes==5 || mes==7 || mes==8 || mes==10 || mes==12) && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 31)", MSJ_ERROR_OPCION, 1, 31, REINTENTOS)) ||
 						((mes==4 || mes==6 || mes==9 || mes==11) && !ingresarEntero(&dia, "Ingrese el día: (del 1 al 30)", MSJ_ERROR_OPCION, 1, 30, REINTENTOS))
 				)){
@@ -367,30 +352,33 @@ int album_cargarFecha(eAlbum* auxiliar, char* mensaje, int anioMinimo, int anioM
 	return retorno;
 }
 
-int album_modificarAlbum(eAlbum* aAlbumes, int limAlbumes, int* indiceBuscado, float* importePrevio, eArtista* aArtistas, int limArtistas,
-							eGenero* aGeneros, int limGeneros, eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes){
+int album_modificarAlbum(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, float* totalImportes){
 	int retorno=-1;
 	eAlbum auxiliar;
 	int codigoModificar;
 	int indiceCodigo;
 	int flagCambio;
 	int confirmar;
-	if(aAlbumes!=NULL && limAlbumes>0 && indiceBuscado!=NULL && importePrevio!=NULL && aArtistas!=NULL && limArtistas>0 &&
-			aGeneros!=NULL && limGeneros>0 && aTiposArtistas!=NULL && limTiposArtistas>0 && aTiposAlbumes!=NULL && limTiposAlbumes>0 &&
-			!ingresarEntero(&codigoModificar, MSJ_CODIGO_MODIFICAR, MSJ_ERROR_CODIGO, 1, codigoIncremental, REINTENTOS) ){
+	if(aAlbumes!=NULL && limAlbumes>0 && aArtistas!=NULL && limArtistas>0
+			&& aGeneros!=NULL && limGeneros>0 && aTiposArtistas!=NULL && limTiposArtistas>0 && aTiposAlbumes!=NULL && limTiposAlbumes>0
+			&& !ingresarEntero(&codigoModificar, MSJ_CODIGO_MODIFICAR, MSJ_ERROR_CODIGO, 1, codigoIncremental, REINTENTOS)){
 		indiceCodigo=album_buscarPorCodigo(aAlbumes, limAlbumes, codigoModificar);
-		if(indiceCodigo>=0 && aAlbumes[indiceCodigo].isEmpty==FALSE &&
-				!album_vistaPrevia(&aAlbumes[indiceCodigo], MSJ_VISTA_ENCONTRADO, aArtistas, limArtistas, aGeneros, limGeneros,
-						aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes) ){
-			*indiceBuscado=indiceCodigo;
-			*importePrevio=aAlbumes[indiceCodigo].importe;
+		if(indiceCodigo>=0 && aAlbumes[indiceCodigo].isEmpty==FALSE
+				&& !album_vistaPrevia(&aAlbumes[indiceCodigo], MSJ_VISTA_ENCONTRADO, aArtistas, limArtistas, aGeneros, limGeneros,
+						aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes)){
+			*totalImportes=*totalImportes-aAlbumes[indiceCodigo].importe;
 			auxiliar=aAlbumes[indiceCodigo];
-			if(!album_menuModificar(&auxiliar, &flagCambio, aAlbumes, limAlbumes, aTiposAlbumes, limTiposAlbumes) && !flagCambio &&
-					!album_vistaPrevia(&auxiliar, MSJ_VISTA_MODIFICADO, aArtistas, limArtistas, aGeneros, limGeneros,
-							aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes) &&
-					!ingresarEntero(&confirmar, MSJ_CONFIRMAR_MODIFICACION, MSJ_ERROR_OPCION, 0, 1, REINTENTOS) && confirmar ){
-				aAlbumes[indiceCodigo]=auxiliar;
+			if(!album_modificarDatos(&auxiliar, &flagCambio, aAlbumes, limAlbumes, aTiposAlbumes, limTiposAlbumes) && !flagCambio
+					&& !album_vistaPrevia(&auxiliar, MSJ_VISTA_MODIFICADO, aArtistas, limArtistas, aGeneros, limGeneros,
+							aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes)
+					&& !ingresarEntero(&confirmar, MSJ_CONFIRMAR_MODIFICACION, MSJ_ERROR_OPCION, 0, 1, REINTENTOS) && confirmar){
 				puts("Confirmado.\n");
+				aAlbumes[indiceCodigo]=auxiliar;
+				*totalImportes=*totalImportes+aAlbumes[indiceCodigo].importe;
+				album_imprimirListaAlbumes(aAlbumes, limAlbumes, aArtistas, limArtistas, aGeneros, limGeneros,
+						aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes);
+				printf("\nSe modificaron los datos del álbum con el código: %d.\n\n\n\n", aAlbumes[indiceCodigo].codigo);
 				retorno=0;
 			}
 			else if(flagCambio){
@@ -407,10 +395,10 @@ int album_modificarAlbum(eAlbum* aAlbumes, int limAlbumes, int* indiceBuscado, f
 	return retorno;
 }
 
-int album_menuModificar(eAlbum* pElemento, int* cambios, eAlbum* aAlbumes, int limAlbumes, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes){
+int album_modificarDatos(eAlbum* pElemento, int* cambios, eAlbum* aAlbumes, int limAlbumes, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes){
 	int retorno=-1;
 	eAlbum auxiliar;
-	char albumExistente[LARGO_MENSAJE];
+	char albumExistente[LARGO_MENSAJE_CORTO];
 	int flagExiste;
 	int opcion;
 	int flagCambios=1;
@@ -420,8 +408,8 @@ int album_menuModificar(eAlbum* pElemento, int* cambios, eAlbum* aAlbumes, int l
 			if(!ingresarEntero(&opcion, MSJ_MENU_MODIFICAR, MSJ_ERROR_OPCION, 1, 5, REINTENTOS)){
 				switch(opcion){
 				case 1:
-					if(!ingresarDescripcion(auxiliar.titulo, LARGO_TEXTO, "Nuevo título:", "No es un título válido.", REINTENTOS) &&
-							!pasarInicialesMayusculas(auxiliar.titulo, LARGO_TEXTO)){
+					if(!ingresarDescripcion(auxiliar.titulo, LARGO_DESCRIPCION, "Nuevo título:", "No es un título válido.", REINTENTOS)
+							&& !pasarInicialesMayusculas(auxiliar.titulo, LARGO_DESCRIPCION)){
 						flagExiste=album_esAlbumExistente(aAlbumes, limAlbumes, auxiliar.titulo, albumExistente);
 						if(!flagExiste){
 							puts("Título ingresado correctamente.\n\n");
@@ -454,8 +442,8 @@ int album_menuModificar(eAlbum* pElemento, int* cambios, eAlbum* aAlbumes, int l
 					}
 					break;
 				case 4:
-					if(!tipoAlbum_imprimirListaTiposAlbumes(aTiposAlbumes, limTiposAlbumes) &&
-							!ingresarEntero(&auxiliar.idTipoAlbum, "Nuevo tipo de album:", "No es un tipo de artista válido.", 1, 3, REINTENTOS)){
+					if(!tipoAlbum_imprimirListaTiposAlbumes(aTiposAlbumes, limTiposAlbumes)
+							&& !ingresarEntero(&auxiliar.idTipoAlbum, "Nuevo tipo de album:", "No es un tipo de artista válido.", 1, 3, REINTENTOS)){
 						puts("Tipo de álbum ingresado correctamente.\n\n");
 						flagCambios=0;
 					}
@@ -478,24 +466,29 @@ int album_menuModificar(eAlbum* pElemento, int* cambios, eAlbum* aAlbumes, int l
 	return retorno;
 }
 
-int album_eliminarAlbum(eAlbum* aAlbumes, int limAlbumes, int* indiceBuscado, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
-							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes){
+int album_eliminarAlbum(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, float* totalImportes, int* totalAlbumes){
 	int retorno=-1;
 	int codigoEliminar;
 	int indiceCodigo;
 	int confirmar;
-	if(aAlbumes!=NULL && limAlbumes>0 && indiceBuscado!=NULL && aArtistas!=NULL && limArtistas>0 && aGeneros!=NULL && limGeneros>0 &&
-			aTiposArtistas!=NULL && limTiposArtistas>0 && aTiposAlbumes!=NULL && limTiposAlbumes>0 &&
-			!ingresarEntero(&codigoEliminar, MSJ_CODIGO_ELIMINAR, MSJ_ERROR_CODIGO, 0, codigoIncremental, REINTENTOS) ){
+	if(aAlbumes!=NULL && limAlbumes>0 && aArtistas!=NULL && limArtistas>0 && aGeneros!=NULL && limGeneros>0
+			&& aTiposArtistas!=NULL && limTiposArtistas>0 && aTiposAlbumes!=NULL && limTiposAlbumes>0
+			&& !ingresarEntero(&codigoEliminar, MSJ_CODIGO_ELIMINAR, MSJ_ERROR_CODIGO, 0, codigoIncremental, REINTENTOS)){
 		indiceCodigo=album_buscarPorCodigo(aAlbumes, limAlbumes, codigoEliminar);
-		if(indiceCodigo>=0 && aAlbumes[indiceCodigo].isEmpty==FALSE &&
-				!album_vistaPrevia(&aAlbumes[indiceCodigo], MSJ_VISTA_ENCONTRADO, aArtistas, limArtistas, aGeneros, limGeneros,
-						aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes) &&
-				!ingresarEntero(&confirmar, MSJ_CONFIRMAR_ELIMINADO, MSJ_ERROR_OPCION, 0, 1, REINTENTOS) && confirmar){
-			aAlbumes[indiceCodigo].isEmpty=TRUE;
-			*indiceBuscado=indiceCodigo;
+		if(indiceCodigo>=0 && aAlbumes[indiceCodigo].isEmpty==FALSE
+				&& !album_vistaPrevia(&aAlbumes[indiceCodigo], MSJ_VISTA_ENCONTRADO, aArtistas, limArtistas, aGeneros, limGeneros,
+						aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes)
+				&& !ingresarEntero(&confirmar, MSJ_CONFIRMAR_ELIMINADO, MSJ_ERROR_OPCION, 0, 1, REINTENTOS) && confirmar){
 			puts("Confirmado.\n\n");
+			aAlbumes[indiceCodigo].isEmpty=TRUE;
+			*totalImportes=*totalImportes-aAlbumes[indiceCodigo].importe;
+			(*totalAlbumes)--;
+			album_imprimirListaAlbumes(aAlbumes, limAlbumes, aArtistas, limArtistas, aGeneros, limGeneros,
+					aTiposArtistas, limTiposArtistas, aTiposAlbumes, limTiposAlbumes);
+			printf("\nSe eliminaron los datos del álbum con el código: %d.\n\n\n\n", aAlbumes[indiceCodigo].codigo);
 			retorno=0;
+
 		}
 		else if(indiceCodigo<0 || aAlbumes[indiceCodigo].isEmpty==TRUE){
 			printf("No existe ningún álbum con el id %d.\n\n", codigoEliminar);
@@ -507,22 +500,34 @@ int album_eliminarAlbum(eAlbum* aAlbumes, int limAlbumes, int* indiceBuscado, eA
 	return retorno;
 }
 
-int album_vistaPrevia(eAlbum* pElemento, char* mensajePrevio, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+int album_imprimirUnAlbumPorParametros(eAlbum* unAlbum, eArtista* artista, eGenero* genero, eTipoArtista* tipoArtista, eTipoAlbum* tipoAlbum){
+	int retorno=-1;
+	if(unAlbum!=NULL && unAlbum->isEmpty==FALSE && artista!=NULL && genero!=NULL && tipoAlbum!=NULL && tipoArtista!=NULL){
+		retorno=0;
+		printf("|%11d|%31s|%13.02d/%02d/%4d|%16.2f|%21s|%21s|%21s|%21s|\n",
+				unAlbum->codigo, unAlbum->titulo, unAlbum->fechaPublicacion.dia,
+				unAlbum->fechaPublicacion.mes, unAlbum->fechaPublicacion.anio, unAlbum->importe,
+				artista->nombre, genero->descripcion, tipoArtista->descripcion, tipoAlbum->descripcion);
+	}
+	return retorno;
+}
+
+int album_vistaPrevia(eAlbum* unAlbum, char* mensajePrevio, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
 									eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes){
 	int retorno=-1;
 	eArtista auxArtista;
 	eGenero auxGenero;
 	eTipoArtista auxTipoArtista;
 	eTipoAlbum auxTipoAlbum;
-	if(pElemento!=NULL && aArtistas!=NULL && limArtistas>0 && aGeneros!=NULL && limGeneros>0 &&
+	if(unAlbum!=NULL && aArtistas!=NULL && limArtistas>0 && aGeneros!=NULL && limGeneros>0 &&
 			aTiposArtistas!=NULL && limTiposArtistas>0 && aTiposAlbumes!=NULL && limTiposAlbumes>0 &&
-			!album_coincidirAlbumConArtista(pElemento, aArtistas, limArtistas, &auxArtista) &&
-			!album_coincidirAlbumConGenero(pElemento, aGeneros, limGeneros, &auxGenero) &&
-			!album_coincidirAlbumConTipoArtista(pElemento, aTiposArtistas, limTiposArtistas, &auxTipoArtista) &&
-			!album_coincidirAlbumConTipoAlbum(pElemento, aTiposAlbumes, limTiposAlbumes, &auxTipoAlbum) ){
+			!album_coincidirAlbumConArtista(unAlbum, aArtistas, limArtistas, &auxArtista) &&
+			!album_coincidirAlbumConGenero(unAlbum, aGeneros, limGeneros, &auxGenero) &&
+			!album_coincidirAlbumConTipoArtista(unAlbum, aTiposArtistas, limTiposArtistas, &auxTipoArtista) &&
+			!album_coincidirAlbumConTipoAlbum(unAlbum, aTiposAlbumes, limTiposAlbumes, &auxTipoAlbum) ){
 		printf("\n\n%s\n\n|%-11s|%-31s|%-21s|%-16s|%-21s|%-21s|%-21s|%-21s|\n", mensajePrevio,
 				"Código:", "Título:","Fecha:","Importe:","Artista:","Genero:","Tipo de Artista:","Tipo de Álbum:");
-		album_imprimirUnAlbumPorParametros(pElemento, &auxArtista, &auxGenero, &auxTipoArtista, &auxTipoAlbum);
+		album_imprimirUnAlbumPorParametros(unAlbum, &auxArtista, &auxGenero, &auxTipoArtista, &auxTipoAlbum);
 		retorno=0;
 	}
 	return retorno;
@@ -554,194 +559,6 @@ int album_imprimirListaAlbumes(eAlbum* aAlbumes, int limAlbumes, eArtista* aArti
 	}
 	return retorno;
 }
-
-int album_imprimirUnAlbumPorParametros(eAlbum* album, eArtista* artista, eGenero* genero, eTipoArtista* tipoArtista, eTipoAlbum* tipoAlbum){
-	int retorno=-1;
-	if(album!=NULL && album->isEmpty==FALSE && artista!=NULL && genero!=NULL && tipoAlbum!=NULL && tipoArtista!=NULL){
-		retorno=0;
-		printf("|%11d|%31s|%13.02d/%02d/%4d|%16.2f|%21s|%21s|%21s|%21s|\n",
-				album->codigo, album->titulo, album->fechaPublicacion.dia,
-				album->fechaPublicacion.mes, album->fechaPublicacion.anio, album->importe,
-				artista->nombre, genero->descripcion, tipoArtista->descripcion, tipoAlbum->descripcion);
-	}
-	return retorno;
-}
-
-int album_ordenarPorCodigo(eAlbum* aAlbumes, int limAlbumes){
-	int retorno=-1;
-	eAlbum auxAlbum;
-	int i;
-	int nuevoLimite;
-	int flagSwap;
-	if(aAlbumes!=NULL && limAlbumes>0){
-		nuevoLimite=limAlbumes-1;
-		do{
-			flagSwap=FALSE;
-			for(i=0;i<nuevoLimite;i++){
-				if(aAlbumes[i].isEmpty || aAlbumes[i+1].isEmpty){
-					continue;
-				}
-				if(aAlbumes[i].codigo>aAlbumes[i+1].codigo){
-					flagSwap=TRUE;
-					auxAlbum=aAlbumes[i];
-					aAlbumes[i]=aAlbumes[i+1];
-					aAlbumes[i+1]=auxAlbum;
-				}
-			}
-			nuevoLimite--;
-		}while(flagSwap);
-		retorno=0;
-	}
-	return retorno;
-}
-
-int album_ordenarPorImporteYTitulo(eAlbum* aAlbumes, int limite){
-	int retorno=-1;
-	eAlbum auxAlbum;
-	int i;
-	int nuevoLimite;
-	int flagSwap;
-	if(aAlbumes!=NULL && limite>0){
-		nuevoLimite=limite-1;
-		do{
-			flagSwap=FALSE;
-			for(i=0;i<nuevoLimite;i++){
-				if(aAlbumes[i].isEmpty || aAlbumes[i+1].isEmpty){
-					continue;
-				}
-				if(aAlbumes[i].importe<aAlbumes[i+1].importe ||
-						(aAlbumes[i].importe==aAlbumes[i+1].importe && strncmp(aAlbumes[i].titulo,aAlbumes[i+1].titulo,LARGO_TEXTO)>0)){
-					flagSwap=TRUE;
-					auxAlbum=aAlbumes[i];
-					aAlbumes[i]=aAlbumes[i+1];
-					aAlbumes[i+1]=auxAlbum;
-				}
-			}
-			nuevoLimite--;
-		}while(flagSwap);
-		retorno = 0;
-	}
-	return retorno;
-}
-
-int album_ordenarPorGeneroYTitulo(eAlbum* aAlbumes, int limite){
-	int retorno=-1;
-	eAlbum auxAlbum;
-	int i;
-	int nuevoLimite;
-	int flagSwap;
-	if(aAlbumes!=NULL && limite>0){
-		nuevoLimite=limite-1;
-		do{
-			flagSwap=FALSE;
-			for(i=0;i<nuevoLimite;i++){
-				if(aAlbumes[i].isEmpty || aAlbumes[i+1].isEmpty){
-					continue;
-				}
-				if(aAlbumes[i].idGenero>aAlbumes[i+1].idGenero ||
-						(aAlbumes[i].idGenero==aAlbumes[i+1].idGenero && strncmp(aAlbumes[i].titulo,aAlbumes[i+1].titulo,LARGO_TEXTO)>0)){
-					flagSwap=TRUE;
-					auxAlbum=aAlbumes[i];
-					aAlbumes[i]=aAlbumes[i+1];
-					aAlbumes[i+1]=auxAlbum;
-				}
-			}
-			nuevoLimite--;
-		}while(flagSwap);
-		retorno = 0;
-	}
-	return retorno;
-}
-
-int album_ordenarPorGeneroYCodigo(eAlbum* aAlbumes, int limite){
-	int retorno=-1;
-	eAlbum auxAlbum;
-	int i;
-	int nuevoLimite;
-	int flagSwap;
-	if(aAlbumes!=NULL && limite>0){
-		nuevoLimite=limite-1;
-		do{
-			flagSwap=FALSE;
-			for(i=0;i<nuevoLimite;i++){
-				if(aAlbumes[i].isEmpty || aAlbumes[i+1].isEmpty){
-					continue;
-				}
-				if(aAlbumes[i].idGenero>aAlbumes[i+1].idGenero ||
-						(aAlbumes[i].idGenero==aAlbumes[i+1].idGenero && aAlbumes[i].codigo>aAlbumes[i+1].codigo)){
-					flagSwap=TRUE;
-					auxAlbum=aAlbumes[i];
-					aAlbumes[i]=aAlbumes[i+1];
-					aAlbumes[i+1]=auxAlbum;
-				}
-			}
-			nuevoLimite--;
-		}while(flagSwap);
-		retorno = 0;
-	}
-	return retorno;
-}
-
-
-
-
-
-
-// 4)
-int album_contarBandasGeneroDeterminado(eAlbum* aAlbumes, int limAlbumes, eGenero* aGeneros, int limGeneros,
-											eTipoArtista* aTiposArtistas, int limTiposArtistas, int* pResultado, char* descripcionGenero){
-	int retorno=-1;
-	int idGeneroEncontrado;
-	int totalAlbumes=0;
-	int i;
-	eGenero auxGenero;
-	eTipoArtista auxTipoArtista;
-	if(aAlbumes!=NULL && limAlbumes>0 && aTiposArtistas!=NULL && limTiposArtistas>0 && pResultado!=NULL){
-		if(!genero_imprimirListaGeneros(aGeneros, limGeneros) &&
-				!ingresarEntero(&idGeneroEncontrado, "\nIngrese el id del genero que desea buscar:\n", MSJ_ERROR_OPCION, 1, 5, REINTENTOS) &&
-				!genero_conseguirDescipcion(aGeneros, limGeneros, descripcionGenero, idGeneroEncontrado)){
-			for(i=0;i<limAlbumes;i++){
-				if(aAlbumes[i].isEmpty==FALSE &&
-						!album_coincidirAlbumConGenero(&aAlbumes[i], aGeneros, limGeneros, &auxGenero) &&
-						auxGenero.idGenero==idGeneroEncontrado &&
-						!album_coincidirAlbumConTipoArtista(&aAlbumes[i], aTiposArtistas, limTiposArtistas, &auxTipoArtista) &&
-						auxTipoArtista.idTipoArtista==2)
-				{
-					totalAlbumes++;
-				}
-			}
-			*pResultado=totalAlbumes;
-			retorno=0;
-		}
-	}
-	return retorno;
-}
-
-
-
-
-
-
-
-
-int album_coincidirAlbumConArtista22222(eAlbum* unAlbum, eArtista* aArtistas, int limArtistas, eArtista* auxArtista){
-	int retorno=-1;
-	int i;
-	if(aArtistas!=NULL && limArtistas>0 && auxArtista!=NULL){
-		for(i=0;i<limArtistas;i++){
-			if(aArtistas[i].idArtista==unAlbum->idArtista){
-				*auxArtista=aArtistas[i];
-				retorno=0;
-				break;
-			}
-		}
-	}
-	return retorno;
-}
-
-
-
-
 
 
 int album_coincidirAlbumConArtista(eAlbum* unAlbum, eArtista* aArtistas, int limArtistas, eArtista* auxArtista){
@@ -805,21 +622,78 @@ int album_coincidirAlbumConTipoAlbum(eAlbum* unAlbum, eTipoAlbum* aTiposAlbumes,
 }
 
 
+int album_ordenarPorCodigo(eAlbum* aAlbumes, int limAlbumes){
+	int retorno=-1;
+	eAlbum auxAlbum;
+	int i;
+	int nuevoLimite;
+	int flagSwap;
+	if(aAlbumes!=NULL && limAlbumes>0){
+		nuevoLimite=limAlbumes-1;
+		do{
+			flagSwap=FALSE;
+			for(i=0;i<nuevoLimite;i++){
+				if(aAlbumes[i].isEmpty || aAlbumes[i+1].isEmpty){
+					continue;
+				}
+				if(aAlbumes[i].codigo>aAlbumes[i+1].codigo){
+					flagSwap=TRUE;
+					auxAlbum=aAlbumes[i];
+					aAlbumes[i]=aAlbumes[i+1];
+					aAlbumes[i+1]=auxAlbum;
+				}
+			}
+			nuevoLimite--;
+		}while(flagSwap);
+		retorno=0;
+	}
+	return retorno;
+}
+
+int album_ordenarPorImporteYTitulo(eAlbum* aAlbumes, int limite){
+	int retorno=-1;
+	eAlbum auxAlbum;
+	int i;
+	int nuevoLimite;
+	int flagSwap;
+	if(aAlbumes!=NULL && limite>0){
+		nuevoLimite=limite-1;
+		do{
+			flagSwap=FALSE;
+			for(i=0;i<nuevoLimite;i++){
+				if(aAlbumes[i].isEmpty || aAlbumes[i+1].isEmpty){
+					continue;
+				}
+				if(aAlbumes[i].importe<aAlbumes[i+1].importe ||
+						(aAlbumes[i].importe==aAlbumes[i+1].importe && strncmp(aAlbumes[i].titulo,aAlbumes[i+1].titulo,LARGO_DESCRIPCION)>0)){
+					flagSwap=TRUE;
+					auxAlbum=aAlbumes[i];
+					aAlbumes[i]=aAlbumes[i+1];
+					aAlbumes[i+1]=auxAlbum;
+				}
+			}
+			nuevoLimite--;
+		}while(flagSwap);
+		retorno = 0;
+	}
+	return retorno;
+}
+
 int album_calcularImporteMaximo(eAlbum* aAlbumes, int limAlbumes, float* importeMaximo){
 	int retorno=-1;
 	int i;
 	int flagMax=1;
-	float auxImporteMaximo;
+	float importeMasAlto;
 	if(aAlbumes!=NULL && limAlbumes>0 && importeMaximo!=NULL){
 		for(i=0;i<limAlbumes;i++){
 			if(aAlbumes[i].isEmpty==FALSE){
-				if(flagMax || (aAlbumes[i].importe>auxImporteMaximo)){
-					auxImporteMaximo=aAlbumes[i].importe;
+				if(flagMax || (aAlbumes[i].importe>importeMasAlto)){
+					importeMasAlto=aAlbumes[i].importe;
 					flagMax=0;
 				}
 			}
 		}
-		*importeMaximo=auxImporteMaximo;
+		*importeMaximo=importeMasAlto;
 		retorno=0;
 	}
 	return retorno;
@@ -832,7 +706,7 @@ int artista_conseguirNombre(eArtista* aArtistas, int limArtistas, char* nombreAr
 	if(aArtistas!=NULL && limArtistas>0 && nombreArtista!=NULL && idArtistaBuscado>0){
 		for(i=0;i<limArtistas;i++){
 			if(aArtistas[i].idArtista==idArtistaBuscado){
-				strncpy(nombreArtista, aArtistas[i].nombre, LARGO_TEXTO);
+				strncpy(nombreArtista, aArtistas[i].nombre, LARGO_DESCRIPCION);
 				break;
 			}
 		}
@@ -847,7 +721,7 @@ int genero_conseguirDescipcion(eGenero* aGeneros, int limGeneros, char* descripc
 	if(aGeneros!=NULL && limGeneros>0 && descripcionGenero!=NULL && idGeneroBuscado>0){
 		for(i=0;i<limGeneros;i++){
 			if(aGeneros[i].idGenero==idGeneroBuscado){
-				strncpy(descripcionGenero, aGeneros[i].descripcion, LARGO_TEXTO);
+				strncpy(descripcionGenero, aGeneros[i].descripcion, LARGO_DESCRIPCION);
 				break;
 			}
 		}
@@ -862,7 +736,7 @@ int tipoAlbum_conseguirDescipcion(eTipoAlbum* aTiposAlbumes, int limTiposAlbumes
 	if(aTiposAlbumes!=NULL && limTiposAlbumes>0 && descripcionTipoAlbum!=NULL && idTipoAlbumBuscado>0){
 		for(i=0;i<limTiposAlbumes;i++){
 			if(aTiposAlbumes[i].idTipoAlbum==idTipoAlbumBuscado){
-				strncpy(descripcionTipoAlbum, aTiposAlbumes[i].descripcion, LARGO_TEXTO);
+				strncpy(descripcionTipoAlbum, aTiposAlbumes[i].descripcion, LARGO_DESCRIPCION);
 				break;
 			}
 		}
@@ -877,7 +751,7 @@ int tipoArtista_conseguirDescipcion(eTipoArtista* aTiposArtistas, int limTiposAr
 	if(aTiposArtistas!=NULL && limTiposArtistas>0 && descripcionTipoArtista!=NULL && idTipoArtistaBuscado>0){
 		for(i=0;i<limTiposArtistas;i++){
 			if(aTiposArtistas[i].idTipoArtista==idTipoArtistaBuscado){
-				strncpy(descripcionTipoArtista, aTiposArtistas[i].descripcion, LARGO_TEXTO);
+				strncpy(descripcionTipoArtista, aTiposArtistas[i].descripcion, LARGO_DESCRIPCION);
 				break;
 			}
 		}
@@ -886,3 +760,169 @@ int tipoArtista_conseguirDescipcion(eTipoArtista* aTiposArtistas, int limTiposAr
 	return retorno;
 }
 
+
+int album_menuInformes(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, float totalImportes, int totalAlbumes){
+	int retorno=-1;
+	int tipoInforme;
+	float importePromedio;
+	int totalMayoresPromedio;
+	int totalAnterioresAnio;
+	int anioBuscado;
+	int totalSolistasAnio;
+	int totalBandasGenero;
+	char descripcionGenero[LARGO_DESCRIPCION];
+
+	if(aAlbumes!=NULL && limAlbumes>0 && aArtistas!=NULL && limArtistas>0 && aGeneros!=NULL && limGeneros>0 &&
+			aTiposArtistas!=NULL && limTiposArtistas>0 && aTiposAlbumes!=NULL && limTiposAlbumes>0 && totalImportes>0 && totalAlbumes>0){
+			if(!ingresarEntero(&tipoInforme, MSJ_MENU_INFORME, MSJ_ERROR_OPCION, 1, 4, REINTENTOS)){
+			switch(tipoInforme){
+			case 1:
+				if(!album_calcularImportePromedio(&importePromedio, totalImportes, totalAlbumes) &&
+						!album_contarAlbumesSuperanImportePromedio(aAlbumes, limAlbumes, &totalMayoresPromedio, importePromedio)){
+					printf("El total de los importes es: %.2f\nEl promedio de los importes es: %.2f\nLa cantidad de álbumes que superan el importe promedio es: %d",
+							totalImportes, importePromedio, totalMayoresPromedio);
+					retorno=0;
+				}
+				break;
+			case 2:
+				if(!album_contarAlbumesAnterioresAnio(aAlbumes, limAlbumes, &totalAnterioresAnio, &anioBuscado)){
+					printf("La cantidad de álbumes publicados antes del año %d es: %d", anioBuscado, totalAnterioresAnio);
+					retorno=0;
+				}
+				else{
+					puts("No se pudieron encontrar álbumes publicados antes del año 2000.\n\n\n");
+				}
+				break;
+			case 3:
+				if(!album_contarSolistasAnioDeterminado(aAlbumes, limAlbumes, aTiposArtistas, limTiposArtistas, &totalSolistasAnio, &anioBuscado)){
+					printf("La cantidad de solistas del año %d es: %d", anioBuscado, totalSolistasAnio);
+					retorno=0;
+				}
+				break;
+			case 4:
+				if(!album_contarAlbumesDeBandasGeneroDeterminado(aAlbumes, limAlbumes, aGeneros, limGeneros, aTiposArtistas, limTiposArtistas,
+						&totalBandasGenero, descripcionGenero)){
+					printf("La cantidad de álbumes de banda del genero %s es: %d", descripcionGenero, totalBandasGenero);
+					retorno=0;
+				}
+				break;
+			}
+		}
+		else{
+			puts("No se pudo ingresar una opción.\n\n\n");
+		}
+	}
+	return retorno;
+}
+
+// 1.a)
+int album_calcularImportePromedio(float* importePromedio, float totalImportes, float totalAlbumes){
+	int retorno=-1;
+	float resultado;
+	if(importePromedio!=NULL && totalImportes>0 && totalAlbumes>0){
+		resultado=totalImportes/totalAlbumes;
+		*importePromedio=resultado;
+		retorno=0;
+	}
+	return retorno;
+}
+
+// 1.b)
+int album_contarAlbumesSuperanImportePromedio(eAlbum* aAlbumes, int limite, int* totalMayoresPromedio, float importePromedio){
+	int retorno=-1;
+	int i;
+	int albumesContados=0;
+	if(aAlbumes!=NULL && limite>0 && totalMayoresPromedio!=NULL && importePromedio>0){
+		for(i=0;i<limite;i++){
+			if(aAlbumes[i].isEmpty==FALSE && aAlbumes[i].importe>importePromedio){
+				albumesContados++;
+			}
+		}
+		*totalMayoresPromedio=albumesContados;
+		retorno=0;
+	}
+	return retorno;
+}
+
+// 2)
+int album_contarAlbumesAnterioresAnio(eAlbum* aAlbumes, int limite, int* totalAnterioresAnio, int* anioBuscado){
+	int retorno=-1;
+	//char mensajeAnio[LARGO_MENSAJE_CORTO];
+	int anioIngresado;
+	int albumesContados=0;
+	int i;
+	if(aAlbumes!=NULL && limite>0 && totalAnterioresAnio!=NULL && anioBuscado!=NULL){
+		//snprintf(mensajeAnio, sizeof(mensajeAnio), MSJ_INGRESO_ANIO, ANIO_MIN, ANIO_ACTUAL);
+		//if(!ingresarEntero(&anioEncontrado, mensajeAnio, MSJ_ERROROPCION, ANIO_MIN, ANIO_ACTUAL, REINTENTOS)){
+			anioIngresado=2000;
+			for(i=0;i<limite;i++){
+				if(aAlbumes[i].isEmpty==FALSE && aAlbumes[i].fechaPublicacion.anio<anioIngresado){
+					albumesContados++;
+				}
+			}
+			*totalAnterioresAnio=albumesContados;
+			*anioBuscado=anioIngresado;
+			retorno=0;
+		//}
+	}
+	return retorno;
+}
+
+// 3)
+int album_contarSolistasAnioDeterminado(eAlbum* aAlbumes, int limAlbumes, eTipoArtista* aTiposArtistas, int limTiposArtistas, int* totalSolistasAnio, int* anioBuscado){
+	int retorno=-1;
+	char mensajeAnio[LARGO_MENSAJE_LARGO];
+	int anioIngresado;
+	int albumesContados=0;
+	int i;
+	eTipoArtista auxTipoArtista;
+	if(aAlbumes!=NULL && limAlbumes>0 && aTiposArtistas!=NULL && limTiposArtistas>0 && totalSolistasAnio!=NULL && anioBuscado!=NULL){
+		snprintf(mensajeAnio, sizeof(mensajeAnio), MSJ_INGRESO_ANIO, ANIO_MIN, ANIO_ACTUAL);
+		if(!ingresarEntero(&anioIngresado, mensajeAnio, MSJ_ERROR_OPCION, ANIO_MIN, ANIO_ACTUAL, REINTENTOS)){
+			for(i=0;i<limAlbumes;i++){
+				if(aAlbumes[i].isEmpty==FALSE &&
+						aAlbumes[i].fechaPublicacion.anio==anioIngresado &&
+						!album_coincidirAlbumConTipoArtista(&aAlbumes[i], aTiposArtistas, limTiposArtistas, &auxTipoArtista) &&
+						auxTipoArtista.idTipoArtista==1)
+				{
+					albumesContados++;
+				}
+			}
+			*totalSolistasAnio=albumesContados;
+			*anioBuscado=anioIngresado;
+			retorno=0;
+		}
+	}
+	return retorno;
+}
+
+// 4)
+int album_contarAlbumesDeBandasGeneroDeterminado(eAlbum* aAlbumes, int limAlbumes, eGenero* aGeneros, int limGeneros,
+											eTipoArtista* aTiposArtistas, int limTiposArtistas, int* totalBandasGenero, char* descripcionGenero){
+	int retorno=-1;
+	int idGeneroIngresado;
+	int albumesContados=0;
+	int i;
+	eGenero auxGenero;
+	eTipoArtista auxTipoArtista;
+	if(aAlbumes!=NULL && limAlbumes>0 && aTiposArtistas!=NULL && limTiposArtistas>0 && totalBandasGenero!=NULL){
+		if(!genero_imprimirListaGeneros(aGeneros, limGeneros) &&
+				!ingresarEntero(&idGeneroIngresado, "\nIngrese el id del genero que desea buscar:\n", MSJ_ERROR_OPCION, 1, 5, REINTENTOS) &&
+				!genero_conseguirDescipcion(aGeneros, limGeneros, descripcionGenero, idGeneroIngresado)){
+			for(i=0;i<limAlbumes;i++){
+				if(aAlbumes[i].isEmpty==FALSE &&
+						!album_coincidirAlbumConGenero(&aAlbumes[i], aGeneros, limGeneros, &auxGenero) &&
+						auxGenero.idGenero==idGeneroIngresado &&
+						!album_coincidirAlbumConTipoArtista(&aAlbumes[i], aTiposArtistas, limTiposArtistas, &auxTipoArtista) &&
+						auxTipoArtista.idTipoArtista==2)
+				{
+					albumesContados++;
+				}
+			}
+			*totalBandasGenero=albumesContados;
+			retorno=0;
+		}
+	}
+	return retorno;
+}

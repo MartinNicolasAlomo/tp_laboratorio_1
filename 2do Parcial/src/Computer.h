@@ -14,6 +14,8 @@
 #define LARGO_NUMERO_TXT 10
 #define LARGO_DESCRIPCION 150
 #define REINTENTOS 3
+
+
 typedef struct{
 	int id;
 	char descripcion[LARGO_DESCRIPCION];
@@ -25,7 +27,7 @@ typedef struct{
 typedef struct{
 	int idTipo;
 	char descripcion[LARGO_DESCRIPCION];
-}eTipo;
+}eTypeComputer;
 
 
 
@@ -71,7 +73,7 @@ int Passenger_getId(eComputer* this,int* id);
 /// @return - Retorna 0 (EXITO) - Si se pudo cargar el ID en el campo del pasajero
 /// 				 -1 (ERROR) - Si el puntero al pasajero es NULL o si el puntero al ID es NULL
 
-int Computer_setIdTXT(eComputer* this,char id[]);
+int Computer_setId_TXT(eComputer* this,char id[]);
 
 /// @brief - Obtiene el ID del pasajero (tratado como texto)
 /// @param this - Puntero a pasajero

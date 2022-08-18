@@ -5,9 +5,10 @@
 #include <ctype.h>
 #include <string.h>
 #include "LinkedList.h"
+#include "Controller.h"
 #include "Passenger.h"
-#include "Input.h"
 #include "parser.h"
+#include "Input.h"
 #include "Validations.h"
 #define ARCHIVO_ID "id.txt"
 
@@ -98,7 +99,7 @@ int controller_ListPassenger(LinkedList* pArrayListPassenger);
  * 						 -1 (ERROR) - Si: El puntero a LinkedList es NULL, el indice es incorrecto,
  * 										  no se pudo obtener el pasajero o no se pudo obtener los datos del pasajero correctamente
  */
-int Controller_imprimirElemento(LinkedList* pArrayListPassenger,int indice);
+int Controller_imprimirPasajeroIndividual(LinkedList* pArrayListPassenger,int indice);
 
 /** \brief - Ordenar pasajeros. Ordena la lista de pasajero segun el criterio y el orden que elija el usuario
  * \param pArrayListPassenger LinkedList* - Puntero al vector de pasajeros

@@ -51,9 +51,9 @@ int main(void){
     						puts("Ya se cargaron los datos previamente, no se pueden volver a cargar.\n\n\n");
     					}
     					else{
-    						if(!ingresarArchivoCSV(nombreArchivoCSV, LARGO_DESCRIPCION, "Ingrese nombre archivo CSV\n", "error", REINTENTOS)){
+    												//"datos_SP.csv"
+    						if(!ingresarDescripcion(nombreArchivoCSV, LARGO_DESCRIPCION, "Ingrese nombre archivo CSV\n", "error", REINTENTOS)){
         						devolucion = controller_loadFromText(nombreArchivoCSV,listaComputadoras);
-        						//"datos_SP.csv"
         						if(devolucion==0){
         					    	puts("Archivo en modo texto cargado exitosamente.\n\n");
         							flagCarga=0;

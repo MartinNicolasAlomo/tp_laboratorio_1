@@ -14,7 +14,7 @@ Passenger* Passenger_newParametros(int numeroPasajero, char* idStr, char* nombre
 		codigoVueloStr!=NULL && tipoPasajeroStr!=NULL && estadoVueloStr!=NULL){
 
 		if(Passenger_setIdTXT(this, idStr)==-1 ||
-				Passenger_setDescripcion(this, nombreStr)==-1 ||
+				Passenger_setNombre(this, nombreStr)==-1 ||
 				Passenger_setApellido(this, apellidoStr)==-1 ||
 				Product_setPrecioTXT(this, precioStr)==-1 ||
 				Passenger_setCodigoVuelo(this, codigoVueloStr)==-1 ||
@@ -85,7 +85,8 @@ int Passenger_getId(Passenger* this, int* id){
 
 int Passenger_setIdTXT(Passenger* this, char* id){
 	int retorno=-1;
-	if(this!=NULL && id!=NULL && esEntero(id, LARGO_NUMERO_TXT)){
+	char mensajeFallo[LARGO_MENSAJE];
+	if(this!=NULL && id!=NULL && esEntero(id, LARGO_NUMERO_TXT, mensajeFallo)){
 		this->id=atoi(id);
 		retorno=0;
 	}
@@ -106,9 +107,10 @@ int Passenger_getIdTXT(Passenger* this, char* id){
 //***********************************************************************************************
 
 
-int Passenger_setDescripcion(Passenger* this, char* nombre){
+int Passenger_setNombre(Passenger* this, char* nombre){
 	int retorno=-1;
-	if(this!=NULL && nombre!=NULL && esNombre(nombre, LARGO_NOMBRE) && !pasarInicialesMayusculas(nombre, LARGO_NOMBRE)){
+	char mensajeFallo[LARGO_MENSAJE];
+	if(this!=NULL && nombre!=NULL && esNombre(nombre, LARGO_NOMBRE, mensajeFallo) && !pasarInicialesMayusculas(nombre, LARGO_NOMBRE)){
 		strncpy(this->nombre, nombre, LARGO_NOMBRE);
 		retorno=0;
 	}
@@ -128,7 +130,8 @@ int Passenger_getDescripcion(Passenger* this, char* nombre){
 
 int Passenger_setApellido(Passenger* this, char* apellido){
 	int retorno=-1;
-	if(this!=NULL && apellido!=NULL && esNombre(apellido, LARGO_NOMBRE) && !pasarInicialesMayusculas(apellido, LARGO_NOMBRE)){
+	char mensajeFallo[LARGO_MENSAJE];
+	if(this!=NULL && apellido!=NULL && esNombre(apellido, LARGO_NOMBRE, mensajeFallo) && !pasarInicialesMayusculas(apellido, LARGO_NOMBRE)){
 		strncpy(this->apellido, apellido, LARGO_NOMBRE);
 		retorno=0;
 	}
@@ -166,8 +169,9 @@ int Product_getPrecio(Passenger* this, float* precio){
 
 int Product_setPrecioTXT(Passenger* this, char* precio){
 	int retorno=-1;
+	char mensajeFallo[LARGO_MENSAJE];
 	float auxPrecio;
-	if(this!=NULL && precio>0 && esFlotante(precio, LARGO_NUMERO_TXT)){
+	if(this!=NULL && precio>0 && esFlotante(precio, LARGO_NUMERO_TXT, mensajeFallo)){
 		auxPrecio=atof(precio);
 		if(auxPrecio>=0){
 			this->precio=auxPrecio;
@@ -193,7 +197,8 @@ int Product_getPrecioTXT(Passenger* this, char* precio){
 
 int Passenger_setCodigoVuelo(Passenger* this, char* codigoVuelo){
 	int retorno=-1;
-	if(this!=NULL && codigoVuelo!=NULL && esAlfanumerico(codigoVuelo, LARGO_CODIGO)){
+	char mensajeFallo[LARGO_MENSAJE];
+	if(this!=NULL && codigoVuelo!=NULL && esAlfanumerico(codigoVuelo, LARGO_CODIGO, mensajeFallo)){
 		strupr(codigoVuelo);
 		strncpy(this->codigoVuelo, codigoVuelo, LARGO_CODIGO);
 		retorno=0;
@@ -214,7 +219,8 @@ int Passenger_getCodigoVuelo(Passenger* this, char* codigoVuelo){
 
 int Passenger_setTipoPasajeroTXT_NUM(Passenger* this, char* tipoPasajero){
 	int retorno=-1;
-	if(this!=NULL && tipoPasajero!=NULL && esDescripcion(tipoPasajero, LARGO_DESCRIPCION)){
+	char mensajeFallo[LARGO_MENSAJE];
+	if(this!=NULL && tipoPasajero!=NULL && esDescripcion(tipoPasajero, LARGO_DESCRIPCION, mensajeFallo)){
 		if(strncmp(tipoPasajero, "EconomyClass", LARGO_DESCRIPCION)==0){
 			this->tipoPasajero=1;
 			retorno=0;
@@ -236,7 +242,8 @@ int Passenger_setTipoPasajeroTXT_NUM(Passenger* this, char* tipoPasajero){
 
 int Passenger_getTipoPasajeroNUM_TXT(Passenger* this, char* tipoPasajero){
 	int retorno=-1;
-	if(this!=NULL && tipoPasajero!=NULL && esDescripcion(tipoPasajero, LARGO_DESCRIPCION)){
+	char mensajeFallo[LARGO_MENSAJE];
+	if(this!=NULL && tipoPasajero!=NULL && esDescripcion(tipoPasajero, LARGO_DESCRIPCION, mensajeFallo)){
 		if(this->tipoPasajero==1){
 			strncpy(tipoPasajero, "EconomyClass", LARGO_DESCRIPCION);
 			retorno=0;
@@ -278,7 +285,8 @@ int Passenger_getTipoPasajeroNumerico(Passenger* this, int* tipoPasajero){
 
 int Passenger_setEstadoVueloTXT_NUM(Passenger* this, char* estadoVuelo){
 	int retorno=-1;
-	if(this!=NULL && estadoVuelo!=NULL && esDescripcion(estadoVuelo, LARGO_DESCRIPCION)){
+	char mensajeFallo[LARGO_MENSAJE];
+	if(this!=NULL && estadoVuelo!=NULL && esDescripcion(estadoVuelo, LARGO_DESCRIPCION, mensajeFallo)){
 		if(strncmp(estadoVuelo, "En Horario", LARGO_DESCRIPCION)==0){
 			this->estadoVuelo=1;
 			retorno=0;
@@ -304,7 +312,8 @@ int Passenger_setEstadoVueloTXT_NUM(Passenger* this, char* estadoVuelo){
 
 int Passenger_getEstadoVueloNUM_TXT(Passenger* this, char* estadoVuelo){
 	int retorno=-1;
-	if(this!=NULL && estadoVuelo!=NULL && esNombre(estadoVuelo, LARGO_DESCRIPCION)){
+	char mensajeFallo[LARGO_MENSAJE];
+	if(this!=NULL && estadoVuelo!=NULL && esNombre(estadoVuelo, LARGO_DESCRIPCION, mensajeFallo)){
 		if(this->estadoVuelo==1){
 			strncpy(estadoVuelo, "En Horario", LARGO_DESCRIPCION);
 			retorno=0;

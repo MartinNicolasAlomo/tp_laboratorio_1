@@ -9,16 +9,16 @@
 
 
 eComputer* Computer_new(){
-	eComputer* auxPuntero=NULL;
-	auxPuntero=(eComputer*) malloc(sizeof(eComputer));
-	return auxPuntero;
+	eComputer* auxiliar=NULL;
+	auxiliar=(eComputer*) malloc(sizeof(eComputer));
+	return auxiliar;
 }
 
 eComputer* Computer_newParametros(char* idStr, char* descripcionStr, char* precioStr, char* idTipoStr){
 	eComputer* this=NULL;
 	this=Computer_new();
 	if(this!=NULL && idStr!=NULL && descripcionStr!=NULL && precioStr!=NULL && idTipoStr!=NULL){
-		if(Computer_setIdTXT(this, idStr)==-1 ||
+		if(Computer_setId_TXT(this, idStr)==-1 ||
 			Computer_setDescripcion(this, descripcionStr)==-1 ||
 			Computer_setPrecioTXT(this, precioStr)==-1 ||
 			Computer_setTipo_TXT(this, idTipoStr)==-1){
@@ -62,7 +62,7 @@ int Passenger_getId(eComputer* this, int* id){
 	return retorno;
 }
 
-int Computer_setIdTXT(eComputer* this, char* id){
+int Computer_setId_TXT(eComputer* this, char* id){
 	int retorno=-1;
 	int auxId;
 	if(this!=NULL && id!=NULL && esEntero(id, LARGO_NUMERO_TXT)){

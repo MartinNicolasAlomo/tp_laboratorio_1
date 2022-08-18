@@ -26,33 +26,33 @@
 #include "LinkedList.h"
 #include "Parser.h"
 #include "Validations.h"
-//#include "../testing/inc/main_test.h"
-//#include "../inc/LinkedList.h"
-#define MSJ_MENU_PRINCIPAL "1. Cargar los datos desde el archivo data.csv (modo texto).\n2. Ordernar lista por idTipo.\n3. Imprimir lista.\n4. Funcion map.\n5. Generar archivo de salida\n6. Salir\n\n"
-#define MSJ_ERROR_OPCION "No es una opción válida, reinténtelo de nuevo.\n\n\n"
+#define MSJ_MENU_PRINCIPAL "Selecciones una opción\n  1. Cargar los datos desde el archivo data.csv (modo texto).\n  2. Ordernar lista por idTipo.\n  3. Imprimir lista.\n  4. Funcion map.\n  5. Generar archivo de salida\n  6. Salir\n\n"
+#define MSJ_ERROR_OPCION "No es una opción válida, reinténtelo de nuevo."
 
 
 int main(void){
 	setbuf(stdout, NULL);
-	int opcionMenu=0;
+	int opcion=0;
 	char nombreArchivoCSV[LARGO_DESCRIPCION];
 	int devolucion;
 	int flagCarga=1;
 	int flagCambios=1;
 
-    LinkedList* listaComputadoras = ll_newLinkedList();
+    LinkedList* listaComputadoras=ll_newLinkedList();
 
     if(listaComputadoras!=NULL){
         do{
-        	if(!ingresarEntero(&opcionMenu, MSJ_MENU_PRINCIPAL, MSJ_ERROR_OPCION, 1, 6, REINTENTOS)){
-    			switch(opcionMenu){
+        	if(!ingresarEntero(&opcion, MSJ_MENU_PRINCIPAL, MSJ_ERROR_OPCION, 1, 6, REINTENTOS)){
+    			switch(opcion){
     				case 1:
     					if(!flagCarga){
     						puts("Ya se cargaron los datos previamente, no se pueden volver a cargar.\n\n\n");
     					}
     					else{
-    						if(!ingresarArchivoCSV(nombreArchivoCSV, LARGO_DESCRIPCION, "Ingrese nombre archivo CSV\n", "error", REINTENTOS)){
-        						devolucion = controller_loadFromText(nombreArchivoCSV,listaComputadoras);
+    						if(!ingresarDescripcion(nombreArchivoCSV, LARGO_DESCRIPCION, "Ingrese el nombre del archivo\n", "error", REINTENTOS)
+    								//!ingresarArchivoCSV(nombreArchivoCSV, LARGO_DESCRIPCION, "Ingrese nombre archivo CSV\n", "error", REINTENTOS)
+    						){
+        						devolucion=controller_loadFromText(nombreArchivoCSV, listaComputadoras);
         						//"datos_SP.csv"
         						if(devolucion==0){
         					    	puts("Archivo en modo texto cargado exitosamente.\n\n");
@@ -127,7 +127,7 @@ int main(void){
 						break;
     			}
         	}
-        }while(opcionMenu!=6);
+        }while(opcion!=6);
     }
     return 0;
 }

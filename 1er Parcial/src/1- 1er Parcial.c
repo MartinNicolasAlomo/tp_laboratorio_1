@@ -3,6 +3,7 @@
 										1er Parcial de Laboratorio 1  -  1er Cuatrimestre, 2022
 */
 
+//					Martin Alomo - 1F	1er Parcial de Laboratorio 1  -  1er Cuatrimestre, 2022
 
 #include <stdio.h>
 #include <stdlib.h>

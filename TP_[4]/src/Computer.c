@@ -1,12 +1,5 @@
 #include "Computer.h"
 
-/*
- * 	int id;
-	char descripcion[LARGODESCRIPCION];
-	float precio;
-	int idTipo;
-	*/
-
 
 eComputer* Computer_new(){
 	eComputer* auxPuntero=NULL;

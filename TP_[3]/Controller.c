@@ -101,7 +101,7 @@ int controller_addPassenger(LinkedList* pArrayListPassenger){
 			auxiliar.id=idIncremental();
 			if(auxiliar.id>0 &&
 					!Passenger_setId(pPasajero, auxiliar.id) &&
-					!Passenger_setDescripcion(pPasajero, auxiliar.nombre) &&
+					!Passenger_setNombre(pPasajero, auxiliar.nombre) &&
 					!Passenger_setApellido(pPasajero, auxiliar.apellido) &&
 					!Product_setPrecio(pPasajero, auxiliar.precio) &&
 					!Passenger_setCodigoVuelo(pPasajero, auxiliar.codigoVuelo)&&
@@ -177,7 +177,7 @@ int controller_editPassenger(LinkedList* pArrayListPassenger){
     			!ingresarEntero(&auxiliar.id, MSJ_ID_MODIFICAR, MSJ_ERROR_OPCION, 1, idGlobal, REINTENTOS)){
     		indice=Controller_buscarPorId(pArrayListPassenger, auxiliar.id);
     		if(indice!=-1){
-    		Controller_imprimirElemento(pArrayListPassenger, indice);
+    		Controller_imprimirPasajeroIndividual(pArrayListPassenger, indice);
     			pPasajero=(Passenger*)ll_get(pArrayListPassenger, indice);
 				if(pPasajero!=NULL &&
 						!Passenger_getDescripcion(pPasajero, auxiliar.nombre) &&
@@ -247,7 +247,7 @@ int controller_editPassenger(LinkedList* pArrayListPassenger){
     							if(!flagCambio){
         							if(!ingresarEntero(&confirmar, MSJ_CONFIRMAR_MODIFICACION, MSJ_ERROR_OPCION, 0, 1, REINTENTOS)){
         								if(confirmar){
-        									if(!Passenger_setDescripcion(pPasajero, auxiliar.nombre) &&
+        									if(!Passenger_setNombre(pPasajero, auxiliar.nombre) &&
 													!Passenger_setApellido(pPasajero, auxiliar.apellido) &&
 													!Product_setPrecio(pPasajero, auxiliar.precio) &&
 													!Passenger_setCodigoVuelo(pPasajero, auxiliar.codigoVuelo) &&
@@ -313,7 +313,7 @@ int controller_removePassenger(LinkedList* pArrayListPassenger){
 				indice=Controller_buscarPorId(pArrayListPassenger, bufferId);
 	    		if(indice!=-1){
 	    			pPasajero=(Passenger*)ll_get(pArrayListPassenger, indice);
-					if(pPasajero!=NULL && !Controller_imprimirElemento(pArrayListPassenger, indice)){
+					if(pPasajero!=NULL && !Controller_imprimirPasajeroIndividual(pArrayListPassenger, indice)){
 						if(!ingresarEntero(&confirmar, "¿Está seguro/a de quiere eliminar este pasajero?\n  1- Si\n  0- No\n\n", MSJ_ERROR_OPCION, 0, 1, REINTENTOS)){
 							if(confirmar==1){
 								Passenger_delete(pPasajero);
@@ -382,13 +382,14 @@ int controller_ListPassenger(LinkedList* pArrayListPassenger){
     if(pArrayListPassenger!=NULL){
     	largo = ll_len(pArrayListPassenger);
     	if(largo>0){
-    		printf("%10s %15s %15s %15s %20s %25s %25s\n","ID","NOMBRE","APELLIDO","PRECIO","CODIGO DE VUELO","TIPO DE PASAJERO","ESTADO DE VUELO");
+    		printf("\nLista de pasajeros:\n\n|%-11s|%-21s|%-21s|%-16s|%-21s|%-21s|%-21s|\n",
+    				"Id:", "Nombre:","Apellido:","Precio:","Código de vuelo:","Tipo de pasajero:","Estado de vuelo");
     		for(i=0;i<largo;i++){
-    			if(!Controller_imprimirElemento(pArrayListPassenger,i)){
+    			if(!Controller_imprimirPasajeroIndividual(pArrayListPassenger,i)){
     				retorno=0;
     			}
     		}
-			puts("\n\n\n");
+			puts("\n\n");
     	}
     	else{
     		retorno=-2;
@@ -399,7 +400,7 @@ int controller_ListPassenger(LinkedList* pArrayListPassenger){
 //****************************************************************************************************************************************************
 
 
-int Controller_imprimirElemento(LinkedList* pArrayListPassenger,int indice){
+int Controller_imprimirPasajeroIndividual(LinkedList* pArrayListPassenger,int indice){
 	int retorno=-1;
 	Passenger auxiliar;
 	Passenger* pPasajero=NULL;
@@ -414,8 +415,9 @@ int Controller_imprimirElemento(LinkedList* pArrayListPassenger,int indice){
 			!Passenger_getCodigoVuelo(pPasajero, auxiliar.codigoVuelo) &&
 			!Passenger_getTipoPasajeroNumerico(pPasajero, &auxiliar.tipoPasajero) &&
 			!Passenger_getEstadoVueloNumerico(pPasajero, &auxiliar.estadoVuelo)){
-			printf("%10d %15s %15s %15.2f %20s %25s %25s\n",auxiliar.id,auxiliar.nombre,auxiliar.apellido,auxiliar.precio,auxiliar.codigoVuelo,
-															TXT_TYPEPASSENGER[auxiliar.tipoPasajero-1],TXT_STATUSFLIGHT[auxiliar.estadoVuelo-1]);
+    		printf("|%11d|%21s|%21s|%16.2f|%21s|%21s|%21s|\n",
+    				auxiliar.id, auxiliar.nombre, auxiliar.apellido, auxiliar.precio,
+					auxiliar.codigoVuelo, TXT_TYPEPASSENGER[auxiliar.tipoPasajero-1], TXT_STATUSFLIGHT[auxiliar.estadoVuelo-1]);
 			retorno=0;
 		}
 		else if(pPasajero==NULL){

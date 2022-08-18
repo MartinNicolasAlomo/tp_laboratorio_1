@@ -15,35 +15,38 @@
 #define CANT_TIPOS_ARTISTAS 2
 #define CANT_TIPOS_ALBUMES 3
 
+#define REINTENTOS 50
 #define TRUE 1
 #define FALSE 0
-#define REINTENTOS 2
-#define LARGO_MENSAJE 1001
-#define LARGO_TEXTO 51
+#define LARGO_DESCRIPCION 50
+#define LARGO_MENSAJE_CORTO 150
+#define LARGO_MENSAJE_LARGO 550
+#define LARGO_MENSAJE_LISTADO 2250
+
 #define ANIO_MIN 1890
 #define ANIO_ACTUAL 2022
+#define MES_ANTERIOR 7
 #define IMPORTE_MIN 1
 #define IMPORTE_MAX 200000
-#define MES_ANTERIOR 7
 
-#define MSJ_MENU_PRINCIPAL "Seleccione una opcion\n1. Agregar un álbum\n2. Modificar un álbum\n3. Eliminar un álbum\n4. Informar\n5. Listar\n6. Salir\n\n"
-#define MSJ_ERROR_OPCION  "No es una opción válida."
-#define MSJ_MENU_MODIFICAR "¿Qué desea modificar?\n  1-Título\n  2-Fecha de publicación\n  3-Importe\n  4-Tipo de álbum\n  5-Finalizar cambios\n\n"
-#define MSJ_MENU_INFORME "¿Qué desea informar?\n  1- Total y promedio de los importes, y cuántos álbumes superan ese promedio.\n  2- Cantidad de álbumes cuya fecha de publicación es anterior a 1/1/2000.\n  3- Informar la cantidad de solistas de un año determinado.\n 4- Informar la cantidad de bandas de un género determinado. \n\n"
-#define MSJ_MENU_LISTADO_01_05 "¿Qué listado desea ver?\n  1. Todos los géneros.\n  2. Todos los tipos de artistas musicales.\n  3. Todos los artistas.\n  4. Todos los álbumes.\n  5. Realizar un solo listado de los álbumes ordenados por los siguientes criterios: Importe (descendentemente) / Título (ascendentemente)\n"
-#define MSJ_MENU_LISTADO_06_10 "  6. Todos los álbumes cuya fecha de publicación es anterior a 1/1/2000.\n  7. Todos los álbumes que superan el promedio de los importes.\n  8. Todos los álbumes de cada artista.\n  9. Todos los álbumes de un año determinado.\n  10. El álbum o los álbumes más caros.\n"
-#define MSJ_MENU_LISTADO_11_14 "  11. Listar todos los tipos de álbumes.\n  12. Listar todos los albumes que no sean de vinilos.\n  13. Listar todos los albumes de vinilo que correspondan a un artista determinado.\n  14. Realizar un solo listado de todos los álbumes de un tipo de álbum determinado y de un género determinado.\n 15. ealizar un solo listado de todos los álbumes de un artista determinado y de un tipo de álbum determinado.\n\n"
+#define MSJ_MENU_PRINCIPAL "Seleccione una opcion\n1. Agregar álbum\n2. Modificar álbum\n3. Eliminar álbum\n4. Informes\n5. Listados\n6. Salir\n\n"
+#define MSJ_MENU_MODIFICAR "¿Qué desea modificar?\n  1- Título\n  2- Fecha de publicación\n  3- Importe\n  4- Tipo de álbum\n  5- Finalizar cambios\n\n"
+#define MSJ_MENU_INFORME "¿Qué desea informar?\n  1- Total y promedio de los importes, y cuántos álbumes superan ese promedio.\n  2- Cantidad de álbumes cuya fecha de publicación es anterior a 1/1/2000.\n  3- Informar la cantidad de solistas de un año determinado.\n  4- Informar la cantidad de álbumes de bandas de un género determinado.\n\n"
+#define MSJ_MENU_LISTADO_01_05 "¿Qué listado desea ver?\n  1- Todos los géneros.\n  2- Todos los tipos de artistas musicales.\n  3- Todos los artistas.\n  4- Todos los álbumes.\n  5- Realizar un solo listado de los álbumes ordenados por los siguientes criterios:\n\tImporte (descendentemente) y Título (ascendentemente)\n"
+#define MSJ_MENU_LISTADO_06_10 "  6- Todos los álbumes cuya fecha de publicación es menor a 1/1/2000.\n  7- Todos los álbumes que superan el promedio de los importes.\n  8- Todos los álbumes de cada artista.\n  9- Todos los álbumes de un año determinado.\n  10- El álbum o los álbumes más caros.\n"
+#define MSJ_MENU_LISTADO_12_15 "  11- Listar todos los tipos de álbumes.\n  12- Listar todos los álbumes que no sean de vinilo.\n  13- Listar todos los álbumes de vinilo que correspondan a un artista determinado.\n  14- Realizar un solo listado de todos los álbumes de un tipo de álbum determinado y de un género determinado.\n  15- Realizar un solo listado de todos los álbumes de un artista determinado y de un tipo de álbum determinado.\n"
+
 #define MSJ_CODIGO_MODIFICAR "Ingrese el código del álbum que desea modificar:"
 #define MSJ_CODIGO_ELIMINAR "Ingrese el código del álbum que desea eliminar:"
-
+#define MSJ_ERROR_OPCION  "No es una opción válida."
 #define MSJ_ERROR_CODIGO "No es un código válido."
 #define MSJ_CONFIRMAR_AGREGADO "¿Está seguro/a de quiere agregar este álbum?\n  1- Si\n  0- No\n\n"
 #define MSJ_CONFIRMAR_MODIFICACION "¿Está seguro/a de quiere realizar las modificaciones?\n  1- Si\n  0- No\n\n"
 #define MSJ_CONFIRMAR_ELIMINADO "¿Está seguro/a de quiere eliminar este álbum?\n  1- Si\n  0- No\n\n"
 #define MSJ_INGRESO_ANIO "Ingrese el año: (entre %d y %d)."
-#define MSJ_INGRESO_MESANTERIOR "Ingrese el mes: (del 1 al %d)"
+#define MSJ_INGRESO_MES_ANTERIOR "Ingrese el mes: (del 1 al %d)"
 #define MSJ_VISTA_NUEVO "Vista previa del álbum ingresado: 	(Tiene código 0 (cero). Se le asignará su código correspondiente una vez que se agregue definitivamente a la lista)."
-#define MSJ_VISTA_MODIFICADO "Vista previa de los cambios hechos:"
+#define MSJ_VISTA_MODIFICADO "Vista previa de los cambios realizados:"
 #define MSJ_VISTA_ENCONTRADO "Se encontró el siguiente álbum con el código ingresado:"
 
 
@@ -56,31 +59,31 @@ typedef struct{
 
 typedef struct{
 	int idTipoAlbum;
-	char descripcion[LARGO_TEXTO];
+	char descripcion[LARGO_DESCRIPCION];
 }eTipoAlbum;
 
 
 typedef struct{
 	int idTipoArtista;
-	char descripcion[LARGO_TEXTO];
+	char descripcion[LARGO_DESCRIPCION];
 }eTipoArtista;
 
 
 typedef struct{
 	int idGenero;
-	char descripcion[LARGO_TEXTO];
+	char descripcion[LARGO_DESCRIPCION];
 }eGenero;
 
 
 typedef struct{
 	int idArtista;
-	char nombre[LARGO_TEXTO];
+	char nombre[LARGO_DESCRIPCION];
 }eArtista;
 
 
 typedef struct{
 	int codigo;
-	char titulo[LARGO_TEXTO];
+	char titulo[LARGO_DESCRIPCION];
 	eFecha fechaPublicacion;
 	float importe;
 	int idArtista;
@@ -89,6 +92,8 @@ typedef struct{
 	int idTipoAlbum;
 	int isEmpty;
 }eAlbum;
+
+
 
 
 /// @brief Es el menu de opcines pricipal de la funcion, se usa un ABM
@@ -146,9 +151,8 @@ int album_agregarAlbumForzado(eAlbum* aAlbumes, int limAlbumes, int indiceLibre,
 /// @param aTiposAlbumes Es la lista de tipos de álbumes
 /// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
 /// @return Retorna 0 (EXITO) si se logró agregar el album a la lista, -1 (ERROR) si no se consiguió
-int album_agregarAlbum(eAlbum* aAlbumes, int limAlbumes, int* indiceNuevo,  eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
-							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
-
+int album_agregarAlbum(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, float* totalImportes, int* totalAlbumes);
 /// @brief Solicita los datos al usuario y los carga dentro de un álbum auxiliar, para luego cargarlos al nuevo álbum
 /// @param pElemento Puntero al espacio de memoria donde se cargarán los datos ingresados
 /// @param aAlbumes Es la lista de álbumes
@@ -198,8 +202,8 @@ int album_cargarFecha(eAlbum* auxiliar, char* mensaje, int anioMinimo, int anioM
 /// @param aTiposAlbumes Es la lista de tipos de álbumes
 /// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
 /// @return Retorna 0 (EXITO) si se lograron modificar los datos el álbum seleccionado, -1 (ERROR) si no se consiguió
-int album_modificarAlbum(eAlbum* aAlbumes, int limAlbumes, int* indiceBuscado, float* importePrevio, eArtista* aArtistas, int limArtistas,
-							eGenero* aGeneros, int limGeneros, eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+int album_modificarAlbum(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, float* totalImportes);
 
 /// @brief Es el menú de opciones para modificar los datos del álbum seleccionado
 /// @param pElemento Puntero al espacio de memoria donde se cargarán los nuevos datos modificados
@@ -207,7 +211,7 @@ int album_modificarAlbum(eAlbum* aAlbumes, int limAlbumes, int* indiceBuscado, f
 /// @param aTiposAlbumes Es la lista de tipos de álbumes
 /// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
 /// @return Retorna 0 (EXITO) si se lograron cargar todos los datos modificados en el auxiliar o si no hubo cambios, -1 (ERROR) si no se consiguió cargar los datos
-int album_menuModificar(eAlbum* pElemento, int* cambios, eAlbum* aAlbumes, int limAlbumes, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+int album_modificarDatos(eAlbum* pElemento, int* cambios, eAlbum* aAlbumes, int limAlbumes, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
 
 /// @brief Elimina un album a elección (baja logica)
 /// @param aAlbumes Es la lista de álbumes donde se encuentra el álbum a eliminar
@@ -222,8 +226,8 @@ int album_menuModificar(eAlbum* pElemento, int* cambios, eAlbum* aAlbumes, int l
 /// @param aTiposAlbumes Es la lista de tipos de álbumes
 /// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
 /// @return Retorna 0 (EXITO) si se logró eliminar el album seleccionado, -1 (ERROR) si no se consiguio
-int album_eliminarAlbum(eAlbum* aAlbumes, int limAlbumes, int* indiceBuscado, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
-							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+int album_eliminarAlbum(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, float* totalImportes, int* totalAlbumes);
 
 /// @brief Imprime un solo álbum de la lista (recibiendo los punteros de los elementos especificados)
 /// @param album Puntero a un solo álbum, que contiene los datos especificados
@@ -265,6 +269,7 @@ int album_imprimirListaAlbumes(eAlbum* aAlbumes, int limAlbumes, eArtista* aArti
 									eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
 
 
+
 /// @brief Ordena la lista de álbumes por código de manera descendente
 /// @param aAlbumes Es la lista de álbumes
 /// @param limAlbumes Define el tamaño de la lista de álbumes
@@ -288,6 +293,8 @@ int album_ordenarPorGeneroYTitulo(eAlbum* aAlbumes, int limite);
 /// @param limAlbumes Define el tamaño de la lista de álbumes
 /// @return Retorna 0 (EXITO) si se logró ordenar la lista, -1 (ERROR) si no se consiguió
 int album_ordenarPorGeneroYCodigo(eAlbum* aAlbumes, int limite);
+
+
 
 
 /// @brief Busca una coincidencia con la lista de artistas según su id, y devuelve los datos del artista encontrado
@@ -331,6 +338,8 @@ int album_coincidirAlbumConTipoAlbum(eAlbum* unAlbum, eTipoAlbum* aTiposAlbumes,
 /// @return Retorna 0 (EXITO) si se logró encontrar el precio más alto de la lista, -1 (ERROR) si no se consiguió
 int album_calcularImporteMaximo(eAlbum* aAlbumes, int limAlbumes, float* pResultado);
 
+int album_calcularImporteMinimo(eAlbum* aAlbumes, int limAlbumes, float* importeMinimo);
+
 /// @brief Obtiene el nombre del artista según su id
 /// @param aArtistas Es la lista de artistas
 /// @param limArtistas Define el tamaño de la lista de artistas
@@ -362,6 +371,291 @@ int tipoArtista_conseguirDescipcion(eTipoArtista* aTiposArtistas, int limTiposAr
 /// @param idGeneroBuscado Es el id del tipo de álbum del cual se buscará la descripción
 /// @return Retorna 0 (EXITO) si se logró obtener la descripción del tipo de álbum buscado, -1 (ERROR) si no se consiguió
 int tipoAlbum_conseguirDescipcion(eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, char* descripcionTipoAlbum, int idTipoAlbumBuscado);
+
+
+
+
+/// @brief Es el menú de opciones de informes
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró mostrar el informe seleccionado correctamente, -1 (ERROR) si no se consiguió
+int album_menuInformes(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+							eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, float totalImportes, int totalAlbumes);
+
+/// @brief Calcula el importe promedio de los importes ingresados
+/// @param pResultado Puntero al espacio de memoria donde se guardará el resultado del promedio de importes
+/// @param importeTotal Es el total de importes ingresados
+/// @param cantidadTotal Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró calcular el promedio, -1 (ERROR) si no se consiguió
+int album_calcularImportePromedio(float* pResultado, float totalImportes, float totalAlbumes);
+
+/// @brief Busca cuántos álbumes superan el importe promedio
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param pResultado Puntero al espacio de memoria donde se guardará el resultado del total de álbumes que superan el importe promedio
+/// @param importePromedio Es el importe promedio de los importes ingresados
+/// @return Retorna 0 (EXITO) si se logró contar el total de albumes que superan el importe promedio, -1 (ERROR) si no se consiguió
+int album_contarAlbumesSuperanImportePromedio(eAlbum* aAlbumes, int limTiposAlbumes, int* pResultado, float importePromedio);
+
+/// @brief Busca cuántos albumes fueron publicados antes de un año determinado
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param anioBuscado Puntero al espacio de memoria donde se guardará el año ingresado
+/// @return Retorna 0 (EXITO) si se logrò encontrar el total de álbumes que se publicaton antes del año ingresado, -1 (ERROR) si no se consiguió
+int album_contarAlbumesAnterioresAnio(eAlbum* aAlbumes, int limTiposAlbumes, int* pResultado, int* anioBuscado);
+
+/// @brief Busca cuántos albumes pertenecen a un solista y se hayan publicado en un año determinado
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param pResultado Puntero al espacio de memoria donde se guardará el total de albumes que sean de un solista y se hayan publicado en el año ingresado
+/// @param anioBuscado Puntero al espacio de memoria donde se guardará el año ingresado
+/// @return Retorna 0 (EXITO) si se logrò encontrar el total de álbumes que sean de solistas y se hayan publicado en el año ingresado, -1 (ERROR) si no se consiguió
+int album_contarSolistasAnioDeterminado(eAlbum* aAlbumes, int limAlbumes, eTipoArtista* aTiposArtistas, int limTiposArtistas, int* pResultado, int* anioBuscado);
+
+
+int album_contarAlbumesDeBandasGeneroDeterminado(eAlbum* aAlbumes, int limAlbumes, eGenero* aGeneros, int limGeneros,
+											eTipoArtista* aTiposArtistas, int limTiposArtistas, int* pResultado, char* descripcionGenero);
+
+
+
+
+
+
+
+
+
+
+
+/// @brief Es el menú de opciones de listados
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró mostrar el listado seleccionado correctamente, -1 (ERROR) si no se consiguió
+int album_menuListado(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+					eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, float totalImportes, int totalAlbumes);
+
+/// @brief Imprime la lista de todos los generos que hay
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @return Retorna 0 (EXITO) si se logró imprimir la lista completa de generos, -1 (ERROR) si no se consiguió
+int genero_imprimirListaGeneros(eGenero* aGeneros, int limGeneros);
+
+/// @brief Imprime la lista de todos los tipos de artistas que hay
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @return Retorna 0 (EXITO) si se logró imprimir la lista completa de tipos de artistas, -1 (ERROR) si no se consiguió
+int tipoArtista_imprimirListaTiposArtistas(eTipoArtista* aTiposArtistas, int limTiposArtistas);
+
+/// @brief Imprime la lista de todos los artistas que hay
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @return Retorna 0 (EXITO) si se logró imprimir la lista completa de artistas, -1 (ERROR) si no se consiguió
+int artista_imprimirListaArtistas(eArtista* aArtistas, int limArtistas);
+
+/// @brief Imprime un listado solo con los álbumes que se hayan publicado antes del año ingresado
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró imprimir el listado correctamente, -1 (ERROR) si no se consiguió
+
+int Listado_albumesAnterioresAnioFijo(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+											eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, int anioFijo);
+
+int Listado_albumesPosterioresAnioFijo(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+											eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes, int anioFijo);
+
+/// @brief Imprime un listado solo con los álbumes que superen el importe promedio
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @param importePromedio Es el importe promedio de todos los importes ingresados
+/// @return Retorna 0 (EXITO) si se logró imprimir el listado correctamente, -1 (ERROR) si no se consiguió
+int Listado_albumesSuperioresImportePromedio(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+												eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes,
+												float totalImportes, int totalAlbumes);
+
+
+int Listado_albumesInferioresImportePromedio(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+												eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes,
+												float totalImportes, int totalAlbumes);
+
+/// @brief Imprime un listado con todos los álbumes de cada artista
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró imprimir el listado correctamente, -1 (ERROR) si no se consiguió
+int Listado_albumesCadaArtista(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+											eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+int Listado_albumesCadaGenero(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+											eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+int Listado_albumesCadaTipoArtista(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+											eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+int Listado_albumesCadaTipoAlbum(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+											eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+/// @brief Imprime un listado con todos los álbumes que se hayan publicado en un año determinado
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró imprimir el listado correctamente, -1 (ERROR) si no se consiguió
+int album_listadoAlbumesAnioDeterminado(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+											eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+/// @brief Imprime un listado con todos los álbumes cuyo importe coincida con el importe más alto de la lista
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró imprimir el listado correctamente, -1 (ERROR) si no se consiguió
+int Listado_albumesMasCaros(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+										eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+int Listado_albumesMasBaratos(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+										eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+/// @brief Imprime la lista de todos los tipos de álbumes que hay
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @return Retorna 0 (EXITO) si se logró imprimir la lista completa de tipos de álbumes, -1 (ERROR) si no se consiguió
+int tipoAlbum_imprimirListaTiposAlbumes(eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+/// @brief Imprime un listado con todos los álbumes que no sean de vinilo
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró imprimir el listado correctamente, -1 (ERROR) si no se consiguió
+int album_listadoAlbumesNoSonVinilos(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+											eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+/// @brief Imprime un listado con todos los álbumes de un artista determinado y que a la vez sean de vinilo
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró imprimir el listado correctamente, -1 (ERROR) si no se consiguió
+int album_listadoAlbumesVinilosArtistaDeterminado(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+														eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+/// @brief Imprime un listado con todos los álbumes que sean de un genero determinado y un tipo de álbum determinado
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró imprimir el listado correctamente, -1 (ERROR) si no se consiguió
+int album_listadoAlbumesGeneroYTipoAlbumDeterminados(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+														eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+/// @brief Imprime un listado con todos los álbumes que sean de un artista determinado y un tipo de álbum determinado
+/// @param aAlbumes Es la lista de álbumes
+/// @param limAlbumes Define el tamaño de la lista de álbumes
+/// @param aArtistas Es la lista de artistas
+/// @param limArtistas Define el tamaño de la lista de artistas
+/// @param aGeneros Es la lista de generos
+/// @param limGeneros Define el tamaño de la lista de generos
+/// @param aTiposArtistas Es la lista de tipos de artistas
+/// @param limTiposArtistas Define el tamaño de la lista de tipos de artistas
+/// @param aTiposAlbumes Es la lista de tipos de álbumes
+/// @param limTiposAlbumes Define el tamaño de la lista de tipos de álbumes
+/// @param totalImportes Es el total de importes ingresados
+/// @param totalAlbumes Es el total de álbumes ingresados
+/// @return Retorna 0 (EXITO) si se logró imprimir el listado correctamente, -1 (ERROR) si no se consiguió
+int album_listadoAlbumesArtistaYTipoAlbumDeterminados(eAlbum* aAlbumes, int limAlbumes, eArtista* aArtistas, int limArtistas, eGenero* aGeneros, int limGeneros,
+														eTipoArtista* aTiposArtistas, int limTiposArtistas, eTipoAlbum* aTiposAlbumes, int limTiposAlbumes);
+
+
 
 
 

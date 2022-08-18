@@ -2,13 +2,13 @@
 
 static const char TXT_IDTIPO[2][LARGO_DESCRIPCION]={"DESKOP", "LAPTOP"};
 
-int controller_loadFromText(char* path, LinkedList* pArraList){
+int controller_loadFromText(char* path, LinkedList* pArrayList){
 	int retorno=-1;
 	FILE* pArchivo=NULL;
-	if(path!=NULL && pArraList!=NULL){
-		pArchivo = fopen(path,"r");
+	if(path!=NULL && pArrayList!=NULL){
+		pArchivo=fopen(path, "r");
 		if(pArchivo!=NULL){
-			if(!parser_PassengerFromText(pArchivo, pArraList)){
+			if(!parser_PassengerFromText(pArchivo, pArrayList)){
 				retorno=0;
 				fclose(pArchivo);
 			}
@@ -20,7 +20,7 @@ int controller_loadFromText(char* path, LinkedList* pArraList){
 			retorno=-3;
 		}
 	}
-	else if(pArraList==NULL){
+	else if(pArrayList==NULL){
 		retorno=-2;
 	}
     return retorno;
@@ -31,13 +31,11 @@ int controller_ListPassenger(LinkedList* pArrayList){
     int retorno=-1;
     int i;
     int largo;
-
     if(pArrayList!=NULL){
-    	largo = ll_len(pArrayList);
+    	largo=ll_len(pArrayList);
     	if(largo>0){
-    		printf("%5s %110s %15s %15s\n","ID","DESCRIPCION","PRECIO","ID DE TIPO");
+    		printf("|%-6s|%-111s|-%16s|%-26s|\n", "Id", "Descripción", "Precio", "Tipo de Computadora");
 			retorno=0;
-
     		for(i=0;i<largo;i++){
     			if(!Controller_imprimirElemento(pArrayList,i)){
     				retorno=0;
@@ -60,14 +58,13 @@ int Controller_imprimirElemento(LinkedList* pArrayList, int indice){
 	eComputer* pComputadora=NULL;
 
 	if(pArrayList!=NULL && indice>=0){
-		pComputadora=(eComputer*)ll_get(pArrayList, indice);
+		pComputadora=(eComputer*) ll_get(pArrayList, indice);
 		if(pComputadora!=NULL &&
 			!Passenger_getId(pComputadora, &auxiliar.id) &&
 			!Computer_getDescripcion(pComputadora, auxiliar.descripcion) &&
 			!Product_getPrecio(pComputadora, &auxiliar.precio) &&
 			!Computer_getTipo(pComputadora, &auxiliar.idTipo)){
-			printf("%5d %110s %15.2f %15s\n",auxiliar.id,auxiliar.descripcion,auxiliar.precio,
-															TXT_IDTIPO[auxiliar.idTipo-1]);
+			printf("%|6d|%111s|%16.2f|%26s|\n", auxiliar.id, auxiliar.descripcion, auxiliar.precio, TXT_IDTIPO[auxiliar.idTipo-1]);
 			retorno=0;
 		}
 		else if(pComputadora==NULL){
@@ -124,7 +121,7 @@ int controller_map(LinkedList* pArrayList){
 
 
 
-int controller_saveAsText(char* path , LinkedList* pArrayList){
+int controller_saveAsText(char* path, LinkedList* pArrayList){
     int retorno=-1;
     FILE* pArchivo;
     eComputer* pComputadora=NULL;
@@ -136,8 +133,8 @@ int controller_saveAsText(char* path , LinkedList* pArrayList){
 	int auxIdTipo;
 
     if(path!=NULL && pArrayList!=NULL){
-		pArchivo = fopen(path,"w");
-    	largo = ll_len(pArrayList);
+		pArchivo=fopen(path, "w");
+    	largo=ll_len(pArrayList);
 		if(pArchivo!=NULL && largo>0){
 			fprintf(pArchivo, "id,Descipcion,Precio,IdTipo\n");
 			for(i=0;i<largo;i++){
@@ -147,7 +144,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayList){
 					!Computer_getDescripcion(pComputadora, auxDescripcion) &&
 					!Product_getPrecio(pComputadora, &auxPrecio) &&
 					!Computer_getTipo(pComputadora, &auxIdTipo)){
-					fprintf(pArchivo,"%d,%s,%.2f,%d\n",auxId,auxDescripcion,auxPrecio,auxIdTipo);
+					fprintf(pArchivo, "%d,%s,%.2f,%d\n", auxId, auxDescripcion, auxPrecio, auxIdTipo);
 				}
 				else if(pComputadora==NULL){
 					puts("No se pudieron guardar los cambios, no se pudo obtener el pasajero.\n");
